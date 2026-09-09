@@ -282,6 +282,15 @@ const Icon = ({
     ChevronRight: /*#__PURE__*/React.createElement("path", {
       d: "m9 18 6-6-6-6"
     }),
+    RefreshCw: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("path", {
+      d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M21 3v5h-5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M8 16H3v5"
+    })),
     Info: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("circle", {
       cx: "12",
       cy: "12",
@@ -1077,10 +1086,12 @@ const App = () => {
   const [palette, setPalette] = useState(palettePresets[0].colors);
   const [editingColorIdx, setEditingColorIdx] = useState(null);
 
-  // Modal & Feedback
+  // Modal, Feedback & Editable Prompt
   const [copied, setCopied] = useState(false);
   const [copiedCli, setCopiedCli] = useState(false);
+  const [copiedImagePrompt, setCopiedImagePrompt] = useState(false);
   const [zoomImage, setZoomImage] = useState(null);
+  const [customPrompt, setCustomPrompt] = useState(null);
 
   // Current Resolution Data
   const currentSpec = useMemo(() => {
@@ -1121,6 +1132,7 @@ const App = () => {
   // Handle mode switch with natural aspect ratio defaults
   const handleModeChange = newMode => {
     setMode(newMode);
+    setCustomPrompt(null);
     if (newMode === 'xhs') {
       setAspectRatio('1:1');
       setQualityTier('mobile');
@@ -1200,7 +1212,7 @@ const App = () => {
 ### 📝 詳細文案來源與段落依據
 ${content}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
 Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${displayTitle}", subtitle "${displaySubtitle}", visual style is ${st.id}, structured in ${lay.id} layout, clean typography, minimalist topic-relevant vector icons, color palette: ${palette.join(', ')}, resolution ${currentSpec.width}x${currentSpec.height}, high fidelity, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
     } else if (mode === 'infographic') {
       const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
@@ -1234,7 +1246,7 @@ ${content}
 2. [主體 Body]：貫徹「${lay.name}」資訊架構，以「${displayTitle}」核心邏輯為主線，將上述內容要點結構化拆解為層次分明、邏輯流暢的模組區塊（依據 ${lay.desc}）。
 3. [底部 Footer]：醒目行動指引 CTA 與關鍵總結結論。
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
 Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displaySubtitle}", structured in ${lay.id} layout, rendered in ${st.id} artistic aesthetic, clear visual hierarchy, topic-relevant minimalist vector icons and diagrams, clean composition, color palette: ${palette.join(' ')}, exact dimensions ${currentSpec.width}x${currentSpec.height} (${currentSpec.dpi}), ultra-detailed vector clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
     } else {
       const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
@@ -1258,15 +1270,25 @@ Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displ
 ### 📝 內容參考
 ${content}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
 Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${displaySubtitle}", ${coverType} layout with ${coverRendering} rendering, ${st.id} artistic style, ${coverMood} atmosphere, prominent typography, color palette: ${palette.join(', ')}, ${currentSpec.width}x${currentSpec.height} resolution, dramatic lighting, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
     }
   }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
+
+  // Active prompt: either user edited custom prompt or auto-generated
+  const activePrompt = customPrompt !== null ? customPrompt : generatedPrompt;
+  const extractImagePrompt = text => {
+    const match = text.match(/Prompt:\s*([\s\S]+)$/i);
+    return match ? match[1].trim() : text.trim();
+  };
   const copyToClipboard = (text, type) => {
     navigator.clipboard.writeText(text).then(() => {
       if (type === 'cli') {
         setCopiedCli(true);
         setTimeout(() => setCopiedCli(false), 2000);
+      } else if (type === 'imagePrompt') {
+        setCopiedImagePrompt(true);
+        setTimeout(() => setCopiedImagePrompt(false), 2000);
       } else {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -1275,7 +1297,7 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
   };
   const exportMarkdown = () => {
     const safeTitle = (title.trim() || '未命名主題').replace(/[/\\?%*:|"<>]/g, '_').slice(0, 15);
-    const blob = new Blob([generatedPrompt], {
+    const blob = new Blob([activePrompt], {
       type: 'text/markdown;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
@@ -1307,7 +1329,7 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
     doc.setFontSize(11);
     doc.text(`Full Generation Prompt:`, 14, 78);
     doc.setFontSize(8);
-    const splitText = doc.splitTextToSize(generatedPrompt, 180);
+    const splitText = doc.splitTextToSize(activePrompt, 180);
     doc.text(splitText, 14, 86);
     doc.save(`${mode}-${safeTitle}.pdf`);
   };
@@ -1623,40 +1645,66 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
   }))), /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-3.5"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3"
+    className: "flex flex-col lg:flex-row items-start lg:items-center justify-between gap-2 border-b border-slate-800 pb-3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"
   }), /*#__PURE__*/React.createElement("span", {
     className: "text-xs font-bold text-white tracking-wide"
-  }, "\u5373\u6642 Prompt \u7DE8\u8B6F\u8F38\u51FA (", currentSpec.width, "\xD7", currentSpec.height, " px \xB7 ", currentSpec.dpi, ")")), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2"
+  }, "\u5373\u6642 Prompt \u7DE8\u8B6F\u8F38\u51FA (", currentSpec.width, "\xD7", currentSpec.height, " px \xB7 ", currentSpec.dpi, ")"), customPrompt !== null && /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-in"
+  }, "\u624B\u52D5\u7DE8\u8F2F\u4E2D")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center flex-wrap gap-2"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => copyToClipboard(generatedCli, 'cli'),
-    className: "px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
+    className: "px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all",
+    title: "\u8907\u88FD CLI \u6307\u4EE4"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Terminal",
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, copiedCli ? '已複製指令！' : '複製 CLI 指令')), /*#__PURE__*/React.createElement("button", {
-    onClick: () => copyToClipboard(generatedPrompt, 'prompt'),
-    className: "px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
+  }), /*#__PURE__*/React.createElement("span", null, copiedCli ? '已複製！' : '複製 CLI')), /*#__PURE__*/React.createElement("button", {
+    onClick: () => copyToClipboard(extractImagePrompt(activePrompt), 'imagePrompt'),
+    className: "px-2.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/40 shadow-sm transition-all",
+    title: "\u55AE\u7368\u8907\u88FD\u7D14\u82F1\u6587\u751F\u5716\u63D0\u793A\u8A5E\uFF08\u76F4\u63A5\u8CBC\u5230 Midjourney / Flux / Gemini \u751F\u5716\uFF09"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: copiedImagePrompt ? 'Check' : 'Sparkles',
+    size: 13
+  }), /*#__PURE__*/React.createElement("span", null, copiedImagePrompt ? '已複製生圖 Prompt！' : '複製生圖 Prompt')), /*#__PURE__*/React.createElement("button", {
+    onClick: () => copyToClipboard(activePrompt, 'prompt'),
+    className: "px-3 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all",
+    title: "\u8907\u88FD\u6574\u4EFD\u898F\u683C\u66F8\uFF08\u76F4\u63A5\u8CBC\u7D66 ChatGPT / Claude \u9032\u884C\u4E8C\u6B21\u751F\u6210\u6216\u6587\u6848\u7D30\u5316\uFF09"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: copied ? 'Check' : 'Copy',
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製 Prompt！' : '複製完整 Prompt')))), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製完整規格！' : '複製完整規格')))), /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar"
   }, /*#__PURE__*/React.createElement("div", {
     className: "truncate pr-3 select-all"
   }, generatedCli)), /*#__PURE__*/React.createElement("div", {
     className: "relative"
-  }, /*#__PURE__*/React.createElement("pre", {
-    className: "bg-slate-950/80 border border-slate-800/60 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed max-h-[320px] overflow-y-auto whitespace-pre-wrap custom-scrollbar select-text"
-  }, generatedPrompt)), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between pt-1"
+  }, /*#__PURE__*/React.createElement("textarea", {
+    value: activePrompt,
+    onChange: e => setCustomPrompt(e.target.value),
+    rows: 13,
+    className: "w-full bg-slate-950/90 border border-slate-800/80 focus:border-cyan-400/80 rounded-xl p-4 text-xs font-mono text-slate-200 leading-relaxed custom-scrollbar outline-none resize-y transition-all",
+    placeholder: "\u5373\u6642\u751F\u6210\u7684\u63D0\u793A\u8A5E...",
+    spellCheck: "false"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mt-1.5 px-1"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] text-slate-400 flex items-center gap-1"
+  }, /*#__PURE__*/React.createElement("span", null, "\u270F\uFE0F \u63D0\u793A\uFF1A\u4E0A\u65B9\u6846\u5167\u6587\u5B57\u5DF2\u958B\u653E", /*#__PURE__*/React.createElement("b", null, "\u76F4\u63A5\u9EDE\u64CA\u7DE8\u8F2F\u4FEE\u6539"))), customPrompt !== null && /*#__PURE__*/React.createElement("button", {
+    onClick: () => setCustomPrompt(null),
+    className: "text-[11px] text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 transition-colors"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "RefreshCw",
+    size: 11
+  }), /*#__PURE__*/React.createElement("span", null, "\u5FA9\u539F\u70BA\u81EA\u52D5\u751F\u6210")))), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-1 border-t border-slate-800/60 mt-1"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-[11px] text-slate-500 font-mono"
-  }, "\u76F8\u5BB9\uFF1AClaude Code / Codex / Midjourney / Gemini / \u963F\u91CC\u901A\u7FA9\u842C\u76F8"), /*#__PURE__*/React.createElement("div", {
+  }, "\u76F8\u5BB9\uFF1AClaude Code / Codex / Midjourney / Flux / Gemini"), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: exportMarkdown,

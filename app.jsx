@@ -28,6 +28,7 @@
                 Layers: <><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></>,
                 Smile: <><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></>,
                 ChevronRight: <path d="m9 18 6-6-6-6"/>,
+                RefreshCw: <><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></>,
                 Info: <><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></>,
                 Maximize2: <><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></>,
                 Youtube: <><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></>
@@ -412,10 +413,12 @@
             const [palette, setPalette] = useState(palettePresets[0].colors);
             const [editingColorIdx, setEditingColorIdx] = useState(null);
 
-            // Modal & Feedback
+            // Modal, Feedback & Editable Prompt
             const [copied, setCopied] = useState(false);
             const [copiedCli, setCopiedCli] = useState(false);
+            const [copiedImagePrompt, setCopiedImagePrompt] = useState(false);
             const [zoomImage, setZoomImage] = useState(null);
+            const [customPrompt, setCustomPrompt] = useState(null);
 
             // Current Resolution Data
             const currentSpec = useMemo(() => {
@@ -455,6 +458,7 @@
             // Handle mode switch with natural aspect ratio defaults
             const handleModeChange = (newMode) => {
                 setMode(newMode);
+                setCustomPrompt(null);
                 if (newMode === 'xhs') {
                     setAspectRatio('1:1');
                     setQualityTier('mobile');
@@ -538,7 +542,7 @@
 ### 📝 詳細文案來源與段落依據
 ${content}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
 Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${displayTitle}", subtitle "${displaySubtitle}", visual style is ${st.id}, structured in ${lay.id} layout, clean typography, minimalist topic-relevant vector icons, color palette: ${palette.join(', ')}, resolution ${currentSpec.width}x${currentSpec.height}, high fidelity, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
                 } else if (mode === 'infographic') {
                     const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
@@ -572,7 +576,7 @@ ${content}
 2. [主體 Body]：貫徹「${lay.name}」資訊架構，以「${displayTitle}」核心邏輯為主線，將上述內容要點結構化拆解為層次分明、邏輯流暢的模組區塊（依據 ${lay.desc}）。
 3. [底部 Footer]：醒目行動指引 CTA 與關鍵總結結論。
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
 Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displaySubtitle}", structured in ${lay.id} layout, rendered in ${st.id} artistic aesthetic, clear visual hierarchy, topic-relevant minimalist vector icons and diagrams, clean composition, color palette: ${palette.join(' ')}, exact dimensions ${currentSpec.width}x${currentSpec.height} (${currentSpec.dpi}), ultra-detailed vector clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
                 } else {
                     const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
@@ -596,16 +600,27 @@ Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displ
 ### 📝 內容參考
 ${content}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
 Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${displaySubtitle}", ${coverType} layout with ${coverRendering} rendering, ${st.id} artistic style, ${coverMood} atmosphere, prominent typography, color palette: ${palette.join(', ')}, ${currentSpec.width}x${currentSpec.height} resolution, dramatic lighting, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
                 }
             }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
+
+            // Active prompt: either user edited custom prompt or auto-generated
+            const activePrompt = customPrompt !== null ? customPrompt : generatedPrompt;
+
+            const extractImagePrompt = (text) => {
+                const match = text.match(/Prompt:\s*([\s\S]+)$/i);
+                return match ? match[1].trim() : text.trim();
+            };
 
             const copyToClipboard = (text, type) => {
                 navigator.clipboard.writeText(text).then(() => {
                     if (type === 'cli') {
                         setCopiedCli(true);
                         setTimeout(() => setCopiedCli(false), 2000);
+                    } else if (type === 'imagePrompt') {
+                        setCopiedImagePrompt(true);
+                        setTimeout(() => setCopiedImagePrompt(false), 2000);
                     } else {
                         setCopied(true);
                         setTimeout(() => setCopied(false), 2000);
@@ -615,7 +630,7 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
 
             const exportMarkdown = () => {
                 const safeTitle = (title.trim() || '未命名主題').replace(/[/\\?%*:|"<>]/g, '_').slice(0, 15);
-                const blob = new Blob([generatedPrompt], { type: 'text/markdown;charset=utf-8' });
+                const blob = new Blob([activePrompt], { type: 'text/markdown;charset=utf-8' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -645,7 +660,7 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
                 doc.setFontSize(11);
                 doc.text(`Full Generation Prompt:`, 14, 78);
                 doc.setFontSize(8);
-                const splitText = doc.splitTextToSize(generatedPrompt, 180);
+                const splitText = doc.splitTextToSize(activePrompt, 180);
                 doc.text(splitText, 14, 86);
                 doc.save(`${mode}-${safeTitle}.pdf`);
             };
@@ -1031,27 +1046,42 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
 
                             {/* Prompt Output Card */}
                             <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-3.5">
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                                     <div className="flex items-center gap-2">
                                         <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
                                         <span className="text-xs font-bold text-white tracking-wide">
                                             即時 Prompt 編譯輸出 ({currentSpec.width}×{currentSpec.height} px · {currentSpec.dpi})
                                         </span>
+                                        {customPrompt !== null && (
+                                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-in">
+                                                手動編輯中
+                                            </span>
+                                        )}
                                     </div>
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center flex-wrap gap-2">
                                         <button
                                             onClick={() => copyToClipboard(generatedCli, 'cli')}
-                                            className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
+                                            className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
+                                            title="複製 CLI 指令"
                                         >
                                             <Icon name="Terminal" size={13} />
-                                            <span>{copiedCli ? '已複製指令！' : '複製 CLI 指令'}</span>
+                                            <span>{copiedCli ? '已複製！' : '複製 CLI'}</span>
                                         </button>
                                         <button
-                                            onClick={() => copyToClipboard(generatedPrompt, 'prompt')}
-                                            className="px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
+                                            onClick={() => copyToClipboard(extractImagePrompt(activePrompt), 'imagePrompt')}
+                                            className="px-2.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/40 shadow-sm transition-all"
+                                            title="單獨複製純英文生圖提示詞（直接貼到 Midjourney / Flux / Gemini 生圖）"
+                                        >
+                                            <Icon name={copiedImagePrompt ? 'Check' : 'Sparkles'} size={13} />
+                                            <span>{copiedImagePrompt ? '已複製生圖 Prompt！' : '複製生圖 Prompt'}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => copyToClipboard(activePrompt, 'prompt')}
+                                            className="px-3 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
+                                            title="複製整份規格書（直接貼給 ChatGPT / Claude 進行二次生成或文案細化）"
                                         >
                                             <Icon name={copied ? 'Check' : 'Copy'} size={13} />
-                                            <span>{copied ? '已複製 Prompt！' : '複製完整 Prompt'}</span>
+                                            <span>{copied ? '已複製完整規格！' : '複製完整規格'}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1061,17 +1091,36 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
                                     <div className="truncate pr-3 select-all">{generatedCli}</div>
                                 </div>
 
-                                {/* Full Structured Prompt Content */}
+                                {/* Full Structured Prompt Content (Directly Editable Textarea) */}
                                 <div className="relative">
-                                    <pre className="bg-slate-950/80 border border-slate-800/60 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed max-h-[320px] overflow-y-auto whitespace-pre-wrap custom-scrollbar select-text">
-                                        {generatedPrompt}
-                                    </pre>
+                                    <textarea
+                                        value={activePrompt}
+                                        onChange={(e) => setCustomPrompt(e.target.value)}
+                                        rows={13}
+                                        className="w-full bg-slate-950/90 border border-slate-800/80 focus:border-cyan-400/80 rounded-xl p-4 text-xs font-mono text-slate-200 leading-relaxed custom-scrollbar outline-none resize-y transition-all"
+                                        placeholder="即時生成的提示詞..."
+                                        spellCheck="false"
+                                    />
+                                    <div className="flex items-center justify-between mt-1.5 px-1">
+                                        <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                                            <span>✏️ 提示：上方框內文字已開放<b>直接點擊編輯修改</b></span>
+                                        </span>
+                                        {customPrompt !== null && (
+                                            <button
+                                                onClick={() => setCustomPrompt(null)}
+                                                className="text-[11px] text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 transition-colors"
+                                            >
+                                                <Icon name="RefreshCw" size={11} />
+                                                <span>復原為自動生成</span>
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
 
                                 {/* Export Actions */}
-                                <div className="flex items-center justify-between pt-1">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-1 border-t border-slate-800/60 mt-1">
                                     <div className="text-[11px] text-slate-500 font-mono">
-                                        相容：Claude Code / Codex / Midjourney / Gemini / 阿里通義萬相
+                                        相容：Claude Code / Codex / Midjourney / Flux / Gemini
                                     </div>
                                     <div className="flex gap-2">
                                         <button
