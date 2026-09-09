@@ -1,7 +1,24 @@
 services:
   gemini-notebook:
     build: .
+    image: gemini-notebook-app:latest
     container_name: gemini-notebook-app
     restart: unless-stopped
     ports:
-      - "8088:80"
+      - "3000:80"
+    networks:
+      - notebook-net
+
+  gemini-notebook-tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: gemini-notebook-cf-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate --url http://gemini-notebook:80
+    networks:
+      - notebook-net
+    depends_on:
+      - gemini-notebook
+
+networks:
+  notebook-net:
+    name: notebook-net
