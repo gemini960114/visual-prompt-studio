@@ -2,15 +2,19 @@
 
 <p align="center">
   <b>將文字文案一秒轉化為專業級 AI 生圖提示詞與 CLI 指令的視覺設計工作台</b><br>
-  專為 <b>LINE 官方帳號輪播小卡</b>、<b>高密度衛教資訊海報</b>、<b>主視覺宣傳封面</b> 打造。
+  專為 <b>LINE 官方帳號輪播小卡</b>、<b>高密度知識資訊海報</b>、<b>主視覺宣傳封面</b> 打造。
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  <a href="https://github.com/gemini960114/visual-prompt-studio/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"></a>
   <img src="https://img.shields.io/badge/React-18.3-cyan.svg" alt="React 18">
   <img src="https://img.shields.io/badge/TailwindCSS-3.x-38bdf8.svg" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/Deploy-GitHub%20Pages-success.svg" alt="GitHub Pages Ready">
+  <a href="https://gemini960114.github.io/visual-prompt-studio/"><img src="https://img.shields.io/badge/Deploy-GitHub%20Pages-success.svg" alt="GitHub Pages Ready"></a>
   <img src="https://img.shields.io/badge/Zero-Backend%20SPA-orange.svg" alt="Zero Backend">
+</p>
+
+<p align="center">
+  🌐 <b>線上體驗網址</b>：<a href="https://gemini960114.github.io/visual-prompt-studio/">https://gemini960114.github.io/visual-prompt-studio/</a>
 </p>
 
 ---
@@ -50,17 +54,24 @@
 ---
 
 ### 4. 🎨 5 維調色盤防色彩漂移 (Color Palette Lock)
-提供 9 款專業主題色票（公共衛教警示、莫蘭迪柔和、未來科技、賽博霓虹等），並支援 HSV/RGB 互動吸色盤。
-嚴格指派五大功能角色：
-- **主色 (Primary)**：主視覺邊框、大標題徽章、核心架構導航
-- **次色 (Secondary)**：卡片獨立容器底色、次要步驟區塊
-- **底色 (Background)**：確保手機閱讀高對比度與純淨呼吸空間
-- **字色 (Text)**：高清晰度易讀性深色字體
-- **警示色 (Emergency/Accent)**：重要行動指南、致死率/危險標註、緊急專線 Highlight
+提供 9 款專業主題色票（高對比醒目警示、經典海軍商務、極客科技青、莫蘭迪雅致等），並支援 HSV/RGB 互動吸色盤。
+嚴格指派五大功能角色，杜絕特定領域文字殘留：
+- **主視覺骨架 (Primary)**：主視覺邊框、大標題徽章、核心架構導航線與關鍵圖標
+- **次要容器 (Secondary)**：卡片獨立容器底色、次要步驟區塊
+- **全局背景 (Background)**：確保手機閱讀高對比度與充足純淨呼吸空間
+- **正文字體 (Text)**：高清晰度易讀性深色字體
+- **焦點強調 (Accent)**：關鍵數據指標、核心結論、重要行動呼籲 (CTA) Highlight
 
 ---
 
-### 5. ⚡ 雙軌輸出與匯出功能
+### 5. 💡 通用視覺架構 Meta-Prompt 與 LLM 二次生成工作流
+本工具定位為「純前端視覺架構與 Meta-Prompt 生成器」，不內建大型語言模型，因此嚴格遵循「中立架構排版原則」，**不無中生有或硬編碼任何業務特定事實**。
+- **直接 AI 生圖**：複製底部的 Midjourney / Flux / Gemini / 通義萬相 提示詞，帶有精確解析度、色彩十六進位碼與構圖關鍵詞，直接生成一致性極高的系列作品。
+- **LLM 二次生成**：將產出的「完整視覺規格書與結構指引」整段複製貼入 ChatGPT、Claude 或 Gemini，命令模型依據您實際輸入的文案進行章節細化、SVG 向量代碼繪製或 HTML 圖卡切版。
+
+---
+
+### 6. ⚡ 雙軌輸出與規格書匯出
 - **CLI 終端指令**：一鍵產生並複製 `/baoyu-xxx ...` 標準指令（自動帶入風格、佈局與精確長寬規格）。
 - **AI 繪圖提示詞 (Full Prompt)**：產生分層嚴謹的 Midjourney / Flux / Gemini / 通義萬相 提示詞。
 - **企劃匯出**：支援匯出 `.md` Markdown 企劃文稿與包含色票與規格的 `.pdf` 簡報規格書。
@@ -71,11 +82,12 @@
 
 ### 方法一：直接使用 GitHub Pages（零安裝、完全免費）
 本專案為純前端 SPA 靜態架構，直接推送至 GitHub 即可啟用 GitHub Pages：
-1. Fork 或 Clone 本專案至您的 GitHub。
+1. Fork 或 Clone 本專案至您的 GitHub：
+   `https://github.com/gemini960114/visual-prompt-studio.git`
 2. 進入 Repository 頁面的 **Settings** $\rightarrow$ **Pages**。
 3. 在 **Build and deployment** 下方的 **Source** 選擇 `Deploy from a branch`。
 4. Branch 選擇 `main`、資料夾選擇 `/(root)`，點擊 **Save**。
-5. 稍候 1 分鐘即可在 `https://<你的帳號>.github.io/visual-prompt-studio/` 上線存取！
+5. 稍候 1 分鐘即可在 `https://gemini960114.github.io/visual-prompt-studio/` 上線存取！
 
 ---
 
@@ -83,7 +95,7 @@
 
 ```bash
 # 1. 複製專案
-git clone https://github.com/<your-username>/visual-prompt-studio.git
+git clone https://github.com/gemini960114/visual-prompt-studio.git
 cd visual-prompt-studio
 
 # 2. 編輯修改 app.jsx 後執行編譯
@@ -130,6 +142,9 @@ visual-prompt-studio/
 
 ---
 
-## 📄 開源授權 (License)
+## 📄 開源授權與致謝 (License & Attribution)
 
 本專案採用 [MIT License](LICENSE) 授權釋出。歡迎自由 Fork、客製化與推廣使用！
+
+- **GitHub 原始碼庫**：[https://github.com/gemini960114/visual-prompt-studio](https://github.com/gemini960114/visual-prompt-studio)
+- **GitHub Pages 線上版**：[https://gemini960114.github.io/visual-prompt-studio/](https://gemini960114.github.io/visual-prompt-studio/)

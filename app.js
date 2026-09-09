@@ -520,8 +520,8 @@ const ColorPicker = ({
   }, "\u78BA\u5B9A")));
 };
 const palettePresets = [{
-  id: 'medical-alert',
-  name: '衛教防疫警示 (藍白紅)',
+  id: 'vivid-contrast',
+  name: '高對比醒目警示 (藍紅白)',
   colors: ['#0284C7', '#DC2626', '#F8FAFC', '#1E293B', '#F59E0B']
 }, {
   id: 'classic-navy',
@@ -729,7 +729,7 @@ const infographicStyles = [{
   name: "地鐵拓撲線路圖",
   name_en: "Subway Transit Map",
   desc: "倫敦地鐵風格拓撲圖、彩色線路節點、流程網絡極佳展示法。",
-  img: "./assets/screenshots/infographic-styles/subway-map.webp"
+  img: "./assets/screenshots/infographic-layouts/subway-map.webp"
 }, {
   id: "ikea-manual",
   name: "IKEA 組裝說明書風",
@@ -753,7 +753,7 @@ const infographicLayouts = [{
   id: "journey-path",
   name: "曲折旅程道路圖",
   name_en: "Journey Path",
-  desc: "公路關卡式貫穿沖、消、送等重要里程碑，行動指引感極強。",
+  desc: "公路關卡式貫穿各階段里程碑與執行步驟，指引感極強。",
   img: "./assets/screenshots/infographic-layouts/journey-path.webp"
 }, {
   id: "bento-grid",
@@ -765,61 +765,61 @@ const infographicLayouts = [{
   id: "timeline-horizontal",
   name: "水平時間軸里程碑",
   name_en: "Timeline Roadmap",
-  desc: "按時間順序與處理節點推進，緊急應變最佳展示法。",
+  desc: "按時間順序與關鍵里程節點推進，歷程演進最佳展示法。",
   img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp"
 }, {
   id: "do-dont",
   name: "正確與錯誤對照",
   name_en: "Do vs Don't Table",
-  desc: "綠勾正確處置 vs 紅叉禁忌雷區，防護對照一目了然。",
+  desc: "綠勾推薦做法 vs 紅叉避免行為，正反對照一目了然。",
   img: "./assets/screenshots/infographic-layouts/do-dont.webp"
 }, {
   id: "funnel",
   name: "轉化與篩選漏斗",
   name_en: "Conversion Funnel",
-  desc: "層層遞進篩選、風險評估各階段條件分級。",
+  desc: "層層遞進篩選、流程評估與各階段條件分級。",
   img: "./assets/screenshots/infographic-layouts/funnel.webp"
 }, {
   id: "pyramid",
   name: "層級金字塔",
   name_en: "Hierarchy Pyramid",
-  desc: "重要性與緊急度層級金字塔、基礎到核心。",
+  desc: "重要性與優先度層級金字塔，由基礎穩固推進到頂層核心。",
   img: "./assets/screenshots/infographic-layouts/pyramid.webp"
 }, {
   id: "mind-map",
   name: "思維導圖發散樹",
   name_en: "Mind Map Radial",
-  desc: "核心主題輻射發散、各項處置措施分支體系。",
+  desc: "核心主題輻射發散、各項關鍵要點分支體系。",
   img: "./assets/screenshots/infographic-layouts/mind-map.webp"
 }, {
   id: "bridge",
   name: "跨越鴻溝問題橋",
   name_en: "Problem-Solution Bridge",
-  desc: "現狀受傷危險 ➜ 規範處理之橋 ➜ 安全降低發病風險。",
+  desc: "現狀痛點問題 ➜ 解決方案之橋 ➜ 達成目標願景。",
   img: "./assets/screenshots/infographic-layouts/bridge.webp"
 }, {
   id: "comparison-table",
   name: "多維度矩陣對比表",
   name_en: "Comparison Table",
-  desc: "多種情況、動物類型與應對方針橫向對決。",
+  desc: "多種方案、情境條件與執行方針橫向對比。",
   img: "./assets/screenshots/infographic-layouts/comparison-table.webp"
 }, {
   id: "layers-stack",
   name: "分層架構模組棧",
   name_en: "Tech Layers Stack",
-  desc: "防護措施、醫療處置、公衛通報等層次架構。",
+  desc: "基礎底層、核心邏輯、頂層應用等層次架構。",
   img: "./assets/screenshots/infographic-layouts/layers-stack.webp"
 }, {
   id: "iceberg",
   name: "冰山可見與隱藏模型",
   name_en: "Iceberg Model",
-  desc: "表面輕微傷口 vs 水面下極高致死風險。",
+  desc: "水面上顯性可見現象 vs 水面下隱性深層關鍵。",
   img: "./assets/screenshots/infographic-layouts/iceberg.webp"
 }, {
   id: "circular-flow",
   name: "循環閉環生態圈",
   name_en: "Circular Ecosystem",
-  desc: "防護閉環、通報與追蹤完整流轉體系。",
+  desc: "閉環回饋、持續優化與流轉體系。",
   img: "./assets/screenshots/infographic-layouts/circular-flow.webp"
 }];
 const coverStyles = [{
@@ -1176,7 +1176,7 @@ const App = () => {
       const st = xhsStyles.find(s => s.id === selectedXhsStyle) || xhsStyles[0];
       const lay = xhsLayouts.find(l => l.id === selectedXhsLayout) || xhsLayouts[0];
       return `### 🎯 任務目標：LINE 官方帳號小卡 / 社群知識圖卡系列生成
-你是一位精通社群視覺、LINE 官方帳號輪播小卡 (Card Carousel) 與高說服力衛教圖文的頂級視覺設計專家。
+你是一位精通社群視覺、LINE 官方帳號輪播小卡 (Card Carousel) 與高說服力知識圖文的頂級視覺設計專家。
 請依據以下具體解析度規格、配色邏輯與文案內容，為主題「${displayTitle}」設計一套共 ${cardCount} 張的系列圖卡視覺規範與生圖提示詞：
 
 ### 📐 尺寸、方向與輸出解析度規格
@@ -1184,12 +1184,12 @@ const App = () => {
 - **精準輸出解析度**：${currentSpec.width} × ${currentSpec.height} px (${currentSpec.dpi}，${currentSpec.note})
 - **系列卡片張數**：共 ${cardCount} 張連續圖卡（建議第一張大標吸睛，中段步驟拆解，末張強烈行動指引）
 
-### 🎨 調色盤精準指派 (確保色調專業且具公信力)
+### 🎨 調色盤精準指派 (色彩功能角色)
 - [主視覺基調色: ${cPrimary}]：用於系列小卡邊框、大標題徽章、關鍵圖標與外框線條
-- [緊急警示強調色: ${cAccent}]：紅色/高飽和警告色，標註「致死率 100%」、「儘速送醫」、「1922 專線」等關鍵字
-- [背景底色: ${cBg}]：保持背景乾淨純粹，確保手機螢幕高對比不疲勞
-- [輔助模組卡片色: ${cSecondary}]：用於步驟 01/02/03 的獨立底色區塊
-- [內文正文字體色: ${cText}]：高易讀性深色字體，保證各年齡層在 LINE 手機端秒懂
+- [焦點強調色: ${cAccent}]：高對比焦點色，突顯關鍵重點、核心數據指標與重要行動呼籲 (CTA)
+- [背景底色: ${cBg}]：保持全局背景純淨，確保行動裝置螢幕高對比不疲勞
+- [次級模組容器色: ${cSecondary}]：用於各步驟卡片、內容分塊容器之獨立底色
+- [內文正文字體色: ${cText}]：高易讀性文字色彩，保證各年齡層在手機端秒懂
 
 ### 📌 標題與視覺風格
 - **主標題**：${displayTitle}
@@ -1201,7 +1201,7 @@ const App = () => {
 ${content}
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
-Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${displayTitle}", subtitle "${displaySubtitle}", visual style is ${st.id}, structured in ${lay.id} layout, clean typography, medical safety emergency icons (washing, disinfectant, hospital), color palette: ${palette.join(', ')}, resolution ${currentSpec.width}x${currentSpec.height}, high fidelity, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
+Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${displayTitle}", subtitle "${displaySubtitle}", visual style is ${st.id}, structured in ${lay.id} layout, clean typography, minimalist topic-relevant vector icons, color palette: ${palette.join(', ')}, resolution ${currentSpec.width}x${currentSpec.height}, high fidelity, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
     } else if (mode === 'infographic') {
       const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
       const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
@@ -1217,9 +1217,9 @@ Prompt: A cohesive social media infographic card series of ${cardCount} cards fo
 
 ### 🎨 調色盤精準指派 (色彩功能角色)
 - [主視覺骨架色: ${cPrimary}]：海報大架構、核心流程導航線、主題 Icon
-- [警示強調色: ${cAccent}]：緊急紅色/警示色，突出「致死率 100%」、「沖洗 15 分鐘」、「1922 防疫專線」
+- [焦點強調色: ${cAccent}]：高對比焦點色，突顯關鍵數據、重要結論與核心行動呼籲 (CTA)
 - [背景底色: ${cBg}]：純淨底色，確保密集的資訊區塊擁有充足呼吸空間
-- [次要模組背景色: ${cSecondary}]：各章節卡片（重點訊息、行動指引、疫苗政策）之獨立容器色彩
+- [次要模組容器色: ${cSecondary}]：各章節卡片、內容分塊容器之獨立底色
 - [正文字體色: ${cText}]：最高清晰度的文字閱讀顏色
 
 ### 📌 標題設定
@@ -1230,17 +1230,17 @@ Prompt: A cohesive social media infographic card series of ${cardCount} cards fo
 ${content}
 
 ### 🏛️ 海報版面結構指引
-1. [頂部 Header]：大標「${displayTitle}」+ 副標「${displaySubtitle}」+ 疾管署權威標識。
-2. [主體 Body]：貫徹 ${lay.name}，以「沖（肥皂水沖15分） ➜ 消（優碘/酒精消毒） ➜ 送（就醫評估預防）」為核心視覺主線，左右並陳動物特徵記憶法與疫苗評估原則。
-3. [底部 Footer]：醒目行動指引 CTA「有抓咬，就先沖、再送醫！」+ 防疫專線 1922。
+1. [頂部 Header]：大標「${displayTitle}」+ 副標「${displaySubtitle}」+ 主題視覺識別。
+2. [主體 Body]：貫徹「${lay.name}」資訊架構，以「${displayTitle}」核心邏輯為主線，將上述內容要點結構化拆解為層次分明、邏輯流暢的模組區塊（依據 ${lay.desc}）。
+3. [底部 Footer]：醒目行動指引 CTA 與關鍵總結結論。
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
-Prompt: High-density public health infographic poster for "${displayTitle}", subtitle "${displaySubtitle}", structured in ${lay.id} layout, rendered in ${st.id} artistic aesthetic, clear visual hierarchy, bold medical signage, clinical step-by-step vector graphics, clean composition, color palette: ${palette.join(' ')}, exact dimensions ${currentSpec.width}x${currentSpec.height} (${currentSpec.dpi}), ultra-detailed vector clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
+Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displaySubtitle}", structured in ${lay.id} layout, rendered in ${st.id} artistic aesthetic, clear visual hierarchy, topic-relevant minimalist vector icons and diagrams, clean composition, color palette: ${palette.join(' ')}, exact dimensions ${currentSpec.width}x${currentSpec.height} (${currentSpec.dpi}), ultra-detailed vector clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
     } else {
       const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
       return `### 🎯 任務目標：主視覺宣傳海報 / LINE 滿版推播大圖
-你是一位知名宣傳海報與公共衛教主視覺藝術總監。
-請依據以下 5 維度客製化規格與解析度設定，為「${displayTitle}」打造一張極具衝擊力與公信力的宣傳封面大圖：
+你是一位知名宣傳海報與數位媒體主視覺藝術總監。
+請依據以下 5 維度客製化規格與解析度設定，為「${displayTitle}」打造一張極具視覺衝擊力與專業感的主視覺封面大圖：
 
 ### 📐 尺寸規格與解析度
 - **長寬比例**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
@@ -1259,7 +1259,7 @@ Prompt: High-density public health infographic poster for "${displayTitle}", sub
 ${content}
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
-Prompt: Striking promotional warning cover poster for "${displayTitle}", subtitle "${displaySubtitle}", ${coverType} layout with ${coverRendering} rendering, ${st.id} artistic style, ${coverMood} atmosphere, prominent typography, color palette: ${palette.join(', ')}, ${currentSpec.width}x${currentSpec.height} resolution, dramatic lighting, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
+Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${displaySubtitle}", ${coverType} layout with ${coverRendering} rendering, ${st.id} artistic style, ${coverMood} atmosphere, prominent typography, color palette: ${palette.join(', ')}, ${currentSpec.width}x${currentSpec.height} resolution, dramatic lighting, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
     }
   }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
   const copyToClipboard = (text, type) => {
@@ -1714,19 +1714,12 @@ Prompt: Striking promotional warning cover poster for "${displayTitle}", subtitl
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-4"
   }, /*#__PURE__*/React.createElement("a", {
-    href: "https://github.com/JimLiu/baoyu-skills",
+    href: "https://github.com/gemini960114/visual-prompt-studio",
     target: "_blank",
-    className: "hover:text-cyan-300 font-bold transition-colors"
-  }, "GitHub: JimLiu/baoyu-skills"), /*#__PURE__*/React.createElement("span", null, "\u2022"), /*#__PURE__*/React.createElement("a", {
-    href: "https://www.youtube.com/@meiko1",
-    target: "_blank",
-    className: "hover:text-cyan-300 font-bold transition-colors flex items-center gap-1"
-  }, /*#__PURE__*/React.createElement("span", null, "Meiko\u5FAE\u8AB2\u983B\u9053"), /*#__PURE__*/React.createElement(Icon, {
-    name: "Youtube",
-    size: 14
-  }))), /*#__PURE__*/React.createElement("div", {
+    className: "hover:text-cyan-300 font-bold transition-colors flex items-center gap-1.5"
+  }, /*#__PURE__*/React.createElement("span", null, "GitHub: gemini960114/visual-prompt-studio"))), /*#__PURE__*/React.createElement("div", {
     className: "text-right font-mono"
-  }, /*#__PURE__*/React.createElement("span", null, "Baoyu Visual Prompt Studio \xA9 2026"), totalViews !== null && /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Visual Prompt Studio \xA9 2026"), totalViews !== null && /*#__PURE__*/React.createElement("span", {
     className: "ml-3 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-400 font-bold"
   }, "\u25C9 \u7D2F\u7A4D\u8A2A\u554F ", totalViews.toLocaleString())))));
 };
