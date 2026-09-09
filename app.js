@@ -291,6 +291,18 @@ const Icon = ({
     }), /*#__PURE__*/React.createElement("path", {
       d: "M12 8h.01"
     })),
+    HelpCircle: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("circle", {
+      cx: "12",
+      cy: "12",
+      r: "10"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "12",
+      y1: "17",
+      x2: "12.01",
+      y2: "17"
+    })),
     Youtube: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("path", {
       d: "M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"
     }), /*#__PURE__*/React.createElement("polygon", {
@@ -501,45 +513,41 @@ const ColorPicker = ({
     className: "flex-1 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-center font-mono text-white text-xs font-bold"
   }), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
-    className: "px-2.5 py-1 bg-pink-400 hover:bg-pink-300 text-slate-950 font-bold rounded"
+    className: "px-2.5 py-1 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold rounded"
   }, "\u78BA\u5B9A")));
 };
 const palettePresets = [{
-  id: 'morandi',
-  name: '莫蘭迪雅緻',
-  colors: ['#5B7065', '#8C9A8E', '#C4B7A6', '#D9D0C7', '#4A5859']
+  id: 'medical-alert',
+  name: '衛教防疫警示 (藍白紅)',
+  colors: ['#0284C7', '#DC2626', '#F8FAFC', '#1E293B', '#F59E0B']
 }, {
-  id: 'macaron',
-  name: '馬卡龍甜彩',
-  colors: ['#FFB5C5', '#B5EAD7', '#C7CEEA', '#FFDAC1', '#E2F0CB']
-}, {
-  id: 'tech-blue',
-  name: '未來科技藍',
-  colors: ['#0A192F', '#172A45', '#303C55', '#64FFDA', '#CCD6F6']
-}, {
-  id: 'neon-dark',
-  name: '賽博霓虹黑',
-  colors: ['#121212', '#FF007F', '#00F0FF', '#FFE600', '#7000FF']
-}, {
-  id: 'minimal-bw',
-  name: '極簡黑白灰',
-  colors: ['#1A1A1A', '#333333', '#777777', '#CCCCCC', '#F8F9FA']
-}, {
-  id: 'warm-earth',
-  name: '溫暖大地秋',
-  colors: ['#3D2B1F', '#8C5A3C', '#C48B5E', '#D9B48F', '#F4EAE1']
-}, {
-  id: 'nordic-fresh',
-  name: '北歐清新綠',
-  colors: ['#1C312E', '#3D5A50', '#839D8E', '#BAD1C2', '#F2F7F4']
-}, {
-  id: 'classic-business',
+  id: 'classic-navy',
   name: '經典海軍商務',
   colors: ['#16324F', '#2E6F95', '#F2A900', '#A9D6E5', '#F7FAFC']
 }, {
+  id: 'tech-cyan',
+  name: '極客科技青',
+  colors: ['#0A192F', '#00F0FF', '#1E293B', '#64FFDA', '#F1F5F9']
+}, {
+  id: 'macaron',
+  name: '馬卡龍溫和',
+  colors: ['#FCA5A5', '#86EFAC', '#93C5FD', '#FDE047', '#F8FAFC']
+}, {
+  id: 'nordic-fresh',
+  name: '北歐自然綠',
+  colors: ['#1C312E', '#3D5A50', '#839D8E', '#BAD1C2', '#F2F7F4']
+}, {
+  id: 'minimal-mono',
+  name: '黑白極簡灰',
+  colors: ['#0F172A', '#334155', '#64748B', '#CBD5E1', '#F8FAFC']
+}, {
   id: 'sunset-orange',
-  name: '日落夕陽暖橙',
-  colors: ['#4A154B', '#9E2A2B', '#E07A5F', '#F4A261', '#FBF8F5']
+  name: '暖陽晚霞橙',
+  colors: ['#7C2D12', '#C2410C', '#EA580C', '#FDBA74', '#FFF7ED']
+}, {
+  id: 'morandi',
+  name: '莫蘭迪雅致',
+  colors: ['#5B7065', '#8C9A8E', '#C4B7A6', '#D9D0C7', '#4A5859']
 }];
 
 // Metadata for Baoyu Skills
@@ -742,8 +750,20 @@ const infographicLayouts = [{
   id: "bento-grid",
   name: "便當盒網格佈局",
   name_en: "Bento Grid",
-  desc: "Apple 發表會最愛的多區塊卡片組合，適合多主題綜觀。",
+  desc: "多區塊卡片組合，適合多主題綜觀。",
   img: "./assets/screenshots/infographic-layouts/grid-cards.webp"
+}, {
+  id: "journey-path",
+  "name": "曲折旅程道路圖",
+  name_en: "Journey Path",
+  desc: "蜿蜒公路貫穿各個里程碑關卡、行動指南極佳展示法。",
+  img: "./assets/screenshots/infographic-layouts/journey-path.webp"
+}, {
+  id: "timeline-horizontal",
+  name: "水平時間軸里程碑",
+  name_en: "Timeline Roadmap",
+  desc: "歷史演進、流程步驟、重要時間節點。",
+  img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp"
 }, {
   id: "funnel",
   name: "轉化與篩選漏斗",
@@ -754,20 +774,8 @@ const infographicLayouts = [{
   id: "pyramid",
   name: "層級金字塔",
   name_en: "Hierarchy Pyramid",
-  desc: "馬斯洛需求、知識體系層次、底層基石至頂層目標。",
+  desc: "需求與知識體系層次、底層基石至頂層目標。",
   img: "./assets/screenshots/infographic-layouts/pyramid.webp"
-}, {
-  id: "timeline-horizontal",
-  name: "水平時間軸里程碑",
-  name_en: "Timeline Roadmap",
-  desc: "歷史演進、產品發佈路線圖、專案階段發展歷程。",
-  img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp"
-}, {
-  id: "journey-path",
-  "name": "曲折旅程道路圖",
-  name_en: "Journey Path",
-  desc: "蜿蜒公路貫穿各個里程碑關卡、探險地圖式展示。",
-  img: "./assets/screenshots/infographic-layouts/journey-path.webp"
 }, {
   id: "mind-map",
   name: "思維導圖發散樹",
@@ -784,7 +792,7 @@ const infographicLayouts = [{
   id: "do-dont",
   name: "正確與錯誤對照",
   name_en: "Do vs Don't Table",
-  desc: "綠勾正確示範 vs 紅叉錯誤雷區、教學指導一目了然。",
+  desc: "綠勾正確示範 vs 紅叉錯誤雷區、防護指引一目了然。",
   img: "./assets/screenshots/infographic-layouts/do-dont.webp"
 }, {
   id: "comparison-table",
@@ -808,7 +816,7 @@ const infographicLayouts = [{
   id: "circular-flow",
   name: "循環閉環生態圈",
   name_en: "Circular Ecosystem",
-  desc: "飛輪效應、PDCA 循環、生命週期可持續流轉。",
+  desc: "飛輪效應、循環處置、生命週期流轉。",
   img: "./assets/screenshots/infographic-layouts/circular-flow.webp"
 }, {
   id: "priority-quadrants",
@@ -832,7 +840,7 @@ const infographicLayouts = [{
   id: "venn",
   name: "概念重疊韋恩圖",
   name_en: "Venn Diagram",
-  desc: "兩者或三者交集、甜蜜點（Sweet Spot）發現法。",
+  desc: "兩者或三者交集、關鍵交會點發現法。",
   img: "./assets/screenshots/infographic-layouts/venn.webp"
 }, {
   id: "scale-balance",
@@ -856,7 +864,7 @@ const infographicLayouts = [{
   id: "nested-circles",
   name: "影響力同心圓",
   name_en: "Nested Circles",
-  desc: "由核心向外擴散的層層影響圈層（黃金圈法則）。",
+  desc: "由核心向外擴散的層層影響圈層。",
   img: "./assets/screenshots/infographic-layouts/nested-circles.webp"
 }];
 const coverStyles = [{
@@ -920,32 +928,102 @@ const coverStyles = [{
   desc: "像素復古風格、遊戲感與開發者文化氛圍十足。",
   img: "./assets/screenshots/cover-image-styles/pixel-art.webp"
 }];
+
+// Default medical content from user
+const DEFAULT_MARKDOWN = `# 主標
+## 被動物抓咬，別等！
+### **沖洗 15 分鐘，儘速就醫評估**
+
+狂犬病一旦發病，致死率幾乎達 100%；
+但遭動物抓咬後，及時做好傷口處理並接受適當的暴露後預防，可降低發病風險。
+
+---
+
+# 重點訊息
+
+### 🧼 ① 先沖洗
+**立即用肥皂＋大量清水沖洗傷口 15 分鐘**
+再以**優碘或 70% 酒精消毒**。
+
+### 🏥 ② 儘速就醫
+不要自行判斷「傷口很小應該沒事」。
+遭動物抓咬後，**儘速就醫，由醫師評估狂犬病暴露風險**，必要時接受狂犬病疫苗及免疫球蛋白等處置。
+
+### 🐾 ③ 記住動物特徵
+保持冷靜，記住動物的**種類、外觀及抓咬地點**。
+**不要為了確認動物而冒險捕捉牠。**
+
+---
+
+# 行動指引
+
+## 被抓咬後，記住「3 步驟」
+### 01｜沖：肥皂＋大量清水 → 沖洗 15 分鐘
+### 02｜消：優碘或 70% 酒精 → 消毒傷口
+### 03｜送：儘速就醫 → 由醫師評估是否需要狂犬病暴露後預防
+
+---
+
+# CTA
+## **有抓咬，就先沖、再送醫！**
+### 不確定怎麼辦？
+**撥打疾管署防疫專線 1922** 或 **0800-001922** 諮詢。
+**別等症狀出現，先把該做的事做好。**
+資料來源：衛生福利部疾病管制署「狂犬病防治專區」`;
+
+// Smart text extractor to get title & summary from markdown
+const extractTitleAndSummary = rawText => {
+  if (!rawText) return {
+    title: '未命名主題',
+    subtitle: '',
+    body: ''
+  };
+  const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+  let title = '';
+  let subtitle = '';
+  for (let line of lines) {
+    const clean = line.replace(/^[#\s\-*]+/g, '').replace(/\*+/g, '').trim();
+    if (!clean) continue;
+    if (!title && clean !== '主標' && clean !== '重點訊息' && clean !== '行動指引' && clean !== 'CTA') {
+      title = clean;
+    } else if (title && !subtitle && clean !== title && clean !== '重點訊息' && clean !== '行動指引' && clean !== 'CTA') {
+      subtitle = clean;
+      break;
+    }
+  }
+  if (!title) title = '未命名主題';
+  return {
+    title,
+    subtitle,
+    body: rawText
+  };
+};
 const App = () => {
-  const [mode, setMode] = useState('xhs'); // 'xhs' | 'infographic' | 'cover'
-  const [subTab, setSubTab] = useState('style'); // 'style' | 'layout' | 'gallery'
+  const [mode, setMode] = useState('infographic'); // default to infographic for rich text
+  const [subTab, setSubTab] = useState('layout'); // 'layout' | 'style'
   const [language, setLanguage] = useState('zh');
   const [totalViews, setTotalViews] = useState(null);
 
-  // Form States
-  const [topic, setTopic] = useState('自媒體高說服力視覺小卡設計指南');
-  const [subtitle, setSubtitle] = useState('掌握黃金佈局與吸睛色彩，LINE 推播開信率提升 300%');
-  const [content, setContent] = useState('1. 明確核心觀點與大標題吸引眼球\n2. 限制單卡重點在 3-4 個以內避免認知過載\n3. 採用高對比調色盤確保手機端清晰易讀\n4. 搭配具象化插圖與步驟箭頭引導視覺流\n5. 尾頁設置強烈行動召喚 (CTA)');
-  const [cardCount, setCardCount] = useState(5);
-  const [aspectRatio, setAspectRatio] = useState('1:1');
+  // Single unified text input field
+  const [rawContent, setRawContent] = useState(DEFAULT_MARKDOWN);
 
-  // Selections
+  // Aspect ratio & count
+  const [aspectRatio, setAspectRatio] = useState('9:16');
+  const [cardCount, setCardCount] = useState(5);
+
+  // Style & layout selections
   const [selectedXhsStyle, setSelectedXhsStyle] = useState('notion');
-  const [selectedXhsLayout, setSelectedXhsLayout] = useState('list');
+  const [selectedXhsLayout, setSelectedXhsLayout] = useState('flow');
   const [selectedInfoStyle, setSelectedInfoStyle] = useState('craft-handmade');
-  const [selectedInfoLayout, setSelectedInfoLayout] = useState('bento-grid');
+  const [selectedInfoLayout, setSelectedInfoLayout] = useState('journey-path');
   const [selectedCoverStyle, setSelectedCoverStyle] = useState('typography');
   const [coverType, setCoverType] = useState('hero');
   const [coverRendering, setCoverRendering] = useState('flat-vector');
   const [coverTextLevel, setCoverTextLevel] = useState('title-subtitle');
-  const [coverMood, setCoverMood] = useState('balanced');
+  const [coverMood, setCoverMood] = useState('bold');
 
-  // Palette
-  const [palette, setPalette] = useState(palettePresets[1].colors); // Macaron default
+  // Palette (defaults to medical-alert for public health info)
+  const [palette, setPalette] = useState(palettePresets[0].colors);
   const [editingColorIdx, setEditingColorIdx] = useState(null);
 
   // Modal & Feedback
@@ -953,10 +1031,22 @@ const App = () => {
   const [copiedCli, setCopiedCli] = useState(false);
   const [zoomImage, setZoomImage] = useState(null);
 
-  // Auto-update aspect ratio when mode changes
+  // Parse title & subtitle dynamically
+  const parsed = useMemo(() => extractTitleAndSummary(rawContent), [rawContent]);
+
+  // Handle mode switch with natural aspect ratio defaults
   const handleModeChange = newMode => {
     setMode(newMode);
-    if (newMode === 'xhs') setAspectRatio('1:1');else if (newMode === 'infographic') setAspectRatio('9:16');else if (newMode === 'cover') setAspectRatio('1:1');
+    if (newMode === 'xhs') {
+      setAspectRatio('1:1');
+      setSubTab('layout');
+    } else if (newMode === 'infographic') {
+      setAspectRatio('9:16');
+      setSubTab('layout');
+    } else if (newMode === 'cover') {
+      setAspectRatio('1:1');
+      setSubTab('style');
+    }
   };
 
   // Supabase view count
@@ -979,7 +1069,7 @@ const App = () => {
 
   // Generate CLI command
   const generatedCli = useMemo(() => {
-    const cleanTopic = topic.replace(/"/g, '\\"');
+    const cleanTopic = (parsed.title || '主題').replace(/"/g, '\\"');
     if (mode === 'xhs') {
       return `/baoyu-xhs-images "${cleanTopic}" --style ${selectedXhsStyle} --layout ${selectedXhsLayout} --count ${cardCount} --aspect ${aspectRatio}`;
     } else if (mode === 'infographic') {
@@ -987,85 +1077,115 @@ const App = () => {
     } else {
       return `/baoyu-cover-image "${cleanTopic}" --type ${coverType} --style ${selectedCoverStyle} --rendering ${coverRendering} --text ${coverTextLevel} --mood ${coverMood} --aspect ${aspectRatio}`;
     }
-  }, [mode, topic, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood]);
+  }, [mode, parsed.title, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood]);
 
-  // Generate structured full Prompt
+  // Aspect ratio details
+  const aspectDetails = [{
+    ratio: '1:1',
+    tag: '【正方形 1:1】',
+    desc: 'LINE 官方帳號小卡、輪播訊息、社群方形貼圖'
+  }, {
+    ratio: '9:16',
+    tag: '【直式長版 9:16】',
+    desc: '手機全螢幕海報、限時動態 (Story)、直式導覽長圖'
+  }, {
+    ratio: '3:4',
+    tag: '【直式標準 3:4】',
+    desc: '經典活動海報、小紅書圖卡、展架宣傳單'
+  }, {
+    ratio: '16:9',
+    tag: '【橫式寬幅 16:9】',
+    desc: '電腦簡報投影片、官網橫幅 (Banner)、橫式看板'
+  }];
+
+  // Generate structured full Prompt with clear palette mapping
   const generatedPrompt = useMemo(() => {
-    const palHex = palette.join(', ');
+    const [cPrimary, cSecondary, cBg, cText, cAccent] = palette;
+    const paletteGuide = `[主視覺基調: ${cPrimary}]、[次要輔助色: ${cSecondary}]、[背景基底色: ${cBg}]、[正文字體色: ${cText}]、[警示強調色: ${cAccent}]`;
     if (mode === 'xhs') {
       const st = xhsStyles.find(s => s.id === selectedXhsStyle) || xhsStyles[0];
       const lay = xhsLayouts.find(l => l.id === selectedXhsLayout) || xhsLayouts[0];
       return `### 🎯 任務目標：LINE 小卡 / 社群知識圖卡系列生成
-你是一位精通小紅書、LINE 官方帳號輪播小卡與社群知識圖文的頂級視覺設計專家。
-請依據以下參數與文案，為主題「${topic}」規劃一套共 ${cardCount} 張的系列圖卡視覺規格與生圖提示詞：
+你是一位精通小紅書、LINE 官方帳號輪播小卡與社群衛教圖文的頂級視覺設計專家。
+請根據以下規格與文案，為主題「${parsed.title}」規劃一套共 ${cardCount} 張的系列圖卡提示詞與視覺規劃：
 
 ### 📐 規格設定
+- **主標題**：${parsed.title}
+- **副標摘要**：${parsed.subtitle}
 - **視覺風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
 - **版面佈局 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
-- **卡片長寬比 (Aspect Ratio)**：${aspectRatio}（${aspectRatio === '1:1' ? 'LINE 官方帳號標準 1:1 方形圖卡 / 輪播小卡' : '3:4 直式社群圖卡'}）
-- **指定調色盤代碼 (Palette)**：${palHex}
-- **系列卡片張數**：共 ${cardCount} 張連續圖卡
+- **卡片長寬比 (Aspect Ratio)**：${aspectRatio} (${aspectRatio === '1:1' ? 'LINE 官方帳號標準方形輪播小卡' : '直式小卡'})
+- **🎨 色彩角色規劃 (調色盤功用)**：
+  - 主視覺基調色：${cPrimary}（用於核心主題外框、重點徽章與主要插圖線條）
+  - 關鍵警示與強調色：${cAccent}（用於關鍵字加粗、重要警告標記如致死率/就醫提醒）
+  - 背景底色：${cBg}（確保畫面純淨，高對比不疲勞）
+  - 輔助與卡片背景色：${cSecondary}（用於步驟區塊底色）
+  - 文字主色：${cText}（確保各年齡層在手機端極佳易讀性）
 
-### 📝 核心文案內容
-${content}
+### 📝 完整內容文案來源
+${rawContent}
 
-### 🎨 各頁視覺與分鏡規劃
-1. **P.1 [封面小卡]**：以強烈大標題「${topic}」為視覺主導，副標為「${subtitle}」，搭配核心概念插圖，邊框乾淨，留白適中。
-2. **P.2 ~ P.${cardCount - 1} [內容小卡]**：採用 ${lay.name} 佈局，每頁展示 1-2 個核心要點，搭配清爽條列標籤、微插圖與高對比重要字詞。
-3. **P.${cardCount} [結尾行動卡]**：統整全篇要點金句，並加上「收藏、轉發分享、點擊連結領取完整懶人包」之清晰 Call To Action (CTA)。
+### 🎨 各頁分鏡與小卡規劃 (共 ${cardCount} 張)
+1. **P.1 [封面醒目卡]**：以震撼大標「${parsed.title}」為主視覺，警示副標「${parsed.subtitle}」，搭配急迫性插圖，留白呼吸感充足。
+2. **P.2 ~ P.${cardCount - 1} [步驟與重點卡]**：採用 ${lay.name} 佈局，重點拆解「沖、消、送」步驟與就醫注意事項，以大編號與清晰圖示標註。
+3. **P.${cardCount} [結尾行動指引卡]**：統整 CTA「有抓咬，就先沖、再送醫！」並顯著標記防疫專線 1922，提供安心信任感。
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${topic}", aesthetic style is ${st.id} with ${st.desc}, layout structure follows ${lay.id}, crisp typography, clean spacing, soothing background, harmonious color palette: ${palHex}, ultra-high quality, 8k resolution, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+Prompt: A cohesive educational infographic card series of ${cardCount} cards about "${parsed.title}", aesthetic style is ${st.id}, structured in ${lay.id} layout, clear visual hierarchy, prominent typography, balanced medical emergency icons, professional color palette: ${palette.join(', ')}, ultra-high resolution, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
     } else if (mode === 'infographic') {
       const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
       const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
-      return `### 🎯 任務目標：高密度知識資訊圖表 / 宣傳海報生成
-你是一位世界級的資訊設計總監（Information Architecture & Data Visualization Designer）。
-請依據以下結構規格，為主題「${topic}」設計一張架構嚴謹、一圖看懂的超高清視覺化資訊海報：
+      return `### 🎯 任務目標：高密度衛教資訊圖表 / 直式宣傳海報生成
+你是一位世界級的資訊設計總監（Information Architecture & Infographic Designer）。
+請依據以下結構規格，為主題「${parsed.title}」設計一張架構嚴謹、一圖看懂的超高清視覺化資訊海報：
 
 ### 📐 規格設定
+- **主標題**：${parsed.title}
+- **副標摘要**：${parsed.subtitle}
 - **資訊結構佈局 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
 - **視覺美學風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **海報比例 (Aspect Ratio)**：${aspectRatio}（${aspectRatio === '9:16' ? '手機直式全螢幕海報' : '直式高密度印刷圖表'}）
-- **專業配色方案 (Palette)**：${palHex}
+- **海報比例 (Aspect Ratio)**：${aspectRatio} (${aspectRatio === '9:16' ? '手機直式全螢幕長海報' : aspectRatio === '3:4' ? '直式標準宣傳海報' : '方形圖表'})
+- **🎨 色彩角色規劃 (調色盤功用)**：
+  - 主色調：${cPrimary}（海報主視覺骨架、標題強調背景）
+  - 警示強調色：${cAccent}（紅色/警示色標註緊急處置原則、致死率與急診提醒）
+  - 背景底色：${cBg}（確保資訊層級分明，清晰可辨）
+  - 輔助區塊色：${cSecondary}（各步驟模組卡片邊框與背景）
+  - 正文字體色：${cText}（極高清晰度的閱讀色彩）
 
-### 📝 核心主題與結構內容
-主題：${topic}
-核心摘要：${subtitle}
-詳細內容與數據：
-${content}
+### 📝 完整文案與結構指引
+${rawContent}
 
 ### 🏛️ 海報板塊分區指南
-1. **頂部 Header**：震撼醒目的主標題「${topic}」，一句話金句副標「${subtitle}」，主題象徵圖騰。
-2. **主體 Body**：完整體現 ${lay.name} 結構，透過模組化卡片、關聯箭頭、流程節點與資料可視化圖表清晰呈現所有知識點。
-3. **底部 Footer**：權威資料來源出處、總結金句、版權標籤與行動引導。
+1. **頂部 Header**：醒目主標題「${parsed.title}」、警示副標「${parsed.subtitle}」、疾管署防護圖騰與致死率警訊。
+2. **主體 Body**：完整體現 ${lay.name} 結構，以「沖（15分鐘）、消（消毒）、送（就醫評估）」為 3 大核心支柱，附帶動物特徵記憶指引與疫苗評估原則。
+3. **底部 Footer**：醒目 CTA「有抓咬，先沖再送醫！」、防疫專線 1922 及諮詢電話、衛生福利部疾病管制署出處標註。
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: High-density information visualization poster about "${topic}", organized in ${lay.id} structure, rendered in ${st.id} artistic style, featuring clear typographic hierarchy, detailed structural diagrams, clean infographic iconography, balanced composition, palette: ${palHex}, 8k resolution, crisp vector-like clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+Prompt: High-density public health infographic poster about "${parsed.title}", structured in ${lay.id} layout, rendered in clean ${st.id} artistic style, featuring clear typographic emergency hierarchy, clinical step-by-step illustrations (soap washing, disinfecting, hospital visit), palette: ${palette.join(' ')}, 8k resolution, crisp vector-like clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
     } else {
       const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
-      return `### 🎯 任務目標：主視覺宣傳海報 / LINE 大封面生成
-你是一位知名品牌視覺海報與廣告主視覺藝術總監。
-請依據以下 5 維度客製化規格，為「${topic}」打造一張極具衝擊力與高級感的宣傳封面海報：
+      return `### 🎯 任務目標：主視覺宣傳海報 / LINE 滿版推播大圖
+你是一位知名品牌宣傳海報與公共衛教主視覺藝術總監。
+請依據以下 5 維度客製化規格，為「${parsed.title}」打造一張極具衝擊力與公信力的主視覺海報：
 
 ### 📐 5 維度定制規格
+- **主標題**：「${parsed.title}」
+- **副標題**：「${parsed.subtitle}」
 - **構圖類型 (Type)**：${coverType}
 - **渲染手法 (Rendering)**：${coverRendering}
 - **視覺風格預設 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **文字排版層級 (Text Level)**：${coverTextLevel}
-- **氛圍基調 (Mood)**：${coverMood}
-- **尺寸長寬比 (Aspect Ratio)**：${aspectRatio}（${aspectRatio === '1:1' ? 'LINE 官方帳號 1:1 單圖推播 / 方形海報' : '寬幅宣傳看板'}）
-- **專用色調 (Palette)**：${palHex}
+- **文字層級 (Text Level)**：${coverTextLevel}
+- **氛圍基調 (Mood)**：${coverMood}（強烈警示感）
+- **尺寸長寬比 (Aspect Ratio)**：${aspectRatio}
+- **🎨 色彩角色規劃 (調色盤功用)**：${paletteGuide}
 
-### 📝 文案與排版資訊
-主標題：「${topic}」
-副標題：「${subtitle}」
-說明內容：${content}
+### 📝 完整內容文案
+${rawContent}
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} composition with ${coverRendering} rendering, aesthetic style ${st.id}, ${coverMood} atmosphere, typography clearly reads "${topic}" with subtitle "${subtitle}", sophisticated color palette ${palHex}, dramatic cinematic lighting, perfect editorial layout, 8k resolution, award-winning graphic design, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+Prompt: Striking public health warning cover poster for "${parsed.title}", subtitle "${parsed.subtitle}", ${coverType} composition with ${coverRendering} rendering, aesthetic style ${st.id}, ${coverMood} urgency mood, prominent typography, harmonious colors ${palette.join(', ')}, dramatic professional lighting, 8k resolution, award-winning poster design, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
     }
-  }, [mode, topic, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverTextLevel, coverMood, palette]);
+  }, [mode, parsed, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverTextLevel, coverMood, palette, rawContent]);
   const copyToClipboard = (text, type) => {
     navigator.clipboard.writeText(text).then(() => {
       if (type === 'cli') {
@@ -1084,7 +1204,7 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${mode}-${topic.slice(0, 10)}.md`;
+    a.download = `${mode}-${parsed.title.slice(0, 10)}.md`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -1095,9 +1215,9 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
     }
     const doc = new window.jspdf.jsPDF();
     doc.setFontSize(16);
-    doc.text(`Baoyu Visual Prompt Specification - ${mode}`, 14, 20);
+    doc.text(`Visual Prompt Specification - ${mode}`, 14, 20);
     doc.setFontSize(11);
-    doc.text(`Topic: ${topic}`, 14, 30);
+    doc.text(`Title: ${parsed.title}`, 14, 30);
     doc.text(`Ratio: ${aspectRatio} | Colors: ${palette.join(', ')}`, 14, 38);
     doc.text(`CLI Command:`, 14, 48);
     doc.setFontSize(9);
@@ -1109,44 +1229,44 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
     doc.setFontSize(8);
     const splitText = doc.splitTextToSize(generatedPrompt, 180);
     doc.text(splitText, 14, 78);
-    doc.save(`${mode}-${topic.slice(0, 8)}.pdf`);
+    doc.save(`${mode}-${parsed.title.slice(0, 8)}.pdf`);
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "min-h-screen bg-slate-950 text-slate-100 font-sans pb-16"
   }, /*#__PURE__*/React.createElement("header", {
-    className: "sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-6 py-4"
+    className: "sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5 shadow-lg shadow-black/40"
   }, /*#__PURE__*/React.createElement("div", {
     className: "max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-3"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-400/40 flex items-center justify-center text-pink-300 shadow-lg shadow-pink-500/10"
+    className: "w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center text-cyan-300 shadow-md shadow-cyan-500/10"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Wand2",
     size: 22
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
-    className: "text-xl font-black tracking-tight text-white flex items-center gap-2"
-  }, "Baoyu Visual Studio", /*#__PURE__*/React.createElement("span", {
-    className: "text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-pink-400/20 text-pink-300 border border-pink-400/30"
-  }, "v2.1")), /*#__PURE__*/React.createElement("p", {
+    className: "text-lg md:text-xl font-black tracking-tight text-white flex items-center gap-2"
+  }, "\u8996\u89BA\u6D77\u5831\u8207 LINE \u5716\u5361\u751F\u6210\u5668", /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/30"
+  }, "Baoyu Studio v2.2")), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-slate-400"
-  }, "\u5BF6\u7389\u8996\u89BA\u6D77\u5831 \xD7 LINE \u5716\u5361 \xD7 \u8CC7\u8A0A\u5716\u8868 Prompt \u751F\u6210\u5668"))), /*#__PURE__*/React.createElement("div", {
+  }, "\u4E00\u7AD9\u5F0F\u751F\u6210 baoyu-xhs-images \xB7 baoyu-infographic \xB7 baoyu-cover-image \u5C08\u696D Prompt"))), /*#__PURE__*/React.createElement("div", {
     className: "flex bg-slate-900 border border-slate-800 p-1 rounded-xl"
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => handleModeChange('xhs'),
-    className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'xhs' ? 'bg-pink-400 text-slate-950 shadow-md shadow-pink-400/20' : 'text-slate-400 hover:text-white'}`
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "Layers",
-    size: 14
-  }), /*#__PURE__*/React.createElement("span", null, "baoyu-xhs-images (\u793E\u7FA4\u5C0F\u5361)")), /*#__PURE__*/React.createElement("button", {
     onClick: () => handleModeChange('infographic'),
-    className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'infographic' ? 'bg-pink-400 text-slate-950 shadow-md shadow-pink-400/20' : 'text-slate-400 hover:text-white'}`
+    className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'infographic' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "BarChart3",
     size: 14
   }), /*#__PURE__*/React.createElement("span", null, "baoyu-infographic (\u8CC7\u8A0A\u6D77\u5831)")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => handleModeChange('xhs'),
+    className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'xhs' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "Layers",
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, "baoyu-xhs-images (\u793E\u7FA4\u5C0F\u5361)")), /*#__PURE__*/React.createElement("button", {
     onClick: () => handleModeChange('cover'),
-    className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'cover' ? 'bg-pink-400 text-slate-950 shadow-md shadow-pink-400/20' : 'text-slate-400 hover:text-white'}`
+    className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'cover' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Image",
     size: 14
@@ -1156,174 +1276,171 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
     className: "lg:col-span-5 flex flex-col gap-5"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mb-2"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-sm font-bold text-slate-200 mb-4 flex items-center gap-2"
+    className: "text-sm font-bold text-slate-200 flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "FileText",
+    size: 16,
+    className: "text-cyan-400"
+  }), /*#__PURE__*/React.createElement("span", null, "\u6587\u6848\u5167\u5BB9\u76F4\u63A5\u8CBC\u4E0A (\u514D\u5206\u6B04)")), /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] text-cyan-400 font-mono"
+  }, "\u81EA\u52D5\u63D0\u53D6\u6A19\u984C\u8207\u7D50\u69CB")), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 mb-3"
+  }, "\u76F4\u63A5\u8CBC\u4E0A\u5B8C\u6574 Markdown \u6216\u6587\u5B57\u8349\u7A3F\uFF0C\u7CFB\u7D71\u6703\u81EA\u52D5\u8403\u53D6\u4E3B\u6A19\u984C\u3001\u526F\u6A19\u984C\uFF0C\u4E26\u5C07\u5B8C\u6574\u6BB5\u843D\u6CE8\u5165\u81F3\u5C0D\u61C9\u7248\u578B\u8207\u5206\u93E1\u4E2D\u3002"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 11,
+    value: rawContent,
+    onChange: e => setRawContent(e.target.value),
+    placeholder: "\u5728\u6B64\u8CBC\u4E0A\u60A8\u7684\u5B8C\u6574\u6587\u7AE0\u3001\u91CD\u9EDE\u689D\u5217\u6216\u885B\u6559\u8349\u7A3F...",
+    className: "w-full bg-slate-950 border border-slate-700/70 rounded-xl p-3.5 text-slate-200 font-mono text-xs leading-relaxed focus:border-cyan-400 focus:outline-none custom-scrollbar select-text"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-col gap-1 text-xs"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-1.5"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60"
+  }, "\u4E3B\u6A19\u8B58\u5225"), /*#__PURE__*/React.createElement("span", {
+    className: "font-bold text-white truncate"
+  }, parsed.title)), parsed.subtitle && /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-1.5"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-800 text-slate-400"
+  }, "\u526F\u6A19\u6458\u8981"), /*#__PURE__*/React.createElement("span", {
+    className: "text-slate-300 truncate"
+  }, parsed.subtitle)))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "text-sm font-bold text-slate-200 mb-1 flex items-center gap-2"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Sliders",
     size: 16,
-    className: "text-pink-300"
-  }), /*#__PURE__*/React.createElement("span", null, "\u4E3B\u984C\u8207\u6838\u5FC3\u5167\u5BB9\u8A2D\u5B9A")), /*#__PURE__*/React.createElement("div", {
-    className: "space-y-4 text-xs"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "block font-bold text-slate-300 mb-1"
-  }, "\u4E3B\u6A19\u984C / \u6D3B\u52D5\u4E3B\u984C"), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    value: topic,
-    onChange: e => setTopic(e.target.value),
-    placeholder: "\u4F8B\u5982\uFF1A\u81EA\u5A92\u9AD4\u7206\u6B3E\u9078\u984C 5 \u5927\u6CD5\u5247",
-    className: "w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white font-medium focus:border-pink-400 focus:outline-none transition-all"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "block font-bold text-slate-300 mb-1"
-  }, "\u526F\u6A19\u984C / \u6838\u5FC3\u4E00\u53E5\u8A71\u7D50\u8AD6"), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    value: subtitle,
-    onChange: e => setSubtitle(e.target.value),
-    placeholder: "\u4F8B\u5982\uFF1A\u7CBE\u6E96\u6293\u4F4F\u8B80\u8005\u75DB\u9EDE\uFF0CLINE \u958B\u4FE1\u7387\u72C2\u98C6 300%",
-    className: "w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white font-medium focus:border-pink-400 focus:outline-none transition-all"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "block font-bold text-slate-300 mb-1"
-  }, "\u8A73\u7D30\u689D\u5217\u5167\u6587\u6216\u6587\u6848\u8349\u7A3F"), /*#__PURE__*/React.createElement("textarea", {
-    rows: 4,
-    value: content,
-    onChange: e => setContent(e.target.value),
-    placeholder: "\u8CBC\u4E0A\u4F60\u7684\u6587\u6848\u6BB5\u843D\u6216\u689D\u5217\u91CD\u9EDE...",
-    className: "w-full bg-slate-950 border border-slate-700/70 rounded-xl p-3 text-slate-200 font-mono text-xs leading-relaxed focus:border-pink-400 focus:outline-none custom-scrollbar"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "block font-bold text-slate-300 mb-1.5"
-  }, "\u5C3A\u5BF8\u6BD4\u4F8B (Aspect Ratio)"), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-4 gap-2"
-  }, ['1:1', '9:16', '3:4', '16:9'].map(ratio => /*#__PURE__*/React.createElement("button", {
-    key: ratio,
-    onClick: () => setAspectRatio(ratio),
-    className: `py-2 rounded-xl text-xs font-bold border transition-all ${aspectRatio === ratio ? 'border-pink-400 bg-pink-400/10 text-pink-300 shadow-sm' : 'border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700'}`
-  }, ratio, /*#__PURE__*/React.createElement("span", {
-    className: "block text-[10px] font-normal text-slate-500 mt-0.5"
-  }, ratio === '1:1' ? 'LINE小卡' : ratio === '9:16' ? '手機直海報' : ratio === '3:4' ? '直式圖卡' : '橫幅海報'))))), mode === 'xhs' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "flex justify-between items-center mb-1"
+    className: "text-cyan-400"
+  }), /*#__PURE__*/React.createElement("span", null, "\u5C3A\u5BF8\u6BD4\u4F8B\u8207\u65B9\u5411 (Aspect Ratio)")), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 mb-3"
+  }, "\u8ACB\u4F9D\u64DA\u60A8\u7684\u6295\u653E\u5E73\u53F0\uFF08LINE \u5C0F\u5361\u3001\u624B\u6A5F\u76F4\u5F0F\u9577\u5716\u3001\u5BE6\u9AD4\u6D77\u5831\u6216\u6A6B\u5E45\uFF09\u9078\u64C7\u5C3A\u5BF8\uFF1A"), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 gap-2.5"
+  }, aspectDetails.map(item => /*#__PURE__*/React.createElement("button", {
+    key: item.ratio,
+    onClick: () => setAspectRatio(item.ratio),
+    className: `p-3 rounded-xl text-left border transition-all flex flex-col justify-between ${aspectRatio === item.ratio ? 'border-cyan-400 bg-cyan-950/30 ring-1 ring-cyan-400 shadow-md shadow-cyan-500/10' : 'border-slate-800 bg-slate-950/80 hover:border-slate-700'}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mb-1"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: `text-xs font-black ${aspectRatio === item.ratio ? 'text-cyan-300' : 'text-slate-200'}`
+  }, item.tag), /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300"
+  }, item.ratio)), /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] text-slate-400 leading-tight"
+  }, item.desc)))), mode === 'xhs' && /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 pt-3 border-t border-slate-800"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-between items-center mb-1 text-xs"
   }, /*#__PURE__*/React.createElement("label", {
     className: "font-bold text-slate-300"
   }, "\u7CFB\u5217\u5361\u7247\u5F35\u6578"), /*#__PURE__*/React.createElement("span", {
-    className: "font-mono text-pink-300 font-bold"
-  }, cardCount, " \u5F35\u5C0F\u5361")), /*#__PURE__*/React.createElement("input", {
+    className: "font-mono text-cyan-300 font-bold"
+  }, cardCount, " \u5F35\u9023\u7E8C\u5C0F\u5361")), /*#__PURE__*/React.createElement("input", {
     type: "range",
     min: "1",
     max: "10",
     value: cardCount,
     onChange: e => setCardCount(Number(e.target.value)),
-    className: "w-full accent-pink-400 cursor-pointer"
-  })), mode === 'cover' && /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-2 gap-3 pt-1"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "block font-bold text-slate-300 mb-1"
-  }, "\u69CB\u5716\u985E\u578B (Type)"), /*#__PURE__*/React.createElement("select", {
-    value: coverType,
-    onChange: e => setCoverType(e.target.value),
-    className: "w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white"
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "hero"
-  }, "Hero \u82F1\u96C4\u4E3B\u5716"), /*#__PURE__*/React.createElement("option", {
-    value: "typography"
-  }, "Typography \u5927\u5B57\u9AD4\u6392\u7248"), /*#__PURE__*/React.createElement("option", {
-    value: "conceptual"
-  }, "Conceptual \u6982\u5FF5\u96B1\u55BB"), /*#__PURE__*/React.createElement("option", {
-    value: "minimal"
-  }, "Minimal \u6975\u7C21\u7559\u767D"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: "block font-bold text-slate-300 mb-1"
-  }, "\u6C1B\u570D (Mood)"), /*#__PURE__*/React.createElement("select", {
-    value: coverMood,
-    onChange: e => setCoverMood(e.target.value),
-    className: "w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white"
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "balanced"
-  }, "Balanced \u5747\u8861"), /*#__PURE__*/React.createElement("option", {
-    value: "bold"
-  }, "Bold \u5F37\u70C8\u9AD8\u5C0D\u6BD4"), /*#__PURE__*/React.createElement("option", {
-    value: "subtle"
-  }, "Subtle \u4F4E\u8ABF\u96C5\u81F4")))))), /*#__PURE__*/React.createElement("div", {
+    className: "w-full accent-cyan-400 cursor-pointer"
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl relative"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between mb-1"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-sm font-bold text-slate-200 mb-3 flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "flex items-center gap-2"
+    className: "text-sm font-bold text-slate-200 flex items-center gap-2"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Palette",
     size: 16,
-    className: "text-pink-300"
-  }), /*#__PURE__*/React.createElement("span", null, "\u8ABF\u8272\u76E4\u8207\u8272\u5F69\u81EA\u8A02 (\u9EDE\u64CA\u8272\u584A\u8ABF\u8272)"))), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-5 gap-2 mb-4"
-  }, palette.map((color, idx) => /*#__PURE__*/React.createElement("div", {
-    key: idx,
-    className: "relative"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => setEditingColorIdx(editingColorIdx === idx ? null : idx),
-    className: "w-full h-12 rounded-xl shadow-md border border-white/10 flex flex-col items-center justify-end pb-1 transition-transform hover:scale-105 active:scale-95",
-    style: {
-      backgroundColor: color
-    },
-    title: `點擊調色：${color}`
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] font-mono font-black px-1 rounded",
-    style: {
-      color: hexToLum(color) > 0.5 ? '#000' : '#fff'
-    }
-  }, color)), editingColorIdx === idx && /*#__PURE__*/React.createElement(ColorPicker, {
-    value: color,
-    onChange: newHex => {
-      const np = [...palette];
-      np[idx] = newHex;
-      setPalette(np);
-    },
-    onClose: () => setEditingColorIdx(null)
-  })))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "text-[11px] font-bold text-slate-400 mb-2"
-  }, "\u8A2D\u8A08\u5E2B\u7CBE\u9078\u8272\u7968\u5957\u7528\uFF1A"), /*#__PURE__*/React.createElement("div", {
+    className: "text-cyan-400"
+  }), /*#__PURE__*/React.createElement("span", null, "\u8ABF\u8272\u76E4\u529F\u80FD\u8207\u8272\u5F69\u898F\u7BC4")), /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] font-bold text-cyan-400"
+  }, "\u53EF\u9EDE\u64CA\u8272\u584A\u8ABF\u8272")), /*#__PURE__*/React.createElement("div", {
+    className: "bg-cyan-950/30 border border-cyan-800/40 rounded-xl p-2.5 mb-3 text-[11px] text-cyan-200/90 leading-relaxed"
+  }, "\uD83D\uDCA1 ", /*#__PURE__*/React.createElement("strong", null, "\u8ABF\u8272\u76E4\u4F5C\u7528"), "\uFF1A\u6B64 5 \u8272\u8ABF\u8272\u76E4\u5C07\u76F4\u63A5\u6CE8\u5165\u751F\u5716\u6307\u4EE4\uFF0C\u5206\u5225\u63A7\u5236\u6D77\u5831\u7684", /*#__PURE__*/React.createElement("strong", null, "\u4E3B\u8272\u8ABF\u3001\u80CC\u666F\u57FA\u5E95\u3001\u91CD\u8981\u6A19\u7C64\u3001\u6B63\u6587\u5B57\u9AD4\u8207\u8B66\u793A\u5F37\u8ABF\u8272"), "\uFF0C\u78BA\u4FDD\u751F\u6210\u51FA\u7684\u6D77\u5831\u8272\u7CFB\u548C\u8AE7\u4E00\u81F4\uFF0C\u4E0D\u6703\u96A8\u6A5F\u4E82\u6DF7\u8272\u3002"), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-5 gap-2 mb-3"
+  }, palette.map((color, idx) => {
+    const labels = ['主色', '次色', '底色', '字色', '警示'];
+    return /*#__PURE__*/React.createElement("div", {
+      key: idx,
+      className: "relative"
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => setEditingColorIdx(editingColorIdx === idx ? null : idx),
+      className: "w-full h-12 rounded-xl shadow-md border border-white/10 flex flex-col items-center justify-between p-1 transition-transform hover:scale-105 active:scale-95",
+      style: {
+        backgroundColor: color
+      },
+      title: `點擊調色：${color}`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-[9px] font-bold px-1 rounded bg-black/40 text-white"
+    }, labels[idx]), /*#__PURE__*/React.createElement("span", {
+      className: "text-[9px] font-mono font-bold",
+      style: {
+        color: hexToLum(color) > 0.5 ? '#000' : '#fff'
+      }
+    }, color)), editingColorIdx === idx && /*#__PURE__*/React.createElement(ColorPicker, {
+      value: color,
+      onChange: newHex => {
+        const np = [...palette];
+        np[idx] = newHex;
+        setPalette(np);
+      },
+      onClose: () => setEditingColorIdx(null)
+    }));
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "text-[11px] font-bold text-slate-400 mb-1.5"
+  }, "\u63A8\u85A6\u60C5\u5883\u8272\u7968\u5FEB\u901F\u5957\u7528\uFF1A"), /*#__PURE__*/React.createElement("div", {
     className: "flex flex-wrap gap-1.5"
   }, palettePresets.map(preset => /*#__PURE__*/React.createElement("button", {
     key: preset.id,
     onClick: () => setPalette(preset.colors),
-    className: "flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-600 text-xs transition-all"
+    className: `flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs transition-all ${JSON.stringify(palette) === JSON.stringify(preset.colors) ? 'border-cyan-400 bg-cyan-950/40 text-cyan-300' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex -space-x-1"
   }, preset.colors.slice(0, 3).map((c, ci) => /*#__PURE__*/React.createElement("span", {
     key: ci,
-    className: "w-2.5 h-2.5 rounded-full border border-slate-900",
+    className: "w-2 h-2 rounded-full border border-slate-900",
     style: {
       backgroundColor: c
     }
   }))), /*#__PURE__*/React.createElement("span", {
-    className: "text-slate-300 text-[11px]"
+    className: "text-[11px] font-medium"
   }, preset.name))))))), /*#__PURE__*/React.createElement("section", {
     className: "lg:col-span-7 flex flex-col gap-5"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between mb-4 border-b border-slate-800 pb-3"
+    className: "flex items-center justify-between mb-3 border-b border-slate-800 pb-2.5"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => setSubTab('style'),
-    className: `px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'style' ? 'bg-slate-800 text-pink-300 border border-pink-400/30' : 'text-slate-400 hover:text-white'}`
-  }, "\u8996\u89BA\u98A8\u683C (Styles)"), mode !== 'cover' && /*#__PURE__*/React.createElement("button", {
+  }, mode !== 'cover' && /*#__PURE__*/React.createElement("button", {
     onClick: () => setSubTab('layout'),
-    className: `px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'layout' ? 'bg-slate-800 text-pink-300 border border-pink-400/30' : 'text-slate-400 hover:text-white'}`
-  }, "\u7248\u9762\u4F48\u5C40 (Layouts)")), /*#__PURE__*/React.createElement("span", {
+    className: `px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'layout' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40' : 'text-slate-400 hover:text-white'}`
+  }, "\u7248\u9762\u67B6\u69CB (Layouts)"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setSubTab('style'),
+    className: `px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'style' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40' : 'text-slate-400 hover:text-white'}`
+  }, "\u8996\u89BA\u98A8\u683C (Styles)")), /*#__PURE__*/React.createElement("span", {
     className: "text-xs text-slate-400 font-mono"
-  }, mode === 'xhs' ? '9 種風格 × 6 種佈局' : mode === 'infographic' ? '17 種風格 × 20 種結構' : '10 種經典封面海報風格')), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[360px] overflow-y-auto pr-1 custom-scrollbar"
-  }, (mode === 'xhs' ? subTab === 'style' ? xhsStyles : xhsLayouts : mode === 'infographic' ? subTab === 'style' ? infographicStyles : infographicLayouts : coverStyles).map(item => {
-    const isSelected = mode === 'xhs' ? subTab === 'style' ? selectedXhsStyle === item.id : selectedXhsLayout === item.id : mode === 'infographic' ? subTab === 'style' ? selectedInfoStyle === item.id : selectedInfoLayout === item.id : selectedCoverStyle === item.id;
+  }, "\u9EDE\u64CA\u5361\u7247\u5957\u7528 \xB7 \u9EDE\u653E\u5927\u93E1\u770B\u5927\u5716")), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[320px] overflow-y-auto pr-1 custom-scrollbar"
+  }, (mode === 'xhs' ? subTab === 'layout' ? xhsLayouts : xhsStyles : mode === 'infographic' ? subTab === 'layout' ? infographicLayouts : infographicStyles : coverStyles).map(item => {
+    const isSelected = mode === 'xhs' ? subTab === 'layout' ? selectedXhsLayout === item.id : selectedXhsStyle === item.id : mode === 'infographic' ? subTab === 'layout' ? selectedInfoLayout === item.id : selectedInfoStyle === item.id : selectedCoverStyle === item.id;
     return /*#__PURE__*/React.createElement("div", {
       key: item.id,
       onClick: () => {
         if (mode === 'xhs') {
-          if (subTab === 'style') setSelectedXhsStyle(item.id);else setSelectedXhsLayout(item.id);
+          if (subTab === 'layout') setSelectedXhsLayout(item.id);else setSelectedXhsStyle(item.id);
         } else if (mode === 'infographic') {
-          if (subTab === 'style') setSelectedInfoStyle(item.id);else setSelectedInfoLayout(item.id);
+          if (subTab === 'layout') setSelectedInfoLayout(item.id);else setSelectedInfoStyle(item.id);
         } else {
           setSelectedCoverStyle(item.id);
         }
       },
-      className: `cursor-pointer rounded-xl overflow-hidden border-2 transition-all group relative bg-slate-950/80 flex flex-col ${isSelected ? 'border-pink-400 shadow-[0_0_15px_rgba(249,168,212,0.3)] ring-1 ring-pink-400' : 'border-slate-800 hover:border-slate-600'}`
+      className: `cursor-pointer rounded-xl overflow-hidden border-2 transition-all group relative bg-slate-950/80 flex flex-col ${isSelected ? 'border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400' : 'border-slate-800 hover:border-slate-600'}`
     }, /*#__PURE__*/React.createElement("div", {
       className: "aspect-video relative overflow-hidden bg-slate-900"
     }, /*#__PURE__*/React.createElement("img", {
@@ -1336,33 +1453,33 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
         e.stopPropagation();
         setZoomImage(item);
       },
-      className: "absolute top-1.5 right-1.5 p-1 rounded-md bg-black/70 text-white hover:text-pink-300 transition-colors",
+      className: "absolute top-1.5 right-1.5 p-1 rounded-md bg-black/70 text-white hover:text-cyan-300 transition-colors",
       title: "\u653E\u5927\u9810\u89BD"
     }, /*#__PURE__*/React.createElement(Icon, {
       name: "ZoomIn",
       size: 13
     })), isSelected && /*#__PURE__*/React.createElement("div", {
-      className: "absolute top-1.5 left-1.5 bg-pink-400 text-slate-950 p-0.5 rounded-full shadow"
+      className: "absolute top-1.5 left-1.5 bg-cyan-400 text-slate-950 p-0.5 rounded-full shadow"
     }, /*#__PURE__*/React.createElement(Icon, {
       name: "Check",
       size: 12
     }))), /*#__PURE__*/React.createElement("div", {
       className: "p-2.5 flex-1 flex flex-col justify-between"
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      className: `text-xs font-bold ${isSelected ? 'text-pink-300' : 'text-slate-200'}`
+      className: `text-xs font-bold ${isSelected ? 'text-cyan-300' : 'text-slate-200'}`
     }, item.name), /*#__PURE__*/React.createElement("div", {
       className: "text-[10px] text-slate-500 font-mono"
     }, item.id)), /*#__PURE__*/React.createElement("p", {
       className: "text-[10px] text-slate-400 line-clamp-2 mt-1"
     }, item.desc)));
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-4"
+    className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-3.5"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"
+    className: "w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"
   }), /*#__PURE__*/React.createElement("span", {
     className: "text-xs font-bold text-white tracking-wide"
   }, "\u5373\u6642 Prompt \u7DE8\u8B6F\u8F38\u51FA")), /*#__PURE__*/React.createElement("div", {
@@ -1375,23 +1492,23 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
     size: 13
   }), /*#__PURE__*/React.createElement("span", null, copiedCli ? '已複製指令！' : '複製 CLI 指令')), /*#__PURE__*/React.createElement("button", {
     onClick: () => copyToClipboard(generatedPrompt, 'prompt'),
-    className: "px-3.5 py-1.5 rounded-lg bg-pink-400 hover:bg-pink-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-pink-400/20 transition-all"
+    className: "px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: copied ? 'Check' : 'Copy',
     size: 13
   }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製 Prompt！' : '複製完整 Prompt')))), /*#__PURE__*/React.createElement("div", {
-    className: "bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-pink-300 flex items-center justify-between overflow-x-auto custom-scrollbar"
+    className: "bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar"
   }, /*#__PURE__*/React.createElement("div", {
     className: "truncate pr-3 select-all"
   }, generatedCli)), /*#__PURE__*/React.createElement("div", {
     className: "relative"
   }, /*#__PURE__*/React.createElement("pre", {
-    className: "bg-slate-950/80 border border-slate-800/60 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto whitespace-pre-wrap custom-scrollbar select-text"
+    className: "bg-slate-950/80 border border-slate-800/60 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed max-h-[320px] overflow-y-auto whitespace-pre-wrap custom-scrollbar select-text"
   }, generatedPrompt)), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between pt-1"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-[11px] text-slate-500 font-mono"
-  }, "\u9069\u7528\u65BC\uFF1AClaude Code / Codex / Midjourney / Gemini / \u963F\u91CC\u901A\u7FA9\u842C\u76F8"), /*#__PURE__*/React.createElement("div", {
+  }, "\u76F8\u5BB9\uFF1AClaude Code / Codex / Midjourney / Gemini / \u963F\u91CC\u901A\u7FA9\u842C\u76F8"), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: exportMarkdown,
@@ -1433,29 +1550,29 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
   }, zoomImage.desc), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       if (mode === 'xhs') {
-        if (subTab === 'style') setSelectedXhsStyle(zoomImage.id);else setSelectedXhsLayout(zoomImage.id);
+        if (subTab === 'layout') setSelectedXhsLayout(zoomImage.id);else setSelectedXhsStyle(zoomImage.id);
       } else if (mode === 'infographic') {
-        if (subTab === 'style') setSelectedInfoStyle(zoomImage.id);else setSelectedInfoLayout(zoomImage.id);
+        if (subTab === 'layout') setSelectedInfoLayout(zoomImage.id);else setSelectedInfoStyle(zoomImage.id);
       } else {
         setSelectedCoverStyle(zoomImage.id);
       }
       setZoomImage(null);
     },
-    className: "px-4 py-2 rounded-xl bg-pink-400 hover:bg-pink-300 text-slate-950 font-black"
+    className: "px-4 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black"
   }, "\u5957\u7528\u6B64\u98A8\u683C / \u4F48\u5C40")))), /*#__PURE__*/React.createElement("footer", {
-    className: "w-full mt-16 pt-10 pb-12 border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md"
+    className: "w-full mt-16 pt-8 pb-10 border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500"
+    className: "max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-4"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/JimLiu/baoyu-skills",
     target: "_blank",
-    className: "hover:text-pink-300 font-bold transition-colors"
+    className: "hover:text-cyan-300 font-bold transition-colors"
   }, "GitHub: JimLiu/baoyu-skills"), /*#__PURE__*/React.createElement("span", null, "\u2022"), /*#__PURE__*/React.createElement("a", {
     href: "https://www.youtube.com/@meiko1",
     target: "_blank",
-    className: "hover:text-pink-300 font-bold transition-colors flex items-center gap-1"
+    className: "hover:text-cyan-300 font-bold transition-colors flex items-center gap-1"
   }, /*#__PURE__*/React.createElement("span", null, "Meiko\u5FAE\u8AB2\u983B\u9053"), /*#__PURE__*/React.createElement(Icon, {
     name: "Youtube",
     size: 14

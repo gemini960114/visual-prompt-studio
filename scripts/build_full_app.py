@@ -31,6 +31,7 @@ app_code = r'''
                 Smile: <><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></>,
                 ChevronRight: <path d="m9 18 6-6-6-6"/>,
                 Info: <><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></>,
+                HelpCircle: <><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></>,
                 Youtube: <><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></>
             };
             return (
@@ -180,7 +181,7 @@ app_code = r'''
                             }}
                             className="flex-1 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-center font-mono text-white text-xs font-bold"
                         />
-                        <button onClick={onClose} className="px-2.5 py-1 bg-pink-400 hover:bg-pink-300 text-slate-950 font-bold rounded">
+                        <button onClick={onClose} className="px-2.5 py-1 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold rounded">
                             確定
                         </button>
                     </div>
@@ -189,15 +190,14 @@ app_code = r'''
         };
 
         const palettePresets = [
-            { id: 'morandi', name: '莫蘭迪雅緻', colors: ['#5B7065', '#8C9A8E', '#C4B7A6', '#D9D0C7', '#4A5859'] },
-            { id: 'macaron', name: '馬卡龍甜彩', colors: ['#FFB5C5', '#B5EAD7', '#C7CEEA', '#FFDAC1', '#E2F0CB'] },
-            { id: 'tech-blue', name: '未來科技藍', colors: ['#0A192F', '#172A45', '#303C55', '#64FFDA', '#CCD6F6'] },
-            { id: 'neon-dark', name: '賽博霓虹黑', colors: ['#121212', '#FF007F', '#00F0FF', '#FFE600', '#7000FF'] },
-            { id: 'minimal-bw', name: '極簡黑白灰', colors: ['#1A1A1A', '#333333', '#777777', '#CCCCCC', '#F8F9FA'] },
-            { id: 'warm-earth', name: '溫暖大地秋', colors: ['#3D2B1F', '#8C5A3C', '#C48B5E', '#D9B48F', '#F4EAE1'] },
-            { id: 'nordic-fresh', name: '北歐清新綠', colors: ['#1C312E', '#3D5A50', '#839D8E', '#BAD1C2', '#F2F7F4'] },
-            { id: 'classic-business', name: '經典海軍商務', colors: ['#16324F', '#2E6F95', '#F2A900', '#A9D6E5', '#F7FAFC'] },
-            { id: 'sunset-orange', name: '日落夕陽暖橙', colors: ['#4A154B', '#9E2A2B', '#E07A5F', '#F4A261', '#FBF8F5'] }
+            { id: 'medical-alert', name: '衛教防疫警示 (藍白紅)', colors: ['#0284C7', '#DC2626', '#F8FAFC', '#1E293B', '#F59E0B'] },
+            { id: 'classic-navy', name: '經典海軍商務', colors: ['#16324F', '#2E6F95', '#F2A900', '#A9D6E5', '#F7FAFC'] },
+            { id: 'tech-cyan', name: '極客科技青', colors: ['#0A192F', '#00F0FF', '#1E293B', '#64FFDA', '#F1F5F9'] },
+            { id: 'macaron', name: '馬卡龍溫和', colors: ['#FCA5A5', '#86EFAC', '#93C5FD', '#FDE047', '#F8FAFC'] },
+            { id: 'nordic-fresh', name: '北歐自然綠', colors: ['#1C312E', '#3D5A50', '#839D8E', '#BAD1C2', '#F2F7F4'] },
+            { id: 'minimal-mono', name: '黑白極簡灰', colors: ['#0F172A', '#334155', '#64748B', '#CBD5E1', '#F8FAFC'] },
+            { id: 'sunset-orange', name: '暖陽晚霞橙', colors: ['#7C2D12', '#C2410C', '#EA580C', '#FDBA74', '#FFF7ED'] },
+            { id: 'morandi', name: '莫蘭迪雅致', colors: ['#5B7065', '#8C9A8E', '#C4B7A6', '#D9D0C7', '#4A5859'] }
         ];
 
         // Metadata for Baoyu Skills
@@ -243,26 +243,26 @@ app_code = r'''
         ];
 
         const infographicLayouts = [
-            { id: "bento-grid", name: "便當盒網格佈局", name_en: "Bento Grid", desc: "Apple 發表會最愛的多區塊卡片組合，適合多主題綜觀。", img: "./assets/screenshots/infographic-layouts/grid-cards.webp" },
+            { id: "bento-grid", name: "便當盒網格佈局", name_en: "Bento Grid", desc: "多區塊卡片組合，適合多主題綜觀。", img: "./assets/screenshots/infographic-layouts/grid-cards.webp" },
+            { id: "journey-path", "name": "曲折旅程道路圖", name_en: "Journey Path", desc: "蜿蜒公路貫穿各個里程碑關卡、行動指南極佳展示法。", img: "./assets/screenshots/infographic-layouts/journey-path.webp" },
+            { id: "timeline-horizontal", name: "水平時間軸里程碑", name_en: "Timeline Roadmap", desc: "歷史演進、流程步驟、重要時間節點。", img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp" },
             { id: "funnel", name: "轉化與篩選漏斗", name_en: "Conversion Funnel", desc: "層層遞進篩選、流量轉化、用戶旅程各階段數據分析。", img: "./assets/screenshots/infographic-layouts/funnel.webp" },
-            { id: "pyramid", name: "層級金字塔", name_en: "Hierarchy Pyramid", desc: "馬斯洛需求、知識體系層次、底層基石至頂層目標。", img: "./assets/screenshots/infographic-layouts/pyramid.webp" },
-            { id: "timeline-horizontal", name: "水平時間軸里程碑", name_en: "Timeline Roadmap", desc: "歷史演進、產品發佈路線圖、專案階段發展歷程。", img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp" },
-            { id: "journey-path", "name": "曲折旅程道路圖", name_en: "Journey Path", desc: "蜿蜒公路貫穿各個里程碑關卡、探險地圖式展示。", img: "./assets/screenshots/infographic-layouts/journey-path.webp" },
+            { id: "pyramid", name: "層級金字塔", name_en: "Hierarchy Pyramid", desc: "需求與知識體系層次、底層基石至頂層目標。", img: "./assets/screenshots/infographic-layouts/pyramid.webp" },
             { id: "mind-map", name: "思維導圖發散樹", name_en: "Mind Map Radial", desc: "核心概念輻射發散、腦力激盪與知識分支體系梳理。", img: "./assets/screenshots/infographic-layouts/mind-map.webp" },
             { id: "bridge", name: "跨越鴻溝問題橋", name_en: "Problem-Solution Bridge", desc: "左岸現狀困境 ➜ 橋樑解決之道 ➜ 右岸理想願景。", img: "./assets/screenshots/infographic-layouts/bridge.webp" },
-            { id: "do-dont", name: "正確與錯誤對照", name_en: "Do vs Don't Table", desc: "綠勾正確示範 vs 紅叉錯誤雷區、教學指導一目了然。", img: "./assets/screenshots/infographic-layouts/do-dont.webp" },
+            { id: "do-dont", name: "正確與錯誤對照", name_en: "Do vs Don't Table", desc: "綠勾正確示範 vs 紅叉錯誤雷區、防護指引一目了然。", img: "./assets/screenshots/infographic-layouts/do-dont.webp" },
             { id: "comparison-table", name: "多維度矩陣對比表", name_en: "Comparison Table", desc: "多方案、競品特性、規格參數橫向對決。", img: "./assets/screenshots/infographic-layouts/comparison-table.webp" },
             { id: "layers-stack", name: "分層架構技術棧", name_en: "Tech Layers Stack", desc: "底層基礎設施 ➜ 中間件 ➜ 應用層 ➜ 用戶介面。", img: "./assets/screenshots/infographic-layouts/layers-stack.webp" },
             { id: "iceberg", name: "冰山可見與隱藏模型", name_en: "Iceberg Model", desc: "水面上表象 vs 水面下龐大的根本原因與技術細節。", img: "./assets/screenshots/infographic-layouts/iceberg.webp" },
-            { id: "circular-flow", name: "循環閉環生態圈", name_en: "Circular Ecosystem", desc: "飛輪效應、PDCA 循環、生命週期可持續流轉。", img: "./assets/screenshots/infographic-layouts/circular-flow.webp" },
+            { id: "circular-flow", name: "循環閉環生態圈", name_en: "Circular Ecosystem", desc: "飛輪效應、循環處置、生命週期流轉。", img: "./assets/screenshots/infographic-layouts/circular-flow.webp" },
             { id: "priority-quadrants", name: "四象限優先級矩陣", name_en: "Priority Quadrants", desc: "緊急 vs 重要、成本 vs 收益、四象限決策指南。", img: "./assets/screenshots/infographic-layouts/priority-quadrants.webp" },
             { id: "fishbone", name: "因果分析魚骨圖", name_en: "Fishbone Cause & Effect", desc: "品質管理、根因追蹤、問題拆解成各大支柱骨架。", img: "./assets/screenshots/infographic-layouts/fishbone.webp" },
             { id: "tree-hierarchy", name: "組織架構分類樹", name_en: "Tree Hierarchy", desc: "自頂向下層級架構、團隊部門與分類目錄樹。", img: "./assets/screenshots/infographic-layouts/tree-hierarchy.webp" },
-            { id: "venn", name: "概念重疊韋恩圖", name_en: "Venn Diagram", desc: "兩者或三者交集、甜蜜點（Sweet Spot）發現法。", img: "./assets/screenshots/infographic-layouts/venn.webp" },
+            { id: "venn", name: "概念重疊韋恩圖", name_en: "Venn Diagram", desc: "兩者或三者交集、關鍵交會點發現法。", img: "./assets/screenshots/infographic-layouts/venn.webp" },
             { id: "scale-balance", name: "天平權衡利弊圖", name_en: "Balance Scale", desc: "天平兩側稱重、風險與機會、成本與價值的理性衡量。", img: "./assets/screenshots/infographic-layouts/scale-balance.webp" },
             { id: "equation", name: "公式拆解與輸入輸出", name_en: "Visual Equation", desc: "A + B + C = 成功結果，直觀圖解價值公式。", img: "./assets/screenshots/infographic-layouts/equation.webp" },
             { id: "feature-list", name: "產品特點幾何列表", name_en: "Feature Showcase", desc: "核心亮點圖示化、產品優勢與規格展示卡片。", img: "./assets/screenshots/infographic-layouts/feature-list.webp" },
-            { id: "nested-circles", name: "影響力同心圓", name_en: "Nested Circles", desc: "由核心向外擴散的層層影響圈層（黃金圈法則）。", img: "./assets/screenshots/infographic-layouts/nested-circles.webp" }
+            { id: "nested-circles", name: "影響力同心圓", name_en: "Nested Circles", desc: "由核心向外擴散的層層影響圈層。", img: "./assets/screenshots/infographic-layouts/nested-circles.webp" }
         ];
 
         const coverStyles = [
@@ -278,34 +278,96 @@ app_code = r'''
             { id: "pixel-art", name: "8-Bit 像素懷舊", name_en: "Pixel Art 8-Bit", desc: "像素復古風格、遊戲感與開發者文化氛圍十足。", img: "./assets/screenshots/cover-image-styles/pixel-art.webp" }
         ];
 
+        // Default medical content from user
+        const DEFAULT_MARKDOWN = `# 主標
+## 被動物抓咬，別等！
+### **沖洗 15 分鐘，儘速就醫評估**
+
+狂犬病一旦發病，致死率幾乎達 100%；
+但遭動物抓咬後，及時做好傷口處理並接受適當的暴露後預防，可降低發病風險。
+
+---
+
+# 重點訊息
+
+### 🧼 ① 先沖洗
+**立即用肥皂＋大量清水沖洗傷口 15 分鐘**
+再以**優碘或 70% 酒精消毒**。
+
+### 🏥 ② 儘速就醫
+不要自行判斷「傷口很小應該沒事」。
+遭動物抓咬後，**儘速就醫，由醫師評估狂犬病暴露風險**，必要時接受狂犬病疫苗及免疫球蛋白等處置。
+
+### 🐾 ③ 記住動物特徵
+保持冷靜，記住動物的**種類、外觀及抓咬地點**。
+**不要為了確認動物而冒險捕捉牠。**
+
+---
+
+# 行動指引
+
+## 被抓咬後，記住「3 步驟」
+### 01｜沖：肥皂＋大量清水 → 沖洗 15 分鐘
+### 02｜消：優碘或 70% 酒精 → 消毒傷口
+### 03｜送：儘速就醫 → 由醫師評估是否需要狂犬病暴露後預防
+
+---
+
+# CTA
+## **有抓咬，就先沖、再送醫！**
+### 不確定怎麼辦？
+**撥打疾管署防疫專線 1922** 或 **0800-001922** 諮詢。
+**別等症狀出現，先把該做的事做好。**
+資料來源：衛生福利部疾病管制署「狂犬病防治專區」`;
+
+        // Smart text extractor to get title & summary from markdown
+        const extractTitleAndSummary = (rawText) => {
+            if (!rawText) return { title: '未命名主題', subtitle: '', body: '' };
+            const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+            let title = '';
+            let subtitle = '';
+            for (let line of lines) {
+                const clean = line.replace(/^[#\s\-*]+/g, '').replace(/\*+/g, '').trim();
+                if (!clean) continue;
+                if (!title && clean !== '主標' && clean !== '重點訊息' && clean !== '行動指引' && clean !== 'CTA') {
+                    title = clean;
+                } else if (title && !subtitle && clean !== title && clean !== '重點訊息' && clean !== '行動指引' && clean !== 'CTA') {
+                    subtitle = clean;
+                    break;
+                }
+            }
+            if (!title) title = '未命名主題';
+            return { title, subtitle, body: rawText };
+        };
+
         const App = () => {
-            const [mode, setMode] = useState('xhs'); // 'xhs' | 'infographic' | 'cover'
-            const [subTab, setSubTab] = useState('style'); // 'style' | 'layout' | 'gallery'
+            const [mode, setMode] = useState('infographic'); // default to infographic for rich text
+            const [subTab, setSubTab] = useState('layout'); // 'layout' | 'style'
             const [language, setLanguage] = useState('zh');
             const [totalViews, setTotalViews] = useState(null);
 
-            // Form States
-            const [topic, setTopic] = useState('自媒體高說服力視覺小卡設計指南');
-            const [subtitle, setSubtitle] = useState('掌握黃金佈局與吸睛色彩，LINE 推播開信率提升 300%');
-            const [content, setContent] = useState('1. 明確核心觀點與大標題吸引眼球\n2. 限制單卡重點在 3-4 個以內避免認知過載\n3. 採用高對比調色盤確保手機端清晰易讀\n4. 搭配具象化插圖與步驟箭頭引導視覺流\n5. 尾頁設置強烈行動召喚 (CTA)');
-            const [cardCount, setCardCount] = useState(5);
-            const [aspectRatio, setAspectRatio] = useState('1:1');
+            // Single unified text input field
+            const [rawContent, setRawContent] = useState(DEFAULT_MARKDOWN);
             
-            // Selections
+            // Aspect ratio & count
+            const [aspectRatio, setAspectRatio] = useState('9:16');
+            const [cardCount, setCardCount] = useState(5);
+            
+            // Style & layout selections
             const [selectedXhsStyle, setSelectedXhsStyle] = useState('notion');
-            const [selectedXhsLayout, setSelectedXhsLayout] = useState('list');
+            const [selectedXhsLayout, setSelectedXhsLayout] = useState('flow');
             
             const [selectedInfoStyle, setSelectedInfoStyle] = useState('craft-handmade');
-            const [selectedInfoLayout, setSelectedInfoLayout] = useState('bento-grid');
+            const [selectedInfoLayout, setSelectedInfoLayout] = useState('journey-path');
 
             const [selectedCoverStyle, setSelectedCoverStyle] = useState('typography');
             const [coverType, setCoverType] = useState('hero');
             const [coverRendering, setCoverRendering] = useState('flat-vector');
             const [coverTextLevel, setCoverTextLevel] = useState('title-subtitle');
-            const [coverMood, setCoverMood] = useState('balanced');
+            const [coverMood, setCoverMood] = useState('bold');
 
-            // Palette
-            const [palette, setPalette] = useState(palettePresets[1].colors); // Macaron default
+            // Palette (defaults to medical-alert for public health info)
+            const [palette, setPalette] = useState(palettePresets[0].colors);
             const [editingColorIdx, setEditingColorIdx] = useState(null);
 
             // Modal & Feedback
@@ -313,12 +375,22 @@ app_code = r'''
             const [copiedCli, setCopiedCli] = useState(false);
             const [zoomImage, setZoomImage] = useState(null);
 
-            // Auto-update aspect ratio when mode changes
+            // Parse title & subtitle dynamically
+            const parsed = useMemo(() => extractTitleAndSummary(rawContent), [rawContent]);
+
+            // Handle mode switch with natural aspect ratio defaults
             const handleModeChange = (newMode) => {
                 setMode(newMode);
-                if (newMode === 'xhs') setAspectRatio('1:1');
-                else if (newMode === 'infographic') setAspectRatio('9:16');
-                else if (newMode === 'cover') setAspectRatio('1:1');
+                if (newMode === 'xhs') {
+                    setAspectRatio('1:1');
+                    setSubTab('layout');
+                } else if (newMode === 'infographic') {
+                    setAspectRatio('9:16');
+                    setSubTab('layout');
+                } else if (newMode === 'cover') {
+                    setAspectRatio('1:1');
+                    setSubTab('style');
+                }
             };
 
             // Supabase view count
@@ -344,7 +416,7 @@ app_code = r'''
 
             // Generate CLI command
             const generatedCli = useMemo(() => {
-                const cleanTopic = topic.replace(/"/g, '\\"');
+                const cleanTopic = (parsed.title || '主題').replace(/"/g, '\\"');
                 if (mode === 'xhs') {
                     return `/baoyu-xhs-images "${cleanTopic}" --style ${selectedXhsStyle} --layout ${selectedXhsLayout} --count ${cardCount} --aspect ${aspectRatio}`;
                 } else if (mode === 'infographic') {
@@ -352,85 +424,105 @@ app_code = r'''
                 } else {
                     return `/baoyu-cover-image "${cleanTopic}" --type ${coverType} --style ${selectedCoverStyle} --rendering ${coverRendering} --text ${coverTextLevel} --mood ${coverMood} --aspect ${aspectRatio}`;
                 }
-            }, [mode, topic, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood]);
+            }, [mode, parsed.title, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood]);
 
-            // Generate structured full Prompt
+            // Aspect ratio details
+            const aspectDetails = [
+                { ratio: '1:1', tag: '【正方形 1:1】', desc: 'LINE 官方帳號小卡、輪播訊息、社群方形貼圖' },
+                { ratio: '9:16', tag: '【直式長版 9:16】', desc: '手機全螢幕海報、限時動態 (Story)、直式導覽長圖' },
+                { ratio: '3:4', tag: '【直式標準 3:4】', desc: '經典活動海報、小紅書圖卡、展架宣傳單' },
+                { ratio: '16:9', tag: '【橫式寬幅 16:9】', desc: '電腦簡報投影片、官網橫幅 (Banner)、橫式看板' }
+            ];
+
+            // Generate structured full Prompt with clear palette mapping
             const generatedPrompt = useMemo(() => {
-                const palHex = palette.join(', ');
+                const [cPrimary, cSecondary, cBg, cText, cAccent] = palette;
+                const paletteGuide = `[主視覺基調: ${cPrimary}]、[次要輔助色: ${cSecondary}]、[背景基底色: ${cBg}]、[正文字體色: ${cText}]、[警示強調色: ${cAccent}]`;
+
                 if (mode === 'xhs') {
                     const st = xhsStyles.find(s => s.id === selectedXhsStyle) || xhsStyles[0];
                     const lay = xhsLayouts.find(l => l.id === selectedXhsLayout) || xhsLayouts[0];
                     return `### 🎯 任務目標：LINE 小卡 / 社群知識圖卡系列生成
-你是一位精通小紅書、LINE 官方帳號輪播小卡與社群知識圖文的頂級視覺設計專家。
-請依據以下參數與文案，為主題「${topic}」規劃一套共 ${cardCount} 張的系列圖卡視覺規格與生圖提示詞：
+你是一位精通小紅書、LINE 官方帳號輪播小卡與社群衛教圖文的頂級視覺設計專家。
+請根據以下規格與文案，為主題「${parsed.title}」規劃一套共 ${cardCount} 張的系列圖卡提示詞與視覺規劃：
 
 ### 📐 規格設定
+- **主標題**：${parsed.title}
+- **副標摘要**：${parsed.subtitle}
 - **視覺風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
 - **版面佈局 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
-- **卡片長寬比 (Aspect Ratio)**：${aspectRatio}（${aspectRatio === '1:1' ? 'LINE 官方帳號標準 1:1 方形圖卡 / 輪播小卡' : '3:4 直式社群圖卡'}）
-- **指定調色盤代碼 (Palette)**：${palHex}
-- **系列卡片張數**：共 ${cardCount} 張連續圖卡
+- **卡片長寬比 (Aspect Ratio)**：${aspectRatio} (${aspectRatio === '1:1' ? 'LINE 官方帳號標準方形輪播小卡' : '直式小卡'})
+- **🎨 色彩角色規劃 (調色盤功用)**：
+  - 主視覺基調色：${cPrimary}（用於核心主題外框、重點徽章與主要插圖線條）
+  - 關鍵警示與強調色：${cAccent}（用於關鍵字加粗、重要警告標記如致死率/就醫提醒）
+  - 背景底色：${cBg}（確保畫面純淨，高對比不疲勞）
+  - 輔助與卡片背景色：${cSecondary}（用於步驟區塊底色）
+  - 文字主色：${cText}（確保各年齡層在手機端極佳易讀性）
 
-### 📝 核心文案內容
-${content}
+### 📝 完整內容文案來源
+${rawContent}
 
-### 🎨 各頁視覺與分鏡規劃
-1. **P.1 [封面小卡]**：以強烈大標題「${topic}」為視覺主導，副標為「${subtitle}」，搭配核心概念插圖，邊框乾淨，留白適中。
-2. **P.2 ~ P.${cardCount - 1} [內容小卡]**：採用 ${lay.name} 佈局，每頁展示 1-2 個核心要點，搭配清爽條列標籤、微插圖與高對比重要字詞。
-3. **P.${cardCount} [結尾行動卡]**：統整全篇要點金句，並加上「收藏、轉發分享、點擊連結領取完整懶人包」之清晰 Call To Action (CTA)。
+### 🎨 各頁分鏡與小卡規劃 (共 ${cardCount} 張)
+1. **P.1 [封面醒目卡]**：以震撼大標「${parsed.title}」為主視覺，警示副標「${parsed.subtitle}」，搭配急迫性插圖，留白呼吸感充足。
+2. **P.2 ~ P.${cardCount - 1} [步驟與重點卡]**：採用 ${lay.name} 佈局，重點拆解「沖、消、送」步驟與就醫注意事項，以大編號與清晰圖示標註。
+3. **P.${cardCount} [結尾行動指引卡]**：統整 CTA「有抓咬，就先沖、再送醫！」並顯著標記防疫專線 1922，提供安心信任感。
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${topic}", aesthetic style is ${st.id} with ${st.desc}, layout structure follows ${lay.id}, crisp typography, clean spacing, soothing background, harmonious color palette: ${palHex}, ultra-high quality, 8k resolution, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+Prompt: A cohesive educational infographic card series of ${cardCount} cards about "${parsed.title}", aesthetic style is ${st.id}, structured in ${lay.id} layout, clear visual hierarchy, prominent typography, balanced medical emergency icons, professional color palette: ${palette.join(', ')}, ultra-high resolution, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
                 } else if (mode === 'infographic') {
                     const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
                     const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
-                    return `### 🎯 任務目標：高密度知識資訊圖表 / 宣傳海報生成
-你是一位世界級的資訊設計總監（Information Architecture & Data Visualization Designer）。
-請依據以下結構規格，為主題「${topic}」設計一張架構嚴謹、一圖看懂的超高清視覺化資訊海報：
+                    return `### 🎯 任務目標：高密度衛教資訊圖表 / 直式宣傳海報生成
+你是一位世界級的資訊設計總監（Information Architecture & Infographic Designer）。
+請依據以下結構規格，為主題「${parsed.title}」設計一張架構嚴謹、一圖看懂的超高清視覺化資訊海報：
 
 ### 📐 規格設定
+- **主標題**：${parsed.title}
+- **副標摘要**：${parsed.subtitle}
 - **資訊結構佈局 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
 - **視覺美學風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **海報比例 (Aspect Ratio)**：${aspectRatio}（${aspectRatio === '9:16' ? '手機直式全螢幕海報' : '直式高密度印刷圖表'}）
-- **專業配色方案 (Palette)**：${palHex}
+- **海報比例 (Aspect Ratio)**：${aspectRatio} (${aspectRatio === '9:16' ? '手機直式全螢幕長海報' : aspectRatio === '3:4' ? '直式標準宣傳海報' : '方形圖表'})
+- **🎨 色彩角色規劃 (調色盤功用)**：
+  - 主色調：${cPrimary}（海報主視覺骨架、標題強調背景）
+  - 警示強調色：${cAccent}（紅色/警示色標註緊急處置原則、致死率與急診提醒）
+  - 背景底色：${cBg}（確保資訊層級分明，清晰可辨）
+  - 輔助區塊色：${cSecondary}（各步驟模組卡片邊框與背景）
+  - 正文字體色：${cText}（極高清晰度的閱讀色彩）
 
-### 📝 核心主題與結構內容
-主題：${topic}
-核心摘要：${subtitle}
-詳細內容與數據：
-${content}
+### 📝 完整文案與結構指引
+${rawContent}
 
 ### 🏛️ 海報板塊分區指南
-1. **頂部 Header**：震撼醒目的主標題「${topic}」，一句話金句副標「${subtitle}」，主題象徵圖騰。
-2. **主體 Body**：完整體現 ${lay.name} 結構，透過模組化卡片、關聯箭頭、流程節點與資料可視化圖表清晰呈現所有知識點。
-3. **底部 Footer**：權威資料來源出處、總結金句、版權標籤與行動引導。
+1. **頂部 Header**：醒目主標題「${parsed.title}」、警示副標「${parsed.subtitle}」、疾管署防護圖騰與致死率警訊。
+2. **主體 Body**：完整體現 ${lay.name} 結構，以「沖（15分鐘）、消（消毒）、送（就醫評估）」為 3 大核心支柱，附帶動物特徵記憶指引與疫苗評估原則。
+3. **底部 Footer**：醒目 CTA「有抓咬，先沖再送醫！」、防疫專線 1922 及諮詢電話、衛生福利部疾病管制署出處標註。
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: High-density information visualization poster about "${topic}", organized in ${lay.id} structure, rendered in ${st.id} artistic style, featuring clear typographic hierarchy, detailed structural diagrams, clean infographic iconography, balanced composition, palette: ${palHex}, 8k resolution, crisp vector-like clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+Prompt: High-density public health infographic poster about "${parsed.title}", structured in ${lay.id} layout, rendered in clean ${st.id} artistic style, featuring clear typographic emergency hierarchy, clinical step-by-step illustrations (soap washing, disinfecting, hospital visit), palette: ${palette.join(' ')}, 8k resolution, crisp vector-like clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
                 } else {
                     const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
-                    return `### 🎯 任務目標：主視覺宣傳海報 / LINE 大封面生成
-你是一位知名品牌視覺海報與廣告主視覺藝術總監。
-請依據以下 5 維度客製化規格，為「${topic}」打造一張極具衝擊力與高級感的宣傳封面海報：
+                    return `### 🎯 任務目標：主視覺宣傳海報 / LINE 滿版推播大圖
+你是一位知名品牌宣傳海報與公共衛教主視覺藝術總監。
+請依據以下 5 維度客製化規格，為「${parsed.title}」打造一張極具衝擊力與公信力的主視覺海報：
 
 ### 📐 5 維度定制規格
+- **主標題**：「${parsed.title}」
+- **副標題**：「${parsed.subtitle}」
 - **構圖類型 (Type)**：${coverType}
 - **渲染手法 (Rendering)**：${coverRendering}
 - **視覺風格預設 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **文字排版層級 (Text Level)**：${coverTextLevel}
-- **氛圍基調 (Mood)**：${coverMood}
-- **尺寸長寬比 (Aspect Ratio)**：${aspectRatio}（${aspectRatio === '1:1' ? 'LINE 官方帳號 1:1 單圖推播 / 方形海報' : '寬幅宣傳看板'}）
-- **專用色調 (Palette)**：${palHex}
+- **文字層級 (Text Level)**：${coverTextLevel}
+- **氛圍基調 (Mood)**：${coverMood}（強烈警示感）
+- **尺寸長寬比 (Aspect Ratio)**：${aspectRatio}
+- **🎨 色彩角色規劃 (調色盤功用)**：${paletteGuide}
 
-### 📝 文案與排版資訊
-主標題：「${topic}」
-副標題：「${subtitle}」
-說明內容：${content}
+### 📝 完整內容文案
+${rawContent}
 
 ### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} composition with ${coverRendering} rendering, aesthetic style ${st.id}, ${coverMood} atmosphere, typography clearly reads "${topic}" with subtitle "${subtitle}", sophisticated color palette ${palHex}, dramatic cinematic lighting, perfect editorial layout, 8k resolution, award-winning graphic design, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+Prompt: Striking public health warning cover poster for "${parsed.title}", subtitle "${parsed.subtitle}", ${coverType} composition with ${coverRendering} rendering, aesthetic style ${st.id}, ${coverMood} urgency mood, prominent typography, harmonious colors ${palette.join(', ')}, dramatic professional lighting, 8k resolution, award-winning poster design, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
                 }
-            }, [mode, topic, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverTextLevel, coverMood, palette]);
+            }, [mode, parsed, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverTextLevel, coverMood, palette, rawContent]);
 
             const copyToClipboard = (text, type) => {
                 navigator.clipboard.writeText(text).then(() => {
@@ -449,7 +541,7 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `${mode}-${topic.slice(0, 10)}.md`;
+                a.download = `${mode}-${parsed.title.slice(0, 10)}.md`;
                 a.click();
                 URL.revokeObjectURL(url);
             };
@@ -461,9 +553,9 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                 }
                 const doc = new window.jspdf.jsPDF();
                 doc.setFontSize(16);
-                doc.text(`Baoyu Visual Prompt Specification - ${mode}`, 14, 20);
+                doc.text(`Visual Prompt Specification - ${mode}`, 14, 20);
                 doc.setFontSize(11);
-                doc.text(`Topic: ${topic}`, 14, 30);
+                doc.text(`Title: ${parsed.title}`, 14, 30);
                 doc.text(`Ratio: ${aspectRatio} | Colors: ${palette.join(', ')}`, 14, 38);
                 doc.text(`CLI Command:`, 14, 48);
                 doc.setFontSize(9);
@@ -474,46 +566,46 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                 doc.setFontSize(8);
                 const splitText = doc.splitTextToSize(generatedPrompt, 180);
                 doc.text(splitText, 14, 78);
-                doc.save(`${mode}-${topic.slice(0, 8)}.pdf`);
+                doc.save(`${mode}-${parsed.title.slice(0, 8)}.pdf`);
             };
 
             return (
                 <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-16">
-                    {/* Header */}
-                    <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-6 py-4">
+                    {/* Header with Sleek Cyan/Blue Tone */}
+                    <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5 shadow-lg shadow-black/40">
                         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-400/40 flex items-center justify-center text-pink-300 shadow-lg shadow-pink-500/10">
+                                <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center text-cyan-300 shadow-md shadow-cyan-500/10">
                                     <Icon name="Wand2" size={22} />
                                 </div>
                                 <div>
-                                    <h1 className="text-xl font-black tracking-tight text-white flex items-center gap-2">
-                                        Baoyu Visual Studio
-                                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-pink-400/20 text-pink-300 border border-pink-400/30">v2.1</span>
+                                    <h1 className="text-lg md:text-xl font-black tracking-tight text-white flex items-center gap-2">
+                                        視覺海報與 LINE 圖卡生成器
+                                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">Baoyu Studio v2.2</span>
                                     </h1>
-                                    <p className="text-xs text-slate-400">寶玉視覺海報 × LINE 圖卡 × 資訊圖表 Prompt 生成器</p>
+                                    <p className="text-xs text-slate-400">一站式生成 baoyu-xhs-images · baoyu-infographic · baoyu-cover-image 專業 Prompt</p>
                                 </div>
                             </div>
 
                             {/* Mode Navigation Tabs */}
                             <div className="flex bg-slate-900 border border-slate-800 p-1 rounded-xl">
                                 <button
-                                    onClick={() => handleModeChange('xhs')}
-                                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'xhs' ? 'bg-pink-400 text-slate-950 shadow-md shadow-pink-400/20' : 'text-slate-400 hover:text-white'}`}
-                                >
-                                    <Icon name="Layers" size={14} />
-                                    <span>baoyu-xhs-images (社群小卡)</span>
-                                </button>
-                                <button
                                     onClick={() => handleModeChange('infographic')}
-                                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'infographic' ? 'bg-pink-400 text-slate-950 shadow-md shadow-pink-400/20' : 'text-slate-400 hover:text-white'}`}
+                                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'infographic' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
                                 >
                                     <Icon name="BarChart3" size={14} />
                                     <span>baoyu-infographic (資訊海報)</span>
                                 </button>
                                 <button
+                                    onClick={() => handleModeChange('xhs')}
+                                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'xhs' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
+                                >
+                                    <Icon name="Layers" size={14} />
+                                    <span>baoyu-xhs-images (社群小卡)</span>
+                                </button>
+                                <button
                                     onClick={() => handleModeChange('cover')}
-                                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'cover' ? 'bg-pink-400 text-slate-950 shadow-md shadow-pink-400/20' : 'text-slate-400 hover:text-white'}`}
+                                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'cover' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
                                 >
                                     <Icon name="Image" size={14} />
                                     <span>baoyu-cover-image (主視覺封面)</span>
@@ -527,170 +619,154 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                         
                         {/* LEFT COLUMN: Controls & Configurations (5 cols) */}
                         <section className="lg:col-span-5 flex flex-col gap-5">
-                            {/* Card 1: Basic Information */}
+                            
+                            {/* Unified Single Content Box */}
                             <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
-                                <h2 className="text-sm font-bold text-slate-200 mb-4 flex items-center gap-2">
-                                    <Icon name="Sliders" size={16} className="text-pink-300" />
-                                    <span>主題與核心內容設定</span>
-                                </h2>
+                                <div className="flex items-center justify-between mb-2">
+                                    <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                                        <Icon name="FileText" size={16} className="text-cyan-400" />
+                                        <span>文案內容直接貼上 (免分欄)</span>
+                                    </h2>
+                                    <span className="text-[11px] text-cyan-400 font-mono">自動提取標題與結構</span>
+                                </div>
                                 
-                                <div className="space-y-4 text-xs">
-                                    <div>
-                                        <label className="block font-bold text-slate-300 mb-1">主標題 / 活動主題</label>
-                                        <input
-                                            type="text"
-                                            value={topic}
-                                            onChange={(e) => setTopic(e.target.value)}
-                                            placeholder="例如：自媒體爆款選題 5 大法則"
-                                            className="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white font-medium focus:border-pink-400 focus:outline-none transition-all"
-                                        />
+                                <p className="text-xs text-slate-400 mb-3">
+                                    直接貼上完整 Markdown 或文字草稿，系統會自動萃取主標題、副標題，並將完整段落注入至對應版型與分鏡中。
+                                </p>
+
+                                <textarea
+                                    rows={11}
+                                    value={rawContent}
+                                    onChange={(e) => setRawContent(e.target.value)}
+                                    placeholder="在此貼上您的完整文章、重點條列或衛教草稿..."
+                                    className="w-full bg-slate-950 border border-slate-700/70 rounded-xl p-3.5 text-slate-200 font-mono text-xs leading-relaxed focus:border-cyan-400 focus:outline-none custom-scrollbar select-text"
+                                />
+
+                                {/* Auto-extracted preview pills */}
+                                <div className="mt-3 p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-col gap-1 text-xs">
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60">主標識別</span>
+                                        <span className="font-bold text-white truncate">{parsed.title}</span>
                                     </div>
-
-                                    <div>
-                                        <label className="block font-bold text-slate-300 mb-1">副標題 / 核心一句話結論</label>
-                                        <input
-                                            type="text"
-                                            value={subtitle}
-                                            onChange={(e) => setSubtitle(e.target.value)}
-                                            placeholder="例如：精準抓住讀者痛點，LINE 開信率狂飆 300%"
-                                            className="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white font-medium focus:border-pink-400 focus:outline-none transition-all"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block font-bold text-slate-300 mb-1">詳細條列內文或文案草稿</label>
-                                        <textarea
-                                            rows={4}
-                                            value={content}
-                                            onChange={(e) => setContent(e.target.value)}
-                                            placeholder="貼上你的文案段落或條列重點..."
-                                            className="w-full bg-slate-950 border border-slate-700/70 rounded-xl p-3 text-slate-200 font-mono text-xs leading-relaxed focus:border-pink-400 focus:outline-none custom-scrollbar"
-                                        />
-                                    </div>
-
-                                    {/* Aspect Ratio Selector */}
-                                    <div>
-                                        <label className="block font-bold text-slate-300 mb-1.5">尺寸比例 (Aspect Ratio)</label>
-                                        <div className="grid grid-cols-4 gap-2">
-                                            {['1:1', '9:16', '3:4', '16:9'].map(ratio => (
-                                                <button
-                                                    key={ratio}
-                                                    onClick={() => setAspectRatio(ratio)}
-                                                    className={`py-2 rounded-xl text-xs font-bold border transition-all ${aspectRatio === ratio ? 'border-pink-400 bg-pink-400/10 text-pink-300 shadow-sm' : 'border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700'}`}
-                                                >
-                                                    {ratio}
-                                                    <span className="block text-[10px] font-normal text-slate-500 mt-0.5">
-                                                        {ratio === '1:1' ? 'LINE小卡' : ratio === '9:16' ? '手機直海報' : ratio === '3:4' ? '直式圖卡' : '橫幅海報'}
-                                                    </span>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Mode Specific Configs */}
-                                    {mode === 'xhs' && (
-                                        <div>
-                                            <div className="flex justify-between items-center mb-1">
-                                                <label className="font-bold text-slate-300">系列卡片張數</label>
-                                                <span className="font-mono text-pink-300 font-bold">{cardCount} 張小卡</span>
-                                            </div>
-                                            <input
-                                                type="range" min="1" max="10" value={cardCount}
-                                                onChange={(e) => setCardCount(Number(e.target.value))}
-                                                className="w-full accent-pink-400 cursor-pointer"
-                                            />
-                                        </div>
-                                    )}
-
-                                    {mode === 'cover' && (
-                                        <div className="grid grid-cols-2 gap-3 pt-1">
-                                            <div>
-                                                <label className="block font-bold text-slate-300 mb-1">構圖類型 (Type)</label>
-                                                <select
-                                                    value={coverType}
-                                                    onChange={(e) => setCoverType(e.target.value)}
-                                                    className="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white"
-                                                >
-                                                    <option value="hero">Hero 英雄主圖</option>
-                                                    <option value="typography">Typography 大字體排版</option>
-                                                    <option value="conceptual">Conceptual 概念隱喻</option>
-                                                    <option value="minimal">Minimal 極簡留白</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="block font-bold text-slate-300 mb-1">氛圍 (Mood)</label>
-                                                <select
-                                                    value={coverMood}
-                                                    onChange={(e) => setCoverMood(e.target.value)}
-                                                    className="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white"
-                                                >
-                                                    <option value="balanced">Balanced 均衡</option>
-                                                    <option value="bold">Bold 強烈高對比</option>
-                                                    <option value="subtle">Subtle 低調雅致</option>
-                                                </select>
-                                            </div>
+                                    {parsed.subtitle && (
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">副標摘要</span>
+                                            <span className="text-slate-300 truncate">{parsed.subtitle}</span>
                                         </div>
                                     )}
                                 </div>
                             </div>
 
-                            {/* Card 2: Interactive Palette Picker */}
-                            <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl relative">
-                                <h2 className="text-sm font-bold text-slate-200 mb-3 flex items-center justify-between">
-                                    <span className="flex items-center gap-2">
-                                        <Icon name="Palette" size={16} className="text-pink-300" />
-                                        <span>調色盤與色彩自訂 (點擊色塊調色)</span>
-                                    </span>
+                            {/* Aspect Ratio & Clear Orientations */}
+                            <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+                                <h2 className="text-sm font-bold text-slate-200 mb-1 flex items-center gap-2">
+                                    <Icon name="Sliders" size={16} className="text-cyan-400" />
+                                    <span>尺寸比例與方向 (Aspect Ratio)</span>
                                 </h2>
+                                <p className="text-xs text-slate-400 mb-3">請依據您的投放平台（LINE 小卡、手機直式長圖、實體海報或橫幅）選擇尺寸：</p>
+                                
+                                <div className="grid grid-cols-2 gap-2.5">
+                                    {aspectDetails.map(item => (
+                                        <button
+                                            key={item.ratio}
+                                            onClick={() => setAspectRatio(item.ratio)}
+                                            className={`p-3 rounded-xl text-left border transition-all flex flex-col justify-between ${aspectRatio === item.ratio ? 'border-cyan-400 bg-cyan-950/30 ring-1 ring-cyan-400 shadow-md shadow-cyan-500/10' : 'border-slate-800 bg-slate-950/80 hover:border-slate-700'}`}
+                                        >
+                                            <div className="flex items-center justify-between mb-1">
+                                                <span className={`text-xs font-black ${aspectRatio === item.ratio ? 'text-cyan-300' : 'text-slate-200'}`}>
+                                                    {item.tag}
+                                                </span>
+                                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">{item.ratio}</span>
+                                            </div>
+                                            <span className="text-[11px] text-slate-400 leading-tight">{item.desc}</span>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {mode === 'xhs' && (
+                                    <div className="mt-4 pt-3 border-t border-slate-800">
+                                        <div className="flex justify-between items-center mb-1 text-xs">
+                                            <label className="font-bold text-slate-300">系列卡片張數</label>
+                                            <span className="font-mono text-cyan-300 font-bold">{cardCount} 張連續小卡</span>
+                                        </div>
+                                        <input
+                                            type="range" min="1" max="10" value={cardCount}
+                                            onChange={(e) => setCardCount(Number(e.target.value))}
+                                            className="w-full accent-cyan-400 cursor-pointer"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Color Palette & Clear Functional Explanation */}
+                            <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl relative">
+                                <div className="flex items-center justify-between mb-1">
+                                    <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                                        <Icon name="Palette" size={16} className="text-cyan-400" />
+                                        <span>調色盤功能與色彩規範</span>
+                                    </h2>
+                                    <span className="text-[11px] font-bold text-cyan-400">可點擊色塊調色</span>
+                                </div>
+
+                                {/* Explanation of why palette matters */}
+                                <div className="bg-cyan-950/30 border border-cyan-800/40 rounded-xl p-2.5 mb-3 text-[11px] text-cyan-200/90 leading-relaxed">
+                                    💡 <strong>調色盤作用</strong>：此 5 色調色盤將直接注入生圖指令，分別控制海報的<strong>主色調、背景基底、重要標籤、正文字體與警示強調色</strong>，確保生成出的海報色系和諧一致，不會隨機亂混色。
+                                </div>
 
                                 {/* Current 5 Color Swatches */}
-                                <div className="grid grid-cols-5 gap-2 mb-4">
-                                    {palette.map((color, idx) => (
-                                        <div key={idx} className="relative">
-                                            <button
-                                                onClick={() => setEditingColorIdx(editingColorIdx === idx ? null : idx)}
-                                                className="w-full h-12 rounded-xl shadow-md border border-white/10 flex flex-col items-center justify-end pb-1 transition-transform hover:scale-105 active:scale-95"
-                                                style={{ backgroundColor: color }}
-                                                title={`點擊調色：${color}`}
-                                            >
-                                                <span
-                                                    className="text-[10px] font-mono font-black px-1 rounded"
-                                                    style={{ color: hexToLum(color) > 0.5 ? '#000' : '#fff' }}
+                                <div className="grid grid-cols-5 gap-2 mb-3">
+                                    {palette.map((color, idx) => {
+                                        const labels = ['主色', '次色', '底色', '字色', '警示'];
+                                        return (
+                                            <div key={idx} className="relative">
+                                                <button
+                                                    onClick={() => setEditingColorIdx(editingColorIdx === idx ? null : idx)}
+                                                    className="w-full h-12 rounded-xl shadow-md border border-white/10 flex flex-col items-center justify-between p-1 transition-transform hover:scale-105 active:scale-95"
+                                                    style={{ backgroundColor: color }}
+                                                    title={`點擊調色：${color}`}
                                                 >
-                                                    {color}
-                                                </span>
-                                            </button>
-                                            {editingColorIdx === idx && (
-                                                <ColorPicker
-                                                    value={color}
-                                                    onChange={(newHex) => {
-                                                        const np = [...palette];
-                                                        np[idx] = newHex;
-                                                        setPalette(np);
-                                                    }}
-                                                    onClose={() => setEditingColorIdx(null)}
-                                                />
-                                            )}
-                                        </div>
-                                    ))}
+                                                    <span className="text-[9px] font-bold px-1 rounded bg-black/40 text-white">
+                                                        {labels[idx]}
+                                                    </span>
+                                                    <span
+                                                        className="text-[9px] font-mono font-bold"
+                                                        style={{ color: hexToLum(color) > 0.5 ? '#000' : '#fff' }}
+                                                    >
+                                                        {color}
+                                                    </span>
+                                                </button>
+                                                {editingColorIdx === idx && (
+                                                    <ColorPicker
+                                                        value={color}
+                                                        onChange={(newHex) => {
+                                                            const np = [...palette];
+                                                            np[idx] = newHex;
+                                                            setPalette(np);
+                                                        }}
+                                                        onClose={() => setEditingColorIdx(null)}
+                                                    />
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
 
                                 {/* Quick Presets */}
                                 <div>
-                                    <div className="text-[11px] font-bold text-slate-400 mb-2">設計師精選色票套用：</div>
+                                    <div className="text-[11px] font-bold text-slate-400 mb-1.5">推薦情境色票快速套用：</div>
                                     <div className="flex flex-wrap gap-1.5">
                                         {palettePresets.map(preset => (
                                             <button
                                                 key={preset.id}
                                                 onClick={() => setPalette(preset.colors)}
-                                                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-600 text-xs transition-all"
+                                                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs transition-all ${JSON.stringify(palette) === JSON.stringify(preset.colors) ? 'border-cyan-400 bg-cyan-950/40 text-cyan-300' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'}`}
                                             >
                                                 <div className="flex -space-x-1">
                                                     {preset.colors.slice(0, 3).map((c, ci) => (
-                                                        <span key={ci} className="w-2.5 h-2.5 rounded-full border border-slate-900" style={{ backgroundColor: c }} />
+                                                        <span key={ci} className="w-2 h-2 rounded-full border border-slate-900" style={{ backgroundColor: c }} />
                                                     ))}
                                                 </div>
-                                                <span className="text-slate-300 text-[11px]">{preset.name}</span>
+                                                <span className="text-[11px] font-medium">{preset.name}</span>
                                             </button>
                                         ))}
                                     </div>
@@ -703,51 +779,51 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                             
                             {/* Visual Showcase Gallery */}
                             <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
-                                <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                                <div className="flex items-center justify-between mb-3 border-b border-slate-800 pb-2.5">
                                     <div className="flex items-center gap-2">
-                                        <button
-                                            onClick={() => setSubTab('style')}
-                                            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'style' ? 'bg-slate-800 text-pink-300 border border-pink-400/30' : 'text-slate-400 hover:text-white'}`}
-                                        >
-                                            視覺風格 (Styles)
-                                        </button>
                                         {mode !== 'cover' && (
                                             <button
                                                 onClick={() => setSubTab('layout')}
-                                                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'layout' ? 'bg-slate-800 text-pink-300 border border-pink-400/30' : 'text-slate-400 hover:text-white'}`}
+                                                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'layout' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40' : 'text-slate-400 hover:text-white'}`}
                                             >
-                                                版面佈局 (Layouts)
+                                                版面架構 (Layouts)
                                             </button>
                                         )}
+                                        <button
+                                            onClick={() => setSubTab('style')}
+                                            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${subTab === 'style' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40' : 'text-slate-400 hover:text-white'}`}
+                                        >
+                                            視覺風格 (Styles)
+                                        </button>
                                     </div>
                                     <span className="text-xs text-slate-400 font-mono">
-                                        {mode === 'xhs' ? '9 種風格 × 6 種佈局' : mode === 'infographic' ? '17 種風格 × 20 種結構' : '10 種經典封面海報風格'}
+                                        點擊卡片套用 · 點放大鏡看大圖
                                     </span>
                                 </div>
 
                                 {/* Items Grid */}
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[360px] overflow-y-auto pr-1 custom-scrollbar">
-                                    {(mode === 'xhs' ? (subTab === 'style' ? xhsStyles : xhsLayouts) :
-                                      mode === 'infographic' ? (subTab === 'style' ? infographicStyles : infographicLayouts) :
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[320px] overflow-y-auto pr-1 custom-scrollbar">
+                                    {(mode === 'xhs' ? (subTab === 'layout' ? xhsLayouts : xhsStyles) :
+                                      mode === 'infographic' ? (subTab === 'layout' ? infographicLayouts : infographicStyles) :
                                       coverStyles).map(item => {
-                                        const isSelected = mode === 'xhs' ? (subTab === 'style' ? selectedXhsStyle === item.id : selectedXhsLayout === item.id) :
-                                                           mode === 'infographic' ? (subTab === 'style' ? selectedInfoStyle === item.id : selectedInfoLayout === item.id) :
+                                        const isSelected = mode === 'xhs' ? (subTab === 'layout' ? selectedXhsLayout === item.id : selectedXhsStyle === item.id) :
+                                                           mode === 'infographic' ? (subTab === 'layout' ? selectedInfoLayout === item.id : selectedInfoStyle === item.id) :
                                                            selectedCoverStyle === item.id;
                                         return (
                                             <div
                                                 key={item.id}
                                                 onClick={() => {
                                                     if (mode === 'xhs') {
-                                                        if (subTab === 'style') setSelectedXhsStyle(item.id);
-                                                        else setSelectedXhsLayout(item.id);
+                                                        if (subTab === 'layout') setSelectedXhsLayout(item.id);
+                                                        else setSelectedXhsStyle(item.id);
                                                     } else if (mode === 'infographic') {
-                                                        if (subTab === 'style') setSelectedInfoStyle(item.id);
-                                                        else setSelectedInfoLayout(item.id);
+                                                        if (subTab === 'layout') setSelectedInfoLayout(item.id);
+                                                        else setSelectedInfoStyle(item.id);
                                                     } else {
                                                         setSelectedCoverStyle(item.id);
                                                     }
                                                 }}
-                                                className={`cursor-pointer rounded-xl overflow-hidden border-2 transition-all group relative bg-slate-950/80 flex flex-col ${isSelected ? 'border-pink-400 shadow-[0_0_15px_rgba(249,168,212,0.3)] ring-1 ring-pink-400' : 'border-slate-800 hover:border-slate-600'}`}
+                                                className={`cursor-pointer rounded-xl overflow-hidden border-2 transition-all group relative bg-slate-950/80 flex flex-col ${isSelected ? 'border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400' : 'border-slate-800 hover:border-slate-600'}`}
                                             >
                                                 <div className="aspect-video relative overflow-hidden bg-slate-900">
                                                     <img
@@ -758,20 +834,20 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                                                     />
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); setZoomImage(item); }}
-                                                        className="absolute top-1.5 right-1.5 p-1 rounded-md bg-black/70 text-white hover:text-pink-300 transition-colors"
+                                                        className="absolute top-1.5 right-1.5 p-1 rounded-md bg-black/70 text-white hover:text-cyan-300 transition-colors"
                                                         title="放大預覽"
                                                     >
                                                         <Icon name="ZoomIn" size={13} />
                                                     </button>
                                                     {isSelected && (
-                                                        <div className="absolute top-1.5 left-1.5 bg-pink-400 text-slate-950 p-0.5 rounded-full shadow">
+                                                        <div className="absolute top-1.5 left-1.5 bg-cyan-400 text-slate-950 p-0.5 rounded-full shadow">
                                                             <Icon name="Check" size={12} />
                                                         </div>
                                                     )}
                                                 </div>
                                                 <div className="p-2.5 flex-1 flex flex-col justify-between">
                                                     <div>
-                                                        <div className={`text-xs font-bold ${isSelected ? 'text-pink-300' : 'text-slate-200'}`}>{item.name}</div>
+                                                        <div className={`text-xs font-bold ${isSelected ? 'text-cyan-300' : 'text-slate-200'}`}>{item.name}</div>
                                                         <div className="text-[10px] text-slate-500 font-mono">{item.id}</div>
                                                     </div>
                                                     <p className="text-[10px] text-slate-400 line-clamp-2 mt-1">{item.desc}</p>
@@ -783,10 +859,10 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                             </div>
 
                             {/* Prompt Output Card */}
-                            <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
+                            <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-3.5">
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
                                         <span className="text-xs font-bold text-white tracking-wide">即時 Prompt 編譯輸出</span>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -799,7 +875,7 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                                         </button>
                                         <button
                                             onClick={() => copyToClipboard(generatedPrompt, 'prompt')}
-                                            className="px-3.5 py-1.5 rounded-lg bg-pink-400 hover:bg-pink-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-pink-400/20 transition-all"
+                                            className="px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
                                         >
                                             <Icon name={copied ? 'Check' : 'Copy'} size={13} />
                                             <span>{copied ? '已複製 Prompt！' : '複製完整 Prompt'}</span>
@@ -808,13 +884,13 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                                 </div>
 
                                 {/* Terminal CLI Banner */}
-                                <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-pink-300 flex items-center justify-between overflow-x-auto custom-scrollbar">
+                                <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar">
                                     <div className="truncate pr-3 select-all">{generatedCli}</div>
                                 </div>
 
                                 {/* Full Structured Prompt Content */}
                                 <div className="relative">
-                                    <pre className="bg-slate-950/80 border border-slate-800/60 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto whitespace-pre-wrap custom-scrollbar select-text">
+                                    <pre className="bg-slate-950/80 border border-slate-800/60 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed max-h-[320px] overflow-y-auto whitespace-pre-wrap custom-scrollbar select-text">
                                         {generatedPrompt}
                                     </pre>
                                 </div>
@@ -822,7 +898,7 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                                 {/* Export Actions */}
                                 <div className="flex items-center justify-between pt-1">
                                     <div className="text-[11px] text-slate-500 font-mono">
-                                        適用於：Claude Code / Codex / Midjourney / Gemini / 阿里通義萬相
+                                        相容：Claude Code / Codex / Midjourney / Gemini / 阿里通義萬相
                                     </div>
                                     <div className="flex gap-2">
                                         <button
@@ -875,17 +951,17 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                                     <button
                                         onClick={() => {
                                             if (mode === 'xhs') {
-                                                if (subTab === 'style') setSelectedXhsStyle(zoomImage.id);
-                                                else setSelectedXhsLayout(zoomImage.id);
+                                                if (subTab === 'layout') setSelectedXhsLayout(zoomImage.id);
+                                                else setSelectedXhsStyle(zoomImage.id);
                                             } else if (mode === 'infographic') {
-                                                if (subTab === 'style') setSelectedInfoStyle(zoomImage.id);
-                                                else setSelectedInfoLayout(zoomImage.id);
+                                                if (subTab === 'layout') setSelectedInfoLayout(zoomImage.id);
+                                                else setSelectedInfoStyle(zoomImage.id);
                                             } else {
                                                 setSelectedCoverStyle(zoomImage.id);
                                             }
                                             setZoomImage(null);
                                         }}
-                                        className="px-4 py-2 rounded-xl bg-pink-400 hover:bg-pink-300 text-slate-950 font-black"
+                                        className="px-4 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black"
                                     >
                                         套用此風格 / 佈局
                                     </button>
@@ -895,14 +971,14 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
                     )}
 
                     {/* Footer */}
-                    <footer className="w-full mt-16 pt-10 pb-12 border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
-                        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500">
+                    <footer className="w-full mt-16 pt-8 pb-10 border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
+                        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
                             <div className="flex items-center gap-4">
-                                <a href="https://github.com/JimLiu/baoyu-skills" target="_blank" className="hover:text-pink-300 font-bold transition-colors">
+                                <a href="https://github.com/JimLiu/baoyu-skills" target="_blank" className="hover:text-cyan-300 font-bold transition-colors">
                                     GitHub: JimLiu/baoyu-skills
                                 </a>
                                 <span>•</span>
-                                <a href="https://www.youtube.com/@meiko1" target="_blank" className="hover:text-pink-300 font-bold transition-colors flex items-center gap-1">
+                                <a href="https://www.youtube.com/@meiko1" target="_blank" className="hover:text-cyan-300 font-bold transition-colors flex items-center gap-1">
                                     <span>Meiko微課頻道</span>
                                     <Icon name="Youtube" size={14} />
                                 </a>
@@ -928,4 +1004,4 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
 with open('/home/ubuntu/github/notebooklm/app.jsx', 'w', encoding='utf-8') as f:
     f.write(app_code)
 
-print("Saved app.jsx, size:", len(app_code))
+print("Saved app.jsx successfully, size:", len(app_code))
