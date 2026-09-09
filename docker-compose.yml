@@ -1,0 +1,7 @@
+services:
+  gemini-notebook:
+    build: .
+    container_name: gemini-notebook-app
+    restart: unless-stopped
+    ports:
+      - "8088:80"

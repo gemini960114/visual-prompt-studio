@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Dev] Gemini Notebook 簡報Prompt生成器</title>
+    <link rel="icon" type="image/png" href="./assets/images/notebooklm.png" />
+    <link rel="preconnect" href="https://drive.google.com" crossorigin />
+    <link rel="dns-prefetch" href="https://drive.google.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.tailwind || document.write('<script src="./assets/libs/tailwindcss.js"><\/script>')</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+    <script>window.React || document.write('<script src="./assets/libs/react.production.min.js"><\/script>')</script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+    <script>window.ReactDOM || document.write('<script src="./assets/libs/react-dom.production.min.js"><\/script>')</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js"></script>
+    <script>window.Babel || document.write('<script src="./assets/libs/babel.min.js"><\/script>')</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>window.pdfjsLib || document.write('<script src="./assets/libs/pdf.min.js"><\/script>')</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>window.jspdf || document.write('<script src="./assets/libs/jspdf.umd.min.js"><\/script>')</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>window.JSZip || document.write('<script src="./assets/libs/jszip.min.js"><\/script>')</script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #000000; color: #f8fafc; }
+        .pink-glow { box-shadow: 0 0 15px rgba(249, 168, 212, 0.15); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #f9a8d4; }
+        @keyframes f-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: f-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .pdf-thumb canvas { max-width: 100%; height: auto; display: block; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- Direct JSX evaluation for live development -->
+    <script type="text/babel" src="./app.jsx"></script>
+</body>
+</html>
