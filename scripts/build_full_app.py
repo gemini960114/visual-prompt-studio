@@ -1,4 +1,6 @@
+import os
 
+app_code = r'''
         const { useState, useEffect, useMemo, useRef } = React;
 
         const SUPABASE_PROJECT_URL = 'https://kwnrkmaoqeyaappnoiwh.supabase.co';
@@ -921,3 +923,9 @@ Prompt: Masterpiece promotional cover poster for "${topic}", ${coverType} compos
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
+'''
+
+with open('/home/ubuntu/github/notebooklm/app.jsx', 'w', encoding='utf-8') as f:
+    f.write(app_code)
+
+print("Saved app.jsx, size:", len(app_code))
