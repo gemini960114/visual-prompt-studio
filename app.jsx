@@ -437,6 +437,9 @@
             const [copied, setCopied] = useState(false);
             const [copiedCli, setCopiedCli] = useState(false);
             const [copiedExampleKey, setCopiedExampleKey] = useState(null);
+            const [examplePrompts, setExamplePrompts] = useState(() =>
+                SECONDARY_PROMPT_EXAMPLES.map(ex => ex.prompt)
+            );
             const [zoomImage, setZoomImage] = useState(null);
             const [customPrompt, setCustomPrompt] = useState(null);
 
@@ -642,6 +645,22 @@ ${content}
                 navigator.clipboard.writeText(text).then(() => {
                     setCopiedExampleKey(key);
                     setTimeout(() => setCopiedExampleKey(null), 2000);
+                });
+            };
+
+            const handleExamplePromptChange = (idx, val) => {
+                setExamplePrompts(prev => {
+                    const next = [...prev];
+                    next[idx] = val;
+                    return next;
+                });
+            };
+
+            const handleResetExamplePrompt = (idx) => {
+                setExamplePrompts(prev => {
+                    const next = [...prev];
+                    next[idx] = SECONDARY_PROMPT_EXAMPLES[idx].prompt;
+                    return next;
                 });
             };
 
@@ -1127,15 +1146,17 @@ ${content}
                                         <div>
                                             <h3 className="text-xs font-bold text-white tracking-wide flex items-center gap-2">
                                                 <span>貼入 ChatGPT / Gemini 二次生成示範指令</span>
-                                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 border border-slate-700">共 2 則範例</span>
+                                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 border border-slate-700">共 2 則範例（點擊可直接編輯）</span>
                                             </h3>
-                                            <p className="text-[11px] text-slate-400 mt-0.5">將上方規格貼給 AI 時，可搭配以下指令要求模型快速改寫風格或角色：</p>
+                                            <p className="text-[11px] text-slate-400 mt-0.5">將上方規格貼給 AI 時，可搭配以下指令要求模型快速改寫風格或角色（文字框支援直接編輯微調）：</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="space-y-3">
                                     {SECONDARY_PROMPT_EXAMPLES.map((ex, idx) => {
+                                        const currentPromptText = examplePrompts[idx] !== undefined ? examplePrompts[idx] : ex.prompt;
+                                        const isModified = currentPromptText !== ex.prompt;
                                         const isCopiedOnly = copiedExampleKey === `only-${idx}`;
                                         const isCopiedCombined = copiedExampleKey === `combined-${idx}`;
 
@@ -1150,31 +1171,56 @@ ${content}
                                                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${ex.badgeColor}`}>
                                                             {ex.badge}
                                                         </span>
+                                                        {isModified && (
+                                                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-in">
+                                                                已自訂編輯
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     <span className="text-[11px] text-slate-400">{ex.desc}</span>
                                                 </div>
 
-                                                <div className="p-3 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-200 leading-relaxed select-all">
-                                                    {ex.prompt}
+                                                <div className="relative">
+                                                    <textarea
+                                                        value={currentPromptText}
+                                                        onChange={(e) => handleExamplePromptChange(idx, e.target.value)}
+                                                        rows={3}
+                                                        className="w-full bg-slate-900/90 border border-slate-800/90 focus:border-cyan-400/80 focus:ring-1 focus:ring-cyan-400/30 rounded-xl p-3 text-xs font-mono text-slate-200 leading-relaxed outline-none resize-y transition-all custom-scrollbar"
+                                                        placeholder="可直接在此編輯自訂指令..."
+                                                        spellCheck="false"
+                                                    />
                                                 </div>
 
-                                                <div className="flex items-center justify-end flex-wrap gap-2 pt-1">
-                                                    <button
-                                                        onClick={() => copyExamplePrompt(`only-${idx}`, ex.prompt)}
-                                                        className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
-                                                        title="僅複製這段示範指令"
-                                                    >
-                                                        <Icon name={isCopiedOnly ? 'Check' : 'Copy'} size={13} className={isCopiedOnly ? 'text-emerald-400' : ''} />
-                                                        <span>{isCopiedOnly ? '已複製指令！' : '複製示範指令'}</span>
-                                                    </button>
-                                                    <button
-                                                        onClick={() => copyExamplePrompt(`combined-${idx}`, `${ex.prompt}\n\n---\n\n${activePrompt}`)}
-                                                        className="px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
-                                                        title="將此指令與上方當前規格提示詞合併複製，直接貼入 ChatGPT 或 Gemini"
-                                                    >
-                                                        <Icon name={isCopiedCombined ? 'Check' : 'Sparkles'} size={13} className={isCopiedCombined ? 'text-emerald-400' : ''} />
-                                                        <span>{isCopiedCombined ? '已複製指令 + 規格書！' : '⚡ 複製指令 + 規格書'}</span>
-                                                    </button>
+                                                <div className="flex items-center justify-between flex-wrap gap-2 pt-0.5">
+                                                    <div>
+                                                        {isModified && (
+                                                            <button
+                                                                onClick={() => handleResetExamplePrompt(idx)}
+                                                                className="text-[11px] text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 transition-colors"
+                                                            >
+                                                                <Icon name="RefreshCw" size={11} />
+                                                                <span>重設為預設指令</span>
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                    <div className="flex items-center gap-2 ml-auto">
+                                                        <button
+                                                            onClick={() => copyExamplePrompt(`only-${idx}`, currentPromptText)}
+                                                            className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
+                                                            title="僅複製這段指令"
+                                                        >
+                                                            <Icon name={isCopiedOnly ? 'Check' : 'Copy'} size={13} className={isCopiedOnly ? 'text-emerald-400' : ''} />
+                                                            <span>{isCopiedOnly ? '已複製指令！' : '複製示範指令'}</span>
+                                                        </button>
+                                                        <button
+                                                            onClick={() => copyExamplePrompt(`combined-${idx}`, `${currentPromptText}\n\n---\n\n${activePrompt}`)}
+                                                            className="px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
+                                                            title="將此編輯指令與上方規格提示詞合併複製，直接貼入 ChatGPT 或 Gemini"
+                                                        >
+                                                            <Icon name={isCopiedCombined ? 'Check' : 'Sparkles'} size={13} className={isCopiedCombined ? 'text-emerald-400' : ''} />
+                                                            <span>{isCopiedCombined ? '已複製指令 + 規格書！' : '⚡ 複製指令 + 規格書'}</span>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         );

@@ -1107,6 +1107,7 @@ const App = () => {
   const [copied, setCopied] = useState(false);
   const [copiedCli, setCopiedCli] = useState(false);
   const [copiedExampleKey, setCopiedExampleKey] = useState(null);
+  const [examplePrompts, setExamplePrompts] = useState(() => SECONDARY_PROMPT_EXAMPLES.map(ex => ex.prompt));
   const [zoomImage, setZoomImage] = useState(null);
   const [customPrompt, setCustomPrompt] = useState(null);
 
@@ -1307,6 +1308,20 @@ ${content}
     navigator.clipboard.writeText(text).then(() => {
       setCopiedExampleKey(key);
       setTimeout(() => setCopiedExampleKey(null), 2000);
+    });
+  };
+  const handleExamplePromptChange = (idx, val) => {
+    setExamplePrompts(prev => {
+      const next = [...prev];
+      next[idx] = val;
+      return next;
+    });
+  };
+  const handleResetExamplePrompt = idx => {
+    setExamplePrompts(prev => {
+      const next = [...prev];
+      next[idx] = SECONDARY_PROMPT_EXAMPLES[idx].prompt;
+      return next;
     });
   };
   const exportMarkdown = () => {
@@ -1708,11 +1723,13 @@ ${content}
     className: "text-xs font-bold text-white tracking-wide flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("span", null, "\u8CBC\u5165 ChatGPT / Gemini \u4E8C\u6B21\u751F\u6210\u793A\u7BC4\u6307\u4EE4"), /*#__PURE__*/React.createElement("span", {
     className: "text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 border border-slate-700"
-  }, "\u5171 2 \u5247\u7BC4\u4F8B")), /*#__PURE__*/React.createElement("p", {
+  }, "\u5171 2 \u5247\u7BC4\u4F8B\uFF08\u9EDE\u64CA\u53EF\u76F4\u63A5\u7DE8\u8F2F\uFF09")), /*#__PURE__*/React.createElement("p", {
     className: "text-[11px] text-slate-400 mt-0.5"
-  }, "\u5C07\u4E0A\u65B9\u898F\u683C\u8CBC\u7D66 AI \u6642\uFF0C\u53EF\u642D\u914D\u4EE5\u4E0B\u6307\u4EE4\u8981\u6C42\u6A21\u578B\u5FEB\u901F\u6539\u5BEB\u98A8\u683C\u6216\u89D2\u8272\uFF1A")))), /*#__PURE__*/React.createElement("div", {
+  }, "\u5C07\u4E0A\u65B9\u898F\u683C\u8CBC\u7D66 AI \u6642\uFF0C\u53EF\u642D\u914D\u4EE5\u4E0B\u6307\u4EE4\u8981\u6C42\u6A21\u578B\u5FEB\u901F\u6539\u5BEB\u98A8\u683C\u6216\u89D2\u8272\uFF08\u6587\u5B57\u6846\u652F\u63F4\u76F4\u63A5\u7DE8\u8F2F\u5FAE\u8ABF\uFF09\uFF1A")))), /*#__PURE__*/React.createElement("div", {
     className: "space-y-3"
   }, SECONDARY_PROMPT_EXAMPLES.map((ex, idx) => {
+    const currentPromptText = examplePrompts[idx] !== undefined ? examplePrompts[idx] : ex.prompt;
+    const isModified = currentPromptText !== ex.prompt;
     const isCopiedOnly = copiedExampleKey === `only-${idx}`;
     const isCopiedCombined = copiedExampleKey === `combined-${idx}`;
     return /*#__PURE__*/React.createElement("div", {
@@ -1726,29 +1743,46 @@ ${content}
       className: "text-xs font-bold text-slate-200"
     }, ex.title), /*#__PURE__*/React.createElement("span", {
       className: `text-[10px] font-bold px-2 py-0.5 rounded-full border ${ex.badgeColor}`
-    }, ex.badge)), /*#__PURE__*/React.createElement("span", {
+    }, ex.badge), isModified && /*#__PURE__*/React.createElement("span", {
+      className: "text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-in"
+    }, "\u5DF2\u81EA\u8A02\u7DE8\u8F2F")), /*#__PURE__*/React.createElement("span", {
       className: "text-[11px] text-slate-400"
     }, ex.desc)), /*#__PURE__*/React.createElement("div", {
-      className: "p-3 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-200 leading-relaxed select-all"
-    }, ex.prompt), /*#__PURE__*/React.createElement("div", {
-      className: "flex items-center justify-end flex-wrap gap-2 pt-1"
+      className: "relative"
+    }, /*#__PURE__*/React.createElement("textarea", {
+      value: currentPromptText,
+      onChange: e => handleExamplePromptChange(idx, e.target.value),
+      rows: 3,
+      className: "w-full bg-slate-900/90 border border-slate-800/90 focus:border-cyan-400/80 focus:ring-1 focus:ring-cyan-400/30 rounded-xl p-3 text-xs font-mono text-slate-200 leading-relaxed outline-none resize-y transition-all custom-scrollbar",
+      placeholder: "\u53EF\u76F4\u63A5\u5728\u6B64\u7DE8\u8F2F\u81EA\u8A02\u6307\u4EE4...",
+      spellCheck: "false"
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center justify-between flex-wrap gap-2 pt-0.5"
+    }, /*#__PURE__*/React.createElement("div", null, isModified && /*#__PURE__*/React.createElement("button", {
+      onClick: () => handleResetExamplePrompt(idx),
+      className: "text-[11px] text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 transition-colors"
+    }, /*#__PURE__*/React.createElement(Icon, {
+      name: "RefreshCw",
+      size: 11
+    }), /*#__PURE__*/React.createElement("span", null, "\u91CD\u8A2D\u70BA\u9810\u8A2D\u6307\u4EE4"))), /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center gap-2 ml-auto"
     }, /*#__PURE__*/React.createElement("button", {
-      onClick: () => copyExamplePrompt(`only-${idx}`, ex.prompt),
+      onClick: () => copyExamplePrompt(`only-${idx}`, currentPromptText),
       className: "px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all",
-      title: "\u50C5\u8907\u88FD\u9019\u6BB5\u793A\u7BC4\u6307\u4EE4"
+      title: "\u50C5\u8907\u88FD\u9019\u6BB5\u6307\u4EE4"
     }, /*#__PURE__*/React.createElement(Icon, {
       name: isCopiedOnly ? 'Check' : 'Copy',
       size: 13,
       className: isCopiedOnly ? 'text-emerald-400' : ''
     }), /*#__PURE__*/React.createElement("span", null, isCopiedOnly ? '已複製指令！' : '複製示範指令')), /*#__PURE__*/React.createElement("button", {
-      onClick: () => copyExamplePrompt(`combined-${idx}`, `${ex.prompt}\n\n---\n\n${activePrompt}`),
+      onClick: () => copyExamplePrompt(`combined-${idx}`, `${currentPromptText}\n\n---\n\n${activePrompt}`),
       className: "px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm",
-      title: "\u5C07\u6B64\u6307\u4EE4\u8207\u4E0A\u65B9\u7576\u524D\u898F\u683C\u63D0\u793A\u8A5E\u5408\u4F75\u8907\u88FD\uFF0C\u76F4\u63A5\u8CBC\u5165 ChatGPT \u6216 Gemini"
+      title: "\u5C07\u6B64\u7DE8\u8F2F\u6307\u4EE4\u8207\u4E0A\u65B9\u898F\u683C\u63D0\u793A\u8A5E\u5408\u4F75\u8907\u88FD\uFF0C\u76F4\u63A5\u8CBC\u5165 ChatGPT \u6216 Gemini"
     }, /*#__PURE__*/React.createElement(Icon, {
       name: isCopiedCombined ? 'Check' : 'Sparkles',
       size: 13,
       className: isCopiedCombined ? 'text-emerald-400' : ''
-    }), /*#__PURE__*/React.createElement("span", null, isCopiedCombined ? '已複製指令 + 規格書！' : '⚡ 複製指令 + 規格書'))));
+    }), /*#__PURE__*/React.createElement("span", null, isCopiedCombined ? '已複製指令 + 規格書！' : '⚡ 複製指令 + 規格書')))));
   }))))), zoomImage && /*#__PURE__*/React.createElement("div", {
     className: "fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in",
     onClick: () => setZoomImage(null)
