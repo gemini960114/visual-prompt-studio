@@ -1213,7 +1213,7 @@ const App = () => {
 ${content}
 
 ---
-### 💡 執行指示（給 Gemini）
+### 💡 執行指示
 請依據上述的「${lay.name}」架構與「${st.name}」視覺風格，將上述內容拆解規劃為共 ${cardCount} 張的連續圖卡文案與各頁畫面排版建議，並嚴格遵循指定的 5 色調色盤。`;
     } else if (mode === 'infographic') {
       const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
@@ -1243,7 +1243,7 @@ ${content}
 ${content}
 
 ---
-### 💡 執行指示（給 Gemini）
+### 💡 執行指示
 請依據上述的「${lay.name}」架構規範與「${st.name}」視覺美學風格，將上述完整內容結構化整理，並嚴格遵循指定的 5 色調色盤，為我輸出完整的海報版面視覺規劃與生圖/排版指示。`;
     } else {
       const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
@@ -1268,25 +1268,18 @@ ${content}
 ${content}
 
 ---
-### 💡 執行指示（給 Gemini）
+### 💡 執行指示
 請依據上述的尺寸比例、構圖類型「${coverType}」、風格「${st.name}」與指定色票，為「${displayTitle}」規劃出最具吸引力的主視覺封面設計與生圖/排版指示。`;
     }
   }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
 
   // Active prompt: either user edited custom prompt or auto-generated
   const activePrompt = customPrompt !== null ? customPrompt : generatedPrompt;
-  const extractImagePrompt = text => {
-    const match = text.match(/Prompt:\s*([\s\S]+)$/i);
-    return match ? match[1].trim() : text.trim();
-  };
   const copyToClipboard = (text, type) => {
     navigator.clipboard.writeText(text).then(() => {
       if (type === 'cli') {
         setCopiedCli(true);
         setTimeout(() => setCopiedCli(false), 2000);
-      } else if (type === 'imagePrompt') {
-        setCopiedImagePrompt(true);
-        setTimeout(() => setCopiedImagePrompt(false), 2000);
       } else {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -1304,32 +1297,6 @@ ${content}
     a.download = `${mode}-${safeTitle}.md`;
     a.click();
     URL.revokeObjectURL(url);
-  };
-  const exportPdf = () => {
-    if (!window.jspdf || !window.jspdf.jsPDF) {
-      alert('PDF 函式庫尚未載入完成，請稍候重試');
-      return;
-    }
-    const displayTitle = title.trim() || '未命名主題';
-    const safeTitle = (title.trim() || '未命名主題').replace(/[/\\?%*:|"<>]/g, '_').slice(0, 10);
-    const doc = new window.jspdf.jsPDF();
-    doc.setFontSize(16);
-    doc.text(`Visual Prompt Specification - ${mode}`, 14, 20);
-    doc.setFontSize(11);
-    doc.text(`Title: ${displayTitle}`, 14, 30);
-    doc.text(`Ratio: ${aspectRatio} (${currentSpec.width}x${currentSpec.height} px, ${currentSpec.dpi})`, 14, 38);
-    doc.text(`Palette: ${palette.join(', ')}`, 14, 46);
-    doc.text(`CLI Command:`, 14, 56);
-    doc.setFontSize(9);
-    doc.text(generatedCli, 14, 63, {
-      maxWidth: 180
-    });
-    doc.setFontSize(11);
-    doc.text(`Full Generation Prompt:`, 14, 78);
-    doc.setFontSize(8);
-    const splitText = doc.splitTextToSize(activePrompt, 180);
-    doc.text(splitText, 14, 86);
-    doc.save(`${mode}-${safeTitle}.pdf`);
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "min-h-screen bg-slate-950 text-slate-100 font-sans pb-16"
@@ -1664,11 +1631,11 @@ ${content}
   }), /*#__PURE__*/React.createElement("span", null, copiedCli ? '已複製！' : '複製 CLI')), /*#__PURE__*/React.createElement("button", {
     onClick: () => copyToClipboard(activePrompt, 'prompt'),
     className: "px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all",
-    title: "\u4E00\u9375\u8907\u88FD\u6574\u4EFD\u898F\u683C\uFF0C\u76F4\u63A5\u8CBC\u7D66 Google Gemini \u5373\u53EF\u5B8C\u6210\u6392\u7248\u8207\u751F\u6210\uFF01"
+    title: "\u4E00\u9375\u8907\u88FD\u6574\u4EFD\u898F\u683C\u63D0\u793A\u8A5E\uFF01"
   }, /*#__PURE__*/React.createElement(Icon, {
-    name: copied ? 'Check' : 'Sparkles',
+    name: copied ? 'Check' : 'Copy',
     size: 14
-  }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製 Gemini 提示詞！' : '📋 複製 Gemini 提示詞')))), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製提示詞！' : '📋 複製提示詞')))), /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar"
   }, /*#__PURE__*/React.createElement("div", {
     className: "truncate pr-3 select-all"
@@ -1685,7 +1652,7 @@ ${content}
     className: "flex items-center justify-between mt-1.5 px-1"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-[11px] text-slate-400 flex items-center gap-1"
-  }, /*#__PURE__*/React.createElement("span", null, "\uD83D\uDCA1 \u63D0\u793A\uFF1A\u6846\u5167\u70BA\u6A19\u6E96\u898F\u683C\u66F8\uFF08\u53EF\u76F4\u63A5\u9EDE\u64CA\u7DE8\u8F2F\uFF09\uFF0C", /*#__PURE__*/React.createElement("b", null, "\u8907\u88FD\u5F8C\u76F4\u63A5\u8CBC\u5165 Google Gemini \u5C0D\u8A71\u6846\u5373\u53EF\uFF01"))), customPrompt !== null && /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("span", null, "\uD83D\uDCA1 \u63D0\u793A\uFF1A\u6846\u5167\u70BA\u6A19\u6E96\u898F\u683C\u66F8\uFF08\u53EF\u76F4\u63A5\u9EDE\u64CA\u7DE8\u8F2F\uFF09\uFF0C", /*#__PURE__*/React.createElement("b", null, "\u8907\u88FD\u5F8C\u76F4\u63A5\u8CBC\u5165 AI \u5C0D\u8A71\u6846\u5373\u53EF\uFF01"))), customPrompt !== null && /*#__PURE__*/React.createElement("button", {
     onClick: () => setCustomPrompt(null),
     className: "text-[11px] text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 transition-colors"
   }, /*#__PURE__*/React.createElement(Icon, {
@@ -1703,13 +1670,7 @@ ${content}
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "FileText",
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "\u4E0B\u8F09 Markdown")), /*#__PURE__*/React.createElement("button", {
-    onClick: exportPdf,
-    className: "px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-600 text-slate-300 text-xs font-bold flex items-center gap-1 transition-all"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "Download",
-    size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "\u532F\u51FA PDF \u898F\u683C\u66F8"))))))), zoomImage && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, "\u4E0B\u8F09 Markdown"))))))), zoomImage && /*#__PURE__*/React.createElement("div", {
     className: "fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in",
     onClick: () => setZoomImage(null)
   }, /*#__PURE__*/React.createElement("div", {

@@ -543,7 +543,7 @@
 ${content}
 
 ---
-### 💡 執行指示（給 Gemini）
+### 💡 執行指示
 請依據上述的「${lay.name}」架構與「${st.name}」視覺風格，將上述內容拆解規劃為共 ${cardCount} 張的連續圖卡文案與各頁畫面排版建議，並嚴格遵循指定的 5 色調色盤。`;
                 } else if (mode === 'infographic') {
                     const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
@@ -573,7 +573,7 @@ ${content}
 ${content}
 
 ---
-### 💡 執行指示（給 Gemini）
+### 💡 執行指示
 請依據上述的「${lay.name}」架構規範與「${st.name}」視覺美學風格，將上述完整內容結構化整理，並嚴格遵循指定的 5 色調色盤，為我輸出完整的海報版面視覺規劃與生圖/排版指示。`;
                 } else {
                     const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
@@ -598,7 +598,7 @@ ${content}
 ${content}
 
 ---
-### 💡 執行指示（給 Gemini）
+### 💡 執行指示
 請依據上述的尺寸比例、構圖類型「${coverType}」、風格「${st.name}」與指定色票，為「${displayTitle}」規劃出最具吸引力的主視覺封面設計與生圖/排版指示。`;
                 }
             }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
@@ -606,19 +606,11 @@ ${content}
             // Active prompt: either user edited custom prompt or auto-generated
             const activePrompt = customPrompt !== null ? customPrompt : generatedPrompt;
 
-            const extractImagePrompt = (text) => {
-                const match = text.match(/Prompt:\s*([\s\S]+)$/i);
-                return match ? match[1].trim() : text.trim();
-            };
-
             const copyToClipboard = (text, type) => {
                 navigator.clipboard.writeText(text).then(() => {
                     if (type === 'cli') {
                         setCopiedCli(true);
                         setTimeout(() => setCopiedCli(false), 2000);
-                    } else if (type === 'imagePrompt') {
-                        setCopiedImagePrompt(true);
-                        setTimeout(() => setCopiedImagePrompt(false), 2000);
                     } else {
                         setCopied(true);
                         setTimeout(() => setCopied(false), 2000);
@@ -635,32 +627,6 @@ ${content}
                 a.download = `${mode}-${safeTitle}.md`;
                 a.click();
                 URL.revokeObjectURL(url);
-            };
-
-            const exportPdf = () => {
-                if (!window.jspdf || !window.jspdf.jsPDF) {
-                    alert('PDF 函式庫尚未載入完成，請稍候重試');
-                    return;
-                }
-                const displayTitle = title.trim() || '未命名主題';
-                const safeTitle = (title.trim() || '未命名主題').replace(/[/\\?%*:|"<>]/g, '_').slice(0, 10);
-                const doc = new window.jspdf.jsPDF();
-                doc.setFontSize(16);
-                doc.text(`Visual Prompt Specification - ${mode}`, 14, 20);
-                doc.setFontSize(11);
-                doc.text(`Title: ${displayTitle}`, 14, 30);
-                doc.text(`Ratio: ${aspectRatio} (${currentSpec.width}x${currentSpec.height} px, ${currentSpec.dpi})`, 14, 38);
-                doc.text(`Palette: ${palette.join(', ')}`, 14, 46);
-                doc.text(`CLI Command:`, 14, 56);
-                doc.setFontSize(9);
-                doc.text(generatedCli, 14, 63, { maxWidth: 180 });
-                
-                doc.setFontSize(11);
-                doc.text(`Full Generation Prompt:`, 14, 78);
-                doc.setFontSize(8);
-                const splitText = doc.splitTextToSize(activePrompt, 180);
-                doc.text(splitText, 14, 86);
-                doc.save(`${mode}-${safeTitle}.pdf`);
             };
 
             return (
@@ -1068,10 +1034,10 @@ ${content}
                                         <button
                                             onClick={() => copyToClipboard(activePrompt, 'prompt')}
                                             className="px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
-                                            title="一鍵複製整份規格，直接貼給 Google Gemini 即可完成排版與生成！"
+                                            title="一鍵複製整份規格提示詞！"
                                         >
-                                            <Icon name={copied ? 'Check' : 'Sparkles'} size={14} />
-                                            <span>{copied ? '已複製 Gemini 提示詞！' : '📋 複製 Gemini 提示詞'}</span>
+                                            <Icon name={copied ? 'Check' : 'Copy'} size={14} />
+                                            <span>{copied ? '已複製提示詞！' : '📋 複製提示詞'}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1093,7 +1059,7 @@ ${content}
                                     />
                                     <div className="flex items-center justify-between mt-1.5 px-1">
                                         <span className="text-[11px] text-slate-400 flex items-center gap-1">
-                                            <span>💡 提示：框內為標準規格書（可直接點擊編輯），<b>複製後直接貼入 Google Gemini 對話框即可！</b></span>
+                                            <span>💡 提示：框內為標準規格書（可直接點擊編輯），<b>複製後直接貼入 AI 對話框即可！</b></span>
                                         </span>
                                         {customPrompt !== null && (
                                             <button
@@ -1119,13 +1085,6 @@ ${content}
                                         >
                                             <Icon name="FileText" size={13} />
                                             <span>下載 Markdown</span>
-                                        </button>
-                                        <button
-                                            onClick={exportPdf}
-                                            className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-600 text-slate-300 text-xs font-bold flex items-center gap-1 transition-all"
-                                        >
-                                            <Icon name="Download" size={13} />
-                                            <span>匯出 PDF 規格書</span>
                                         </button>
                                     </div>
                                 </div>
