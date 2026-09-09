@@ -356,6 +356,26 @@
             }
         };
 
+        // LLM Secondary Re-generation Prompts (ChatGPT / Gemini)
+        const SECONDARY_PROMPT_EXAMPLES = [
+            {
+                id: 'pikachu',
+                title: '範例 1：IP 角色趣味轉化（皮卡丘主題）',
+                badge: '角色擬人 · 溫暖活潑',
+                badgeColor: 'bg-amber-400/15 text-amber-300 border-amber-400/30',
+                desc: '將嚴肅衛教或專業宣導轉化為皮卡丘主角視角，親切吸睛。',
+                prompt: '將以下文字內容的敘事主角改為皮卡丘，統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
+            },
+            {
+                id: 'executive',
+                title: '範例 2：科技顧問與商務簡報（高管戰情版）',
+                badge: '專業商務 · 模組拆解',
+                badgeColor: 'bg-cyan-400/15 text-cyan-300 border-cyan-400/30',
+                desc: '適合技術架構、業務報告或高管彙報，強調極客青色調與關鍵量化指標。',
+                prompt: '請將以下文字內容轉化為科技大廠高管簡報風格，統一調整為深邃科技藍與極客青色調，以便當盒結構拆解出核心洞察與關鍵量化指標，完整保留原文資訊與數據，並直接輸出修改潤飾後的完整內容。'
+            }
+        ];
+
         // Robust markdown title and subtitle extractor
         const extractTitleAndSubtitle = (rawText) => {
             const lines = (rawText || '').split('\n').map(l => l.trim()).filter(Boolean);
@@ -416,7 +436,7 @@
             // Modal, Feedback & Editable Prompt
             const [copied, setCopied] = useState(false);
             const [copiedCli, setCopiedCli] = useState(false);
-            const [copiedImagePrompt, setCopiedImagePrompt] = useState(false);
+            const [copiedExampleKey, setCopiedExampleKey] = useState(null);
             const [zoomImage, setZoomImage] = useState(null);
             const [customPrompt, setCustomPrompt] = useState(null);
 
@@ -615,6 +635,13 @@ ${content}
                         setCopied(true);
                         setTimeout(() => setCopied(false), 2000);
                     }
+                });
+            };
+
+            const copyExamplePrompt = (key, text) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    setCopiedExampleKey(key);
+                    setTimeout(() => setCopiedExampleKey(null), 2000);
                 });
             };
 
@@ -1087,6 +1114,71 @@ ${content}
                                             <span>下載 Markdown</span>
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+
+                            {/* Secondary Generation Prompts for ChatGPT / Gemini */}
+                            <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-3.5">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                                    <div className="flex items-center gap-2.5">
+                                        <div className="w-7 h-7 rounded-lg bg-cyan-400/15 border border-cyan-400/30 flex items-center justify-center text-cyan-300">
+                                            <Icon name="Sparkles" size={15} />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xs font-bold text-white tracking-wide flex items-center gap-2">
+                                                <span>貼入 ChatGPT / Gemini 二次生成示範指令</span>
+                                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 border border-slate-700">共 2 則範例</span>
+                                            </h3>
+                                            <p className="text-[11px] text-slate-400 mt-0.5">將上方規格貼給 AI 時，可搭配以下指令要求模型快速改寫風格或角色：</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    {SECONDARY_PROMPT_EXAMPLES.map((ex, idx) => {
+                                        const isCopiedOnly = copiedExampleKey === `only-${idx}`;
+                                        const isCopiedCombined = copiedExampleKey === `combined-${idx}`;
+
+                                        return (
+                                            <div
+                                                key={ex.id}
+                                                className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 hover:border-slate-700 transition-all flex flex-col gap-2.5"
+                                            >
+                                                <div className="flex items-center justify-between gap-2 flex-wrap">
+                                                    <div className="flex items-center gap-2 flex-wrap">
+                                                        <span className="text-xs font-bold text-slate-200">{ex.title}</span>
+                                                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${ex.badgeColor}`}>
+                                                            {ex.badge}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-[11px] text-slate-400">{ex.desc}</span>
+                                                </div>
+
+                                                <div className="p-3 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-200 leading-relaxed select-all">
+                                                    {ex.prompt}
+                                                </div>
+
+                                                <div className="flex items-center justify-end flex-wrap gap-2 pt-1">
+                                                    <button
+                                                        onClick={() => copyExamplePrompt(`only-${idx}`, ex.prompt)}
+                                                        className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
+                                                        title="僅複製這段示範指令"
+                                                    >
+                                                        <Icon name={isCopiedOnly ? 'Check' : 'Copy'} size={13} className={isCopiedOnly ? 'text-emerald-400' : ''} />
+                                                        <span>{isCopiedOnly ? '已複製指令！' : '複製示範指令'}</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => copyExamplePrompt(`combined-${idx}`, `${ex.prompt}\n\n---\n\n${activePrompt}`)}
+                                                        className="px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
+                                                        title="將此指令與上方當前規格提示詞合併複製，直接貼入 ChatGPT 或 Gemini"
+                                                    >
+                                                        <Icon name={isCopiedCombined ? 'Check' : 'Sparkles'} size={13} className={isCopiedCombined ? 'text-emerald-400' : ''} />
+                                                        <span>{isCopiedCombined ? '已複製指令 + 規格書！' : '⚡ 複製指令 + 規格書'}</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </section>

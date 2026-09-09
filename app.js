@@ -1029,6 +1029,23 @@ const RESOLUTION_SPECS = {
   }
 };
 
+// LLM Secondary Re-generation Prompts (ChatGPT / Gemini)
+const SECONDARY_PROMPT_EXAMPLES = [{
+  id: 'pikachu',
+  title: '範例 1：IP 角色趣味轉化（皮卡丘主題）',
+  badge: '角色擬人 · 溫暖活潑',
+  badgeColor: 'bg-amber-400/15 text-amber-300 border-amber-400/30',
+  desc: '將嚴肅衛教或專業宣導轉化為皮卡丘主角視角，親切吸睛。',
+  prompt: '將以下文字內容的敘事主角改為皮卡丘，統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
+}, {
+  id: 'executive',
+  title: '範例 2：科技顧問與商務簡報（高管戰情版）',
+  badge: '專業商務 · 模組拆解',
+  badgeColor: 'bg-cyan-400/15 text-cyan-300 border-cyan-400/30',
+  desc: '適合技術架構、業務報告或高管彙報，強調極客青色調與關鍵量化指標。',
+  prompt: '請將以下文字內容轉化為科技大廠高管簡報風格，統一調整為深邃科技藍與極客青色調，以便當盒結構拆解出核心洞察與關鍵量化指標，完整保留原文資訊與數據，並直接輸出修改潤飾後的完整內容。'
+}];
+
 // Robust markdown title and subtitle extractor
 const extractTitleAndSubtitle = rawText => {
   const lines = (rawText || '').split('\n').map(l => l.trim()).filter(Boolean);
@@ -1089,7 +1106,7 @@ const App = () => {
   // Modal, Feedback & Editable Prompt
   const [copied, setCopied] = useState(false);
   const [copiedCli, setCopiedCli] = useState(false);
-  const [copiedImagePrompt, setCopiedImagePrompt] = useState(false);
+  const [copiedExampleKey, setCopiedExampleKey] = useState(null);
   const [zoomImage, setZoomImage] = useState(null);
   const [customPrompt, setCustomPrompt] = useState(null);
 
@@ -1284,6 +1301,12 @@ ${content}
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }
+    });
+  };
+  const copyExamplePrompt = (key, text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedExampleKey(key);
+      setTimeout(() => setCopiedExampleKey(null), 2000);
     });
   };
   const exportMarkdown = () => {
@@ -1670,7 +1693,63 @@ ${content}
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "FileText",
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "\u4E0B\u8F09 Markdown"))))))), zoomImage && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, "\u4E0B\u8F09 Markdown"))))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-3.5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2.5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "w-7 h-7 rounded-lg bg-cyan-400/15 border border-cyan-400/30 flex items-center justify-center text-cyan-300"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "Sparkles",
+    size: 15
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
+    className: "text-xs font-bold text-white tracking-wide flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", null, "\u8CBC\u5165 ChatGPT / Gemini \u4E8C\u6B21\u751F\u6210\u793A\u7BC4\u6307\u4EE4"), /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 border border-slate-700"
+  }, "\u5171 2 \u5247\u7BC4\u4F8B")), /*#__PURE__*/React.createElement("p", {
+    className: "text-[11px] text-slate-400 mt-0.5"
+  }, "\u5C07\u4E0A\u65B9\u898F\u683C\u8CBC\u7D66 AI \u6642\uFF0C\u53EF\u642D\u914D\u4EE5\u4E0B\u6307\u4EE4\u8981\u6C42\u6A21\u578B\u5FEB\u901F\u6539\u5BEB\u98A8\u683C\u6216\u89D2\u8272\uFF1A")))), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-3"
+  }, SECONDARY_PROMPT_EXAMPLES.map((ex, idx) => {
+    const isCopiedOnly = copiedExampleKey === `only-${idx}`;
+    const isCopiedCombined = copiedExampleKey === `combined-${idx}`;
+    return /*#__PURE__*/React.createElement("div", {
+      key: ex.id,
+      className: "p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 hover:border-slate-700 transition-all flex flex-col gap-2.5"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center justify-between gap-2 flex-wrap"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center gap-2 flex-wrap"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "text-xs font-bold text-slate-200"
+    }, ex.title), /*#__PURE__*/React.createElement("span", {
+      className: `text-[10px] font-bold px-2 py-0.5 rounded-full border ${ex.badgeColor}`
+    }, ex.badge)), /*#__PURE__*/React.createElement("span", {
+      className: "text-[11px] text-slate-400"
+    }, ex.desc)), /*#__PURE__*/React.createElement("div", {
+      className: "p-3 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-200 leading-relaxed select-all"
+    }, ex.prompt), /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center justify-end flex-wrap gap-2 pt-1"
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => copyExamplePrompt(`only-${idx}`, ex.prompt),
+      className: "px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all",
+      title: "\u50C5\u8907\u88FD\u9019\u6BB5\u793A\u7BC4\u6307\u4EE4"
+    }, /*#__PURE__*/React.createElement(Icon, {
+      name: isCopiedOnly ? 'Check' : 'Copy',
+      size: 13,
+      className: isCopiedOnly ? 'text-emerald-400' : ''
+    }), /*#__PURE__*/React.createElement("span", null, isCopiedOnly ? '已複製指令！' : '複製示範指令')), /*#__PURE__*/React.createElement("button", {
+      onClick: () => copyExamplePrompt(`combined-${idx}`, `${ex.prompt}\n\n---\n\n${activePrompt}`),
+      className: "px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm",
+      title: "\u5C07\u6B64\u6307\u4EE4\u8207\u4E0A\u65B9\u7576\u524D\u898F\u683C\u63D0\u793A\u8A5E\u5408\u4F75\u8907\u88FD\uFF0C\u76F4\u63A5\u8CBC\u5165 ChatGPT \u6216 Gemini"
+    }, /*#__PURE__*/React.createElement(Icon, {
+      name: isCopiedCombined ? 'Check' : 'Sparkles',
+      size: 13,
+      className: isCopiedCombined ? 'text-emerald-400' : ''
+    }), /*#__PURE__*/React.createElement("span", null, isCopiedCombined ? '已複製指令 + 規格書！' : '⚡ 複製指令 + 規格書'))));
+  }))))), zoomImage && /*#__PURE__*/React.createElement("div", {
     className: "fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in",
     onClick: () => setZoomImage(null)
   }, /*#__PURE__*/React.createElement("div", {
