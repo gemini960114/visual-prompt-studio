@@ -1189,12 +1189,14 @@ const App = () => {
       const lay = xhsLayouts.find(l => l.id === selectedXhsLayout) || xhsLayouts[0];
       return `### 🎯 任務目標：LINE 官方帳號小卡 / 社群知識圖卡系列生成
 你是一位精通社群視覺、LINE 官方帳號輪播小卡 (Card Carousel) 與高說服力知識圖文的頂級視覺設計專家。
-請依據以下具體解析度規格、配色邏輯與文案內容，為主題「${displayTitle}」設計一套共 ${cardCount} 張的系列圖卡視覺規範與生圖提示詞：
+請依據以下具體解析度規格、配色邏輯與文案內容，為主題「${displayTitle}」設計一套共 ${cardCount} 張的系列圖卡視覺規範與內容規劃：
 
 ### 📐 尺寸、方向與輸出解析度規格
 - **卡片長寬比**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
 - **精準輸出解析度**：${currentSpec.width} × ${currentSpec.height} px (${currentSpec.dpi}，${currentSpec.note})
 - **系列卡片張數**：共 ${cardCount} 張連續圖卡（建議第一張大標吸睛，中段步驟拆解，末張強烈行動指引）
+- **視覺美學風格**：${st.name} (${st.id}) - ${st.desc}
+- **版面佈局結構**：${lay.name} (${lay.id}) - ${lay.desc}
 
 ### 🎨 調色盤精準指派 (色彩功能角色)
 - [主視覺基調色: ${cPrimary}]：用於系列小卡邊框、大標題徽章、關鍵圖標與外框線條
@@ -1203,32 +1205,31 @@ const App = () => {
 - [次級模組容器色: ${cSecondary}]：用於各步驟卡片、內容分塊容器之獨立底色
 - [內文正文字體色: ${cText}]：高易讀性文字色彩，保證各年齡層在手機端秒懂
 
-### 📌 標題與視覺風格
+### 📌 標題設定
 - **主標題**：${displayTitle}
 - **副標導讀**：${displaySubtitle}
-- **視覺美學風格**：${st.name} (${st.id}) - ${st.desc}
-- **版面佈局結構**：${lay.name} (${lay.id}) - ${lay.desc}
 
 ### 📝 詳細文案來源與段落依據
 ${content}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
-Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${displayTitle}", subtitle "${displaySubtitle}", visual style is ${st.id}, structured in ${lay.id} layout, clean typography, minimalist topic-relevant vector icons, color palette: ${palette.join(', ')}, resolution ${currentSpec.width}x${currentSpec.height}, high fidelity, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
+---
+### 💡 執行指示（給 Gemini）
+請依據上述的「${lay.name}」架構與「${st.name}」視覺風格，將上述內容拆解規劃為共 ${cardCount} 張的連續圖卡文案與各頁畫面排版建議，並嚴格遵循指定的 5 色調色盤。`;
     } else if (mode === 'infographic') {
       const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
       const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
       return `### 🎯 任務目標：高密度知識資訊圖表 / 實體宣傳海報生成
 你是一位世界級的資訊視覺化設計總監（Information Architecture & Poster Designer）。
-請依據以下結構規格、尺寸解析度與配色原則，為主題「${displayTitle}」設計一張架構嚴密、一圖看懂的高品質資訊海報：
+請依據以下結構規格、尺寸解析度、配色原則與輸入文案，為主題「${displayTitle}」規劃一張架構嚴密、一圖看懂的高品質資訊海報：
 
 ### 📐 尺寸、方向與輸出解析度規格
 - **海報比例**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
 - **精準輸出解析度**：${currentSpec.width} × ${currentSpec.height} px (${currentSpec.dpi}，${currentSpec.note})
-- **視覺風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **資訊架構 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
+- **視覺美學風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
+- **資訊架構模式 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
 
 ### 🎨 調色盤精準指派 (色彩功能角色)
-- [主視覺骨架色: ${cPrimary}]：海報大架構、核心流程導航線、主題 Icon
+- [主視覺骨架色: ${cPrimary}]：海報大架構、核心流程導航線、主題 Icon 與外框線條
 - [焦點強調色: ${cAccent}]：高對比焦點色，突顯關鍵數據、重要結論與核心行動呼籲 (CTA)
 - [背景底色: ${cBg}]：純淨底色，確保密集的資訊區塊擁有充足呼吸空間
 - [次要模組容器色: ${cSecondary}]：各章節卡片、內容分塊容器之獨立底色
@@ -1241,18 +1242,14 @@ Prompt: A cohesive social media infographic card series of ${cardCount} cards fo
 ### 📝 完整內容與模組規劃依據
 ${content}
 
-### 🏛️ 海報版面結構指引
-1. [頂部 Header]：大標「${displayTitle}」+ 副標「${displaySubtitle}」+ 主題視覺識別。
-2. [主體 Body]：貫徹「${lay.name}」資訊架構，以「${displayTitle}」核心邏輯為主線，將上述內容要點結構化拆解為層次分明、邏輯流暢的模組區塊（依據 ${lay.desc}）。
-3. [底部 Footer]：醒目行動指引 CTA 與關鍵總結結論。
-
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
-Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displaySubtitle}", structured in ${lay.id} layout, rendered in ${st.id} artistic aesthetic, clear visual hierarchy, topic-relevant minimalist vector icons and diagrams, clean composition, color palette: ${palette.join(' ')}, exact dimensions ${currentSpec.width}x${currentSpec.height} (${currentSpec.dpi}), ultra-detailed vector clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
+---
+### 💡 執行指示（給 Gemini）
+請依據上述的「${lay.name}」架構規範與「${st.name}」視覺美學風格，將上述完整內容結構化整理，並嚴格遵循指定的 5 色調色盤，為我輸出完整的海報版面視覺規劃與生圖/排版指示。`;
     } else {
       const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
       return `### 🎯 任務目標：主視覺宣傳海報 / LINE 滿版推播大圖
 你是一位知名宣傳海報與數位媒體主視覺藝術總監。
-請依據以下 5 維度客製化規格與解析度設定，為「${displayTitle}」打造一張極具視覺衝擊力與專業感的主視覺封面大圖：
+請依據以下客製化規格與解析度設定，為「${displayTitle}」打造一張極具視覺衝擊力與專業感的主視覺封面大圖：
 
 ### 📐 尺寸規格與解析度
 - **長寬比例**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
@@ -1270,8 +1267,9 @@ Prompt: High-density infographic poster for "${displayTitle}", subtitle "${displ
 ### 📝 內容參考
 ${content}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini)
-Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${displaySubtitle}", ${coverType} layout with ${coverRendering} rendering, ${st.id} artistic style, ${coverMood} atmosphere, prominent typography, color palette: ${palette.join(', ')}, ${currentSpec.width}x${currentSpec.height} resolution, dramatic lighting, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
+---
+### 💡 執行指示（給 Gemini）
+請依據上述的尺寸比例、構圖類型「${coverType}」、風格「${st.name}」與指定色票，為「${displayTitle}」規劃出最具吸引力的主視覺封面設計與生圖/排版指示。`;
     }
   }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
 
@@ -1664,20 +1662,13 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
     name: "Terminal",
     size: 13
   }), /*#__PURE__*/React.createElement("span", null, copiedCli ? '已複製！' : '複製 CLI')), /*#__PURE__*/React.createElement("button", {
-    onClick: () => copyToClipboard(extractImagePrompt(activePrompt), 'imagePrompt'),
-    className: "px-2.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/40 shadow-sm transition-all",
-    title: "\u55AE\u7368\u8907\u88FD\u7D14\u82F1\u6587\u751F\u5716\u63D0\u793A\u8A5E\uFF08\u76F4\u63A5\u8CBC\u5230 Midjourney / Flux / Gemini \u751F\u5716\uFF09"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: copiedImagePrompt ? 'Check' : 'Sparkles',
-    size: 13
-  }), /*#__PURE__*/React.createElement("span", null, copiedImagePrompt ? '已複製生圖 Prompt！' : '複製生圖 Prompt')), /*#__PURE__*/React.createElement("button", {
     onClick: () => copyToClipboard(activePrompt, 'prompt'),
-    className: "px-3 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all",
-    title: "\u8907\u88FD\u6574\u4EFD\u898F\u683C\u66F8\uFF08\u76F4\u63A5\u8CBC\u7D66 ChatGPT / Claude \u9032\u884C\u4E8C\u6B21\u751F\u6210\u6216\u6587\u6848\u7D30\u5316\uFF09"
+    className: "px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all",
+    title: "\u4E00\u9375\u8907\u88FD\u6574\u4EFD\u898F\u683C\uFF0C\u76F4\u63A5\u8CBC\u7D66 Google Gemini \u5373\u53EF\u5B8C\u6210\u6392\u7248\u8207\u751F\u6210\uFF01"
   }, /*#__PURE__*/React.createElement(Icon, {
-    name: copied ? 'Check' : 'Copy',
-    size: 13
-  }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製完整規格！' : '複製完整規格')))), /*#__PURE__*/React.createElement("div", {
+    name: copied ? 'Check' : 'Sparkles',
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製 Gemini 提示詞！' : '📋 複製 Gemini 提示詞')))), /*#__PURE__*/React.createElement("div", {
     className: "bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar"
   }, /*#__PURE__*/React.createElement("div", {
     className: "truncate pr-3 select-all"
@@ -1694,7 +1685,7 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
     className: "flex items-center justify-between mt-1.5 px-1"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-[11px] text-slate-400 flex items-center gap-1"
-  }, /*#__PURE__*/React.createElement("span", null, "\u270F\uFE0F \u63D0\u793A\uFF1A\u4E0A\u65B9\u6846\u5167\u6587\u5B57\u5DF2\u958B\u653E", /*#__PURE__*/React.createElement("b", null, "\u76F4\u63A5\u9EDE\u64CA\u7DE8\u8F2F\u4FEE\u6539"))), customPrompt !== null && /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("span", null, "\uD83D\uDCA1 \u63D0\u793A\uFF1A\u6846\u5167\u70BA\u6A19\u6E96\u898F\u683C\u66F8\uFF08\u53EF\u76F4\u63A5\u9EDE\u64CA\u7DE8\u8F2F\uFF09\uFF0C", /*#__PURE__*/React.createElement("b", null, "\u8907\u88FD\u5F8C\u76F4\u63A5\u8CBC\u5165 Google Gemini \u5C0D\u8A71\u6846\u5373\u53EF\uFF01"))), customPrompt !== null && /*#__PURE__*/React.createElement("button", {
     onClick: () => setCustomPrompt(null),
     className: "text-[11px] text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 transition-colors"
   }, /*#__PURE__*/React.createElement(Icon, {
@@ -1704,7 +1695,7 @@ Prompt: Striking promotional cover poster for "${displayTitle}", subtitle "${dis
     className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-1 border-t border-slate-800/60 mt-1"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-[11px] text-slate-500 font-mono"
-  }, "\u76F8\u5BB9\uFF1AClaude Code / Codex / Midjourney / Flux / Gemini"), /*#__PURE__*/React.createElement("div", {
+  }, "\u76F8\u5BB9\uFF1AGoogle Gemini / Claude / ChatGPT / Codex / CLI"), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: exportMarkdown,
