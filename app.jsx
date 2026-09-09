@@ -29,7 +29,7 @@
                 Smile: <><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></>,
                 ChevronRight: <path d="m9 18 6-6-6-6"/>,
                 Info: <><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></>,
-                HelpCircle: <><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></>,
+                Maximize2: <><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></>,
                 Youtube: <><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></>
             };
             return (
@@ -241,26 +241,18 @@
         ];
 
         const infographicLayouts = [
-            { id: "bento-grid", name: "便當盒網格佈局", name_en: "Bento Grid", desc: "多區塊卡片組合，適合多主題綜觀。", img: "./assets/screenshots/infographic-layouts/grid-cards.webp" },
-            { id: "journey-path", "name": "曲折旅程道路圖", name_en: "Journey Path", desc: "蜿蜒公路貫穿各個里程碑關卡、行動指南極佳展示法。", img: "./assets/screenshots/infographic-layouts/journey-path.webp" },
-            { id: "timeline-horizontal", name: "水平時間軸里程碑", name_en: "Timeline Roadmap", desc: "歷史演進、流程步驟、重要時間節點。", img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp" },
-            { id: "funnel", name: "轉化與篩選漏斗", name_en: "Conversion Funnel", desc: "層層遞進篩選、流量轉化、用戶旅程各階段數據分析。", img: "./assets/screenshots/infographic-layouts/funnel.webp" },
-            { id: "pyramid", name: "層級金字塔", name_en: "Hierarchy Pyramid", desc: "需求與知識體系層次、底層基石至頂層目標。", img: "./assets/screenshots/infographic-layouts/pyramid.webp" },
-            { id: "mind-map", name: "思維導圖發散樹", name_en: "Mind Map Radial", desc: "核心概念輻射發散、腦力激盪與知識分支體系梳理。", img: "./assets/screenshots/infographic-layouts/mind-map.webp" },
-            { id: "bridge", name: "跨越鴻溝問題橋", name_en: "Problem-Solution Bridge", desc: "左岸現狀困境 ➜ 橋樑解決之道 ➜ 右岸理想願景。", img: "./assets/screenshots/infographic-layouts/bridge.webp" },
-            { id: "do-dont", name: "正確與錯誤對照", name_en: "Do vs Don't Table", desc: "綠勾正確示範 vs 紅叉錯誤雷區、防護指引一目了然。", img: "./assets/screenshots/infographic-layouts/do-dont.webp" },
-            { id: "comparison-table", name: "多維度矩陣對比表", name_en: "Comparison Table", desc: "多方案、競品特性、規格參數橫向對決。", img: "./assets/screenshots/infographic-layouts/comparison-table.webp" },
-            { id: "layers-stack", name: "分層架構技術棧", name_en: "Tech Layers Stack", desc: "底層基礎設施 ➜ 中間件 ➜ 應用層 ➜ 用戶介面。", img: "./assets/screenshots/infographic-layouts/layers-stack.webp" },
-            { id: "iceberg", name: "冰山可見與隱藏模型", name_en: "Iceberg Model", desc: "水面上表象 vs 水面下龐大的根本原因與技術細節。", img: "./assets/screenshots/infographic-layouts/iceberg.webp" },
-            { id: "circular-flow", name: "循環閉環生態圈", name_en: "Circular Ecosystem", desc: "飛輪效應、循環處置、生命週期流轉。", img: "./assets/screenshots/infographic-layouts/circular-flow.webp" },
-            { id: "priority-quadrants", name: "四象限優先級矩陣", name_en: "Priority Quadrants", desc: "緊急 vs 重要、成本 vs 收益、四象限決策指南。", img: "./assets/screenshots/infographic-layouts/priority-quadrants.webp" },
-            { id: "fishbone", name: "因果分析魚骨圖", name_en: "Fishbone Cause & Effect", desc: "品質管理、根因追蹤、問題拆解成各大支柱骨架。", img: "./assets/screenshots/infographic-layouts/fishbone.webp" },
-            { id: "tree-hierarchy", name: "組織架構分類樹", name_en: "Tree Hierarchy", desc: "自頂向下層級架構、團隊部門與分類目錄樹。", img: "./assets/screenshots/infographic-layouts/tree-hierarchy.webp" },
-            { id: "venn", name: "概念重疊韋恩圖", name_en: "Venn Diagram", desc: "兩者或三者交集、關鍵交會點發現法。", img: "./assets/screenshots/infographic-layouts/venn.webp" },
-            { id: "scale-balance", name: "天平權衡利弊圖", name_en: "Balance Scale", desc: "天平兩側稱重、風險與機會、成本與價值的理性衡量。", img: "./assets/screenshots/infographic-layouts/scale-balance.webp" },
-            { id: "equation", name: "公式拆解與輸入輸出", name_en: "Visual Equation", desc: "A + B + C = 成功結果，直觀圖解價值公式。", img: "./assets/screenshots/infographic-layouts/equation.webp" },
-            { id: "feature-list", name: "產品特點幾何列表", name_en: "Feature Showcase", desc: "核心亮點圖示化、產品優勢與規格展示卡片。", img: "./assets/screenshots/infographic-layouts/feature-list.webp" },
-            { id: "nested-circles", name: "影響力同心圓", name_en: "Nested Circles", desc: "由核心向外擴散的層層影響圈層。", img: "./assets/screenshots/infographic-layouts/nested-circles.webp" }
+            { id: "journey-path", name: "曲折旅程道路圖", name_en: "Journey Path", desc: "公路關卡式貫穿沖、消、送等重要里程碑，行動指引感極強。", img: "./assets/screenshots/infographic-layouts/journey-path.webp" },
+            { id: "bento-grid", name: "便當盒網格佈局", name_en: "Bento Grid", desc: "多區塊卡片組合，適合多主題或多面向重點綜觀。", img: "./assets/screenshots/infographic-layouts/grid-cards.webp" },
+            { id: "timeline-horizontal", name: "水平時間軸里程碑", name_en: "Timeline Roadmap", desc: "按時間順序與處理節點推進，緊急應變最佳展示法。", img: "./assets/screenshots/infographic-layouts/timeline-horizontal.webp" },
+            { id: "do-dont", name: "正確與錯誤對照", name_en: "Do vs Don't Table", desc: "綠勾正確處置 vs 紅叉禁忌雷區，防護對照一目了然。", img: "./assets/screenshots/infographic-layouts/do-dont.webp" },
+            { id: "funnel", name: "轉化與篩選漏斗", name_en: "Conversion Funnel", desc: "層層遞進篩選、風險評估各階段條件分級。", img: "./assets/screenshots/infographic-layouts/funnel.webp" },
+            { id: "pyramid", name: "層級金字塔", name_en: "Hierarchy Pyramid", desc: "重要性與緊急度層級金字塔、基礎到核心。", img: "./assets/screenshots/infographic-layouts/pyramid.webp" },
+            { id: "mind-map", name: "思維導圖發散樹", name_en: "Mind Map Radial", desc: "核心主題輻射發散、各項處置措施分支體系。", img: "./assets/screenshots/infographic-layouts/mind-map.webp" },
+            { id: "bridge", name: "跨越鴻溝問題橋", name_en: "Problem-Solution Bridge", desc: "現狀受傷危險 ➜ 規範處理之橋 ➜ 安全降低發病風險。", img: "./assets/screenshots/infographic-layouts/bridge.webp" },
+            { id: "comparison-table", name: "多維度矩陣對比表", name_en: "Comparison Table", desc: "多種情況、動物類型與應對方針橫向對決。", img: "./assets/screenshots/infographic-layouts/comparison-table.webp" },
+            { id: "layers-stack", name: "分層架構模組棧", name_en: "Tech Layers Stack", desc: "防護措施、醫療處置、公衛通報等層次架構。", img: "./assets/screenshots/infographic-layouts/layers-stack.webp" },
+            { id: "iceberg", name: "冰山可見與隱藏模型", name_en: "Iceberg Model", desc: "表面輕微傷口 vs 水面下極高致死風險。", img: "./assets/screenshots/infographic-layouts/iceberg.webp" },
+            { id: "circular-flow", name: "循環閉環生態圈", name_en: "Circular Ecosystem", desc: "防護閉環、通報與追蹤完整流轉體系。", img: "./assets/screenshots/infographic-layouts/circular-flow.webp" }
         ];
 
         const coverStyles = [
@@ -271,15 +263,16 @@
             { id: "blueprint", name: "工程藍圖科技海報", name_en: "Blueprint Architecture", desc: "工程藍底白線、精密幾何格線、架構與技術發表會大作。", img: "./assets/screenshots/cover-image-styles/blueprint.webp" },
             { id: "vector-illustration", name: "精緻扁平向量插畫", name_en: "Vector Illustration", desc: "現代向量插畫、豐富細節、友善而富有活力、適合品牌行銷。", img: "./assets/screenshots/cover-image-styles/vector-illustration.webp" },
             { id: "watercolor", name: "唯美藝術水彩", name_en: "Artistic Watercolor", desc: "優雅水彩暈染、手感藝術、人文與生活風格封面首選。", img: "./assets/screenshots/cover-image-styles/watercolor.webp" },
-            { id: "chalkboard", name: "粉筆黑板手繪", name_en: "Chalkboard Concept", desc: "黑板底紋、彩色手寫粉筆字、教學活動與講座海報。", img: "./assets/screenshots/cover-image-styles/chalkboard.webp" },
-            { id: "retro", name: "復古美式版畫", name_en: "Retro Vintage", desc: "做舊質感、復古配色、經典廣告海報韻味。", img: "./assets/screenshots/cover-image-styles/retro.webp" },
-            { id: "pixel-art", name: "8-Bit 像素懷舊", name_en: "Pixel Art 8-Bit", desc: "像素復古風格、遊戲感與開發者文化氛圍十足。", img: "./assets/screenshots/cover-image-styles/pixel-art.webp" }
+            { id: "chalkboard", name: "粉筆黑板手繪", name_en: "Chalkboard Concept", desc: "黑板底紋、彩色手寫粉筆字、教學活動與講座海報。", img: "./assets/screenshots/cover-image-styles/chalkboard.webp" }
         ];
+
+        const DEFAULT_TITLE = '被動物抓咬，別等！';
+        const DEFAULT_SUBTITLE = '沖洗 15 分鐘，儘速就醫評估';
 
         // Default medical content from user
         const DEFAULT_MARKDOWN = `# 主標
-## 被動物抓咬，別等！
-### **沖洗 15 分鐘，儘速就醫評估**
+## ${DEFAULT_TITLE}
+### **${DEFAULT_SUBTITLE}**
 
 狂犬病一旦發病，致死率幾乎達 100%；
 但遭動物抓咬後，及時做好傷口處理並接受適當的暴露後預防，可降低發病風險。
@@ -311,6 +304,14 @@
 
 ---
 
+# 疫苗政策重點
+### 「不是被咬就自己決定要不要打。」
+狂犬病疫苗是否需要接種，由醫師依動物種類、暴露情形及所在地風險等因素評估。
+符合暴露後預防接種條件者，應依醫師安排接受疫苗及必要的免疫球蛋白。
+目前疾管署設有 人用狂犬病疫苗接種服務醫院 及 人用狂犬病免疫球蛋白儲備醫院。
+
+---
+
 # CTA
 ## **有抓咬，就先沖、再送醫！**
 ### 不確定怎麼辦？
@@ -318,40 +319,83 @@
 **別等症狀出現，先把該做的事做好。**
 資料來源：衛生福利部疾病管制署「狂犬病防治專區」`;
 
-        // Smart text extractor to get title & summary from markdown
-        const extractTitleAndSummary = (rawText) => {
-            if (!rawText) return { title: '未命名主題', subtitle: '', body: '' };
-            const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
-            let title = '';
-            let subtitle = '';
+        // Resolution & Quality Presets Database
+        const RESOLUTION_SPECS = {
+            '1:1': {
+                name: '【正方形 1:1】',
+                direction: '方形',
+                desc: 'LINE 官方帳號小卡、輪播訊息、社群方形貼圖',
+                mobile: { w: 1040, h: 1040, dpi: '72 DPI', note: 'LINE 官方建議標準（< 1MB 載入極速）' },
+                hd2k: { w: 2048, h: 2048, dpi: '150 DPI', note: '2K Retina 視網膜螢幕高清展示' },
+                print4k: { w: 3000, h: 3000, dpi: '300 DPI', note: '3000×3000 實體印刷方卡標準' }
+            },
+            '9:16': {
+                name: '【直式長版 9:16】',
+                direction: '直式全螢幕',
+                desc: '手機全螢幕海報、限時動態 (Story)、直式導覽長圖',
+                mobile: { w: 1080, h: 1920, dpi: '72 DPI', note: '手機標準 FHD (1080×1920)' },
+                hd2k: { w: 1440, h: 2560, dpi: '150 DPI', note: '2K 旗艦手機高密度清晰長圖' },
+                print4k: { w: 2160, h: 3840, dpi: '300 DPI', note: '4K UHD 手機全屏長海報印刷' }
+            },
+            '3:4': {
+                name: '【直式標準 3:4】',
+                direction: '直式標準',
+                desc: '經典活動海報、社群精美圖卡、展架宣傳單、A4/A3 文宣',
+                mobile: { w: 1080, h: 1440, dpi: '72 DPI', note: '社群直式圖卡標準' },
+                hd2k: { w: 1800, h: 2400, dpi: '150 DPI', note: '2K 易拉寶 / 數位立牌規格' },
+                print4k: { w: 3000, h: 4000, dpi: '300 DPI', note: '3000×4000 px 實體 A3/A2 印刷標準' }
+            },
+            '16:9': {
+                name: '【橫式寬幅 16:9】',
+                direction: '橫式寬螢幕',
+                desc: '電腦簡報投影片、官網橫幅 (Banner)、橫式廣告看板',
+                mobile: { w: 1920, h: 1080, dpi: '72 DPI', note: 'FHD 電腦螢幕 / YouTube 封面' },
+                hd2k: { w: 2560, h: 1440, dpi: '150 DPI', note: '2K QHD 官網橫向大 Banner' },
+                print4k: { w: 3840, h: 2160, dpi: '300 DPI', note: '4K 寬屏展覽大螢幕 / 戶外看板' }
+            }
+        };
+
+        // Robust markdown title and subtitle extractor
+        const extractTitleAndSubtitle = (rawText) => {
+            const lines = (rawText || '').split('\n').map(l => l.trim()).filter(Boolean);
+            let newT = '', newSub = '';
             for (let line of lines) {
-                const clean = line.replace(/^[#\s\-*]+/g, '').replace(/\*+/g, '').trim();
-                if (!clean) continue;
-                if (!title && clean !== '主標' && clean !== '重點訊息' && clean !== '行動指引' && clean !== 'CTA') {
-                    title = clean;
-                } else if (title && !subtitle && clean !== title && clean !== '重點訊息' && clean !== '行動指引' && clean !== 'CTA') {
-                    subtitle = clean;
-                    break;
+                if (/^[-=*_]{3,}$/.test(line)) continue;
+                let clean = line.replace(/^#+\s*/, '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').trim();
+                clean = clean.replace(/^(?:主標題?|標題|主題|Title)[:：\s]*/i, '').trim();
+                if (!clean || clean === '重點訊息' || clean === '行動指引' || clean === 'CTA') continue;
+                
+                if (!newT) {
+                    newT = clean;
+                } else if (!newSub && clean !== newT) {
+                    let subClean = clean.replace(/^(?:副標題?|副標|Subtitle)[:：\s]*/i, '').trim();
+                    if (subClean && subClean !== newT && subClean !== '重點訊息' && subClean !== '行動指引') {
+                        newSub = subClean;
+                        break;
+                    }
                 }
             }
-            if (!title) title = '未命名主題';
-            return { title, subtitle, body: rawText };
+            return { title: newT, subtitle: newSub };
         };
 
         const App = () => {
-            const [mode, setMode] = useState('infographic'); // default to infographic for rich text
+            const [mode, setMode] = useState('infographic'); // 'infographic' | 'xhs' | 'cover'
             const [subTab, setSubTab] = useState('layout'); // 'layout' | 'style'
             const [language, setLanguage] = useState('zh');
             const [totalViews, setTotalViews] = useState(null);
 
-            // Single unified text input field
-            const [rawContent, setRawContent] = useState(DEFAULT_MARKDOWN);
+            // Separate inputs with smart sync capability
+            const [title, setTitle] = useState(DEFAULT_TITLE);
+            const [subtitle, setSubtitle] = useState(DEFAULT_SUBTITLE);
+            const [content, setContent] = useState(DEFAULT_MARKDOWN);
+            const [autoSyncTitle, setAutoSyncTitle] = useState(true);
             
-            // Aspect ratio & count
+            // Aspect ratio & Resolution Tier
             const [aspectRatio, setAspectRatio] = useState('9:16');
+            const [qualityTier, setQualityTier] = useState('hd2k'); // 'mobile' | 'hd2k' | 'print4k'
             const [cardCount, setCardCount] = useState(5);
             
-            // Style & layout selections
+            // Selections
             const [selectedXhsStyle, setSelectedXhsStyle] = useState('notion');
             const [selectedXhsLayout, setSelectedXhsLayout] = useState('flow');
             
@@ -373,20 +417,55 @@
             const [copiedCli, setCopiedCli] = useState(false);
             const [zoomImage, setZoomImage] = useState(null);
 
-            // Parse title & subtitle dynamically
-            const parsed = useMemo(() => extractTitleAndSummary(rawContent), [rawContent]);
+            // Current Resolution Data
+            const currentSpec = useMemo(() => {
+                const specGroup = RESOLUTION_SPECS[aspectRatio] || RESOLUTION_SPECS['9:16'];
+                const tier = specGroup[qualityTier] || specGroup.hd2k;
+                return {
+                    direction: specGroup.direction,
+                    desc: specGroup.desc,
+                    width: tier.w,
+                    height: tier.h,
+                    dpi: tier.dpi,
+                    note: tier.note
+                };
+            }, [aspectRatio, qualityTier]);
+
+            // Detect title from current content to check synchronization
+            const detectedFromContent = useMemo(() => extractTitleAndSubtitle(content), [content]);
+            const isOutOfSync = useMemo(() => {
+                return Boolean(detectedFromContent.title && detectedFromContent.title !== title);
+            }, [detectedFromContent, title]);
+
+            const handleContentChange = (newVal) => {
+                setContent(newVal);
+                if (autoSyncTitle) {
+                    const extracted = extractTitleAndSubtitle(newVal);
+                    if (extracted.title) setTitle(extracted.title);
+                    if (extracted.subtitle) setSubtitle(extracted.subtitle);
+                }
+            };
+
+            const handleSmartExtract = () => {
+                const { title: t, subtitle: sub } = detectedFromContent;
+                if (t) setTitle(t);
+                if (sub) setSubtitle(sub);
+            };
 
             // Handle mode switch with natural aspect ratio defaults
             const handleModeChange = (newMode) => {
                 setMode(newMode);
                 if (newMode === 'xhs') {
                     setAspectRatio('1:1');
+                    setQualityTier('mobile');
                     setSubTab('layout');
                 } else if (newMode === 'infographic') {
                     setAspectRatio('9:16');
+                    setQualityTier('hd2k');
                     setSubTab('layout');
                 } else if (newMode === 'cover') {
                     setAspectRatio('1:1');
+                    setQualityTier('hd2k');
                     setSubTab('style');
                 }
             };
@@ -412,115 +491,115 @@
                 .catch(() => {});
             }, []);
 
-            // Generate CLI command
+            // Generate CLI command including size/quality
             const generatedCli = useMemo(() => {
-                const cleanTopic = (parsed.title || '主題').replace(/"/g, '\\"');
+                const cleanTopic = (title.trim() || '未命名主題').replace(/"/g, '\\"');
+                const sizeArg = `--size ${currentSpec.width}x${currentSpec.height}`;
                 if (mode === 'xhs') {
-                    return `/baoyu-xhs-images "${cleanTopic}" --style ${selectedXhsStyle} --layout ${selectedXhsLayout} --count ${cardCount} --aspect ${aspectRatio}`;
+                    return `/baoyu-xhs-images "${cleanTopic}" --style ${selectedXhsStyle} --layout ${selectedXhsLayout} --count ${cardCount} --aspect ${aspectRatio} ${sizeArg}`;
                 } else if (mode === 'infographic') {
-                    return `/baoyu-infographic "${cleanTopic}" --layout ${selectedInfoLayout} --style ${selectedInfoStyle} --aspect ${aspectRatio}`;
+                    return `/baoyu-infographic "${cleanTopic}" --layout ${selectedInfoLayout} --style ${selectedInfoStyle} --aspect ${aspectRatio} ${sizeArg}`;
                 } else {
-                    return `/baoyu-cover-image "${cleanTopic}" --type ${coverType} --style ${selectedCoverStyle} --rendering ${coverRendering} --text ${coverTextLevel} --mood ${coverMood} --aspect ${aspectRatio}`;
+                    return `/baoyu-cover-image "${cleanTopic}" --type ${coverType} --style ${selectedCoverStyle} --rendering ${coverRendering} --text ${coverTextLevel} --mood ${coverMood} --aspect ${aspectRatio} ${sizeArg}`;
                 }
-            }, [mode, parsed.title, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood]);
+            }, [mode, title, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood, currentSpec]);
 
-            // Aspect ratio details
-            const aspectDetails = [
-                { ratio: '1:1', tag: '【正方形 1:1】', desc: 'LINE 官方帳號小卡、輪播訊息、社群方形貼圖' },
-                { ratio: '9:16', tag: '【直式長版 9:16】', desc: '手機全螢幕海報、限時動態 (Story)、直式導覽長圖' },
-                { ratio: '3:4', tag: '【直式標準 3:4】', desc: '經典活動海報、小紅書圖卡、展架宣傳單' },
-                { ratio: '16:9', tag: '【橫式寬幅 16:9】', desc: '電腦簡報投影片、官網橫幅 (Banner)、橫式看板' }
-            ];
-
-            // Generate structured full Prompt with clear palette mapping
+            // Generate structured full Prompt with clear palette mapping & pixel dimensions
             const generatedPrompt = useMemo(() => {
                 const [cPrimary, cSecondary, cBg, cText, cAccent] = palette;
-                const paletteGuide = `[主視覺基調: ${cPrimary}]、[次要輔助色: ${cSecondary}]、[背景基底色: ${cBg}]、[正文字體色: ${cText}]、[警示強調色: ${cAccent}]`;
+                const displayTitle = title.trim() || '未命名主題';
+                const displaySubtitle = subtitle.trim() || '重要宣導事項';
 
                 if (mode === 'xhs') {
                     const st = xhsStyles.find(s => s.id === selectedXhsStyle) || xhsStyles[0];
                     const lay = xhsLayouts.find(l => l.id === selectedXhsLayout) || xhsLayouts[0];
-                    return `### 🎯 任務目標：LINE 小卡 / 社群知識圖卡系列生成
-你是一位精通小紅書、LINE 官方帳號輪播小卡與社群衛教圖文的頂級視覺設計專家。
-請根據以下規格與文案，為主題「${parsed.title}」規劃一套共 ${cardCount} 張的系列圖卡提示詞與視覺規劃：
+                    return `### 🎯 任務目標：LINE 官方帳號小卡 / 社群知識圖卡系列生成
+你是一位精通社群視覺、LINE 官方帳號輪播小卡 (Card Carousel) 與高說服力衛教圖文的頂級視覺設計專家。
+請依據以下具體解析度規格、配色邏輯與文案內容，為主題「${displayTitle}」設計一套共 ${cardCount} 張的系列圖卡視覺規範與生圖提示詞：
 
-### 📐 規格設定
-- **主標題**：${parsed.title}
-- **副標摘要**：${parsed.subtitle}
-- **視覺風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **版面佈局 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
-- **卡片長寬比 (Aspect Ratio)**：${aspectRatio} (${aspectRatio === '1:1' ? 'LINE 官方帳號標準方形輪播小卡' : '直式小卡'})
-- **🎨 色彩角色規劃 (調色盤功用)**：
-  - 主視覺基調色：${cPrimary}（用於核心主題外框、重點徽章與主要插圖線條）
-  - 關鍵警示與強調色：${cAccent}（用於關鍵字加粗、重要警告標記如致死率/就醫提醒）
-  - 背景底色：${cBg}（確保畫面純淨，高對比不疲勞）
-  - 輔助與卡片背景色：${cSecondary}（用於步驟區塊底色）
-  - 文字主色：${cText}（確保各年齡層在手機端極佳易讀性）
+### 📐 尺寸、方向與輸出解析度規格
+- **卡片長寬比**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
+- **精準輸出解析度**：${currentSpec.width} × ${currentSpec.height} px (${currentSpec.dpi}，${currentSpec.note})
+- **系列卡片張數**：共 ${cardCount} 張連續圖卡（建議第一張大標吸睛，中段步驟拆解，末張強烈行動指引）
 
-### 📝 完整內容文案來源
-${rawContent}
+### 🎨 調色盤精準指派 (確保色調專業且具公信力)
+- [主視覺基調色: ${cPrimary}]：用於系列小卡邊框、大標題徽章、關鍵圖標與外框線條
+- [緊急警示強調色: ${cAccent}]：紅色/高飽和警告色，標註「致死率 100%」、「儘速送醫」、「1922 專線」等關鍵字
+- [背景底色: ${cBg}]：保持背景乾淨純粹，確保手機螢幕高對比不疲勞
+- [輔助模組卡片色: ${cSecondary}]：用於步驟 01/02/03 的獨立底色區塊
+- [內文正文字體色: ${cText}]：高易讀性深色字體，保證各年齡層在 LINE 手機端秒懂
 
-### 🎨 各頁分鏡與小卡規劃 (共 ${cardCount} 張)
-1. **P.1 [封面醒目卡]**：以震撼大標「${parsed.title}」為主視覺，警示副標「${parsed.subtitle}」，搭配急迫性插圖，留白呼吸感充足。
-2. **P.2 ~ P.${cardCount - 1} [步驟與重點卡]**：採用 ${lay.name} 佈局，重點拆解「沖、消、送」步驟與就醫注意事項，以大編號與清晰圖示標註。
-3. **P.${cardCount} [結尾行動指引卡]**：統整 CTA「有抓咬，就先沖、再送醫！」並顯著標記防疫專線 1922，提供安心信任感。
+### 📌 標題與視覺風格
+- **主標題**：${displayTitle}
+- **副標導讀**：${displaySubtitle}
+- **視覺美學風格**：${st.name} (${st.id}) - ${st.desc}
+- **版面佈局結構**：${lay.name} (${lay.id}) - ${lay.desc}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: A cohesive educational infographic card series of ${cardCount} cards about "${parsed.title}", aesthetic style is ${st.id}, structured in ${lay.id} layout, clear visual hierarchy, prominent typography, balanced medical emergency icons, professional color palette: ${palette.join(', ')}, ultra-high resolution, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+### 📝 詳細文案來源與段落依據
+${content}
+
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+Prompt: A cohesive social media infographic card series of ${cardCount} cards for "${displayTitle}", subtitle "${displaySubtitle}", visual style is ${st.id}, structured in ${lay.id} layout, clean typography, medical safety emergency icons (washing, disinfectant, hospital), color palette: ${palette.join(', ')}, resolution ${currentSpec.width}x${currentSpec.height}, high fidelity, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
                 } else if (mode === 'infographic') {
                     const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
                     const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
-                    return `### 🎯 任務目標：高密度衛教資訊圖表 / 直式宣傳海報生成
-你是一位世界級的資訊設計總監（Information Architecture & Infographic Designer）。
-請依據以下結構規格，為主題「${parsed.title}」設計一張架構嚴謹、一圖看懂的超高清視覺化資訊海報：
+                    return `### 🎯 任務目標：高密度知識資訊圖表 / 實體宣傳海報生成
+你是一位世界級的資訊視覺化設計總監（Information Architecture & Poster Designer）。
+請依據以下結構規格、尺寸解析度與配色原則，為主題「${displayTitle}」設計一張架構嚴密、一圖看懂的高品質資訊海報：
 
-### 📐 規格設定
-- **主標題**：${parsed.title}
-- **副標摘要**：${parsed.subtitle}
-- **資訊結構佈局 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
-- **視覺美學風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **海報比例 (Aspect Ratio)**：${aspectRatio} (${aspectRatio === '9:16' ? '手機直式全螢幕長海報' : aspectRatio === '3:4' ? '直式標準宣傳海報' : '方形圖表'})
-- **🎨 色彩角色規劃 (調色盤功用)**：
-  - 主色調：${cPrimary}（海報主視覺骨架、標題強調背景）
-  - 警示強調色：${cAccent}（紅色/警示色標註緊急處置原則、致死率與急診提醒）
-  - 背景底色：${cBg}（確保資訊層級分明，清晰可辨）
-  - 輔助區塊色：${cSecondary}（各步驟模組卡片邊框與背景）
-  - 正文字體色：${cText}（極高清晰度的閱讀色彩）
+### 📐 尺寸、方向與輸出解析度規格
+- **海報比例**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
+- **精準輸出解析度**：${currentSpec.width} × ${currentSpec.height} px (${currentSpec.dpi}，${currentSpec.note})
+- **視覺風格 (Style)**：${st.name} (${st.id}) - ${st.desc}
+- **資訊架構 (Layout)**：${lay.name} (${lay.id}) - ${lay.desc}
 
-### 📝 完整文案與結構指引
-${rawContent}
+### 🎨 調色盤精準指派 (色彩功能角色)
+- [主視覺骨架色: ${cPrimary}]：海報大架構、核心流程導航線、主題 Icon
+- [警示強調色: ${cAccent}]：緊急紅色/警示色，突出「致死率 100%」、「沖洗 15 分鐘」、「1922 防疫專線」
+- [背景底色: ${cBg}]：純淨底色，確保密集的資訊區塊擁有充足呼吸空間
+- [次要模組背景色: ${cSecondary}]：各章節卡片（重點訊息、行動指引、疫苗政策）之獨立容器色彩
+- [正文字體色: ${cText}]：最高清晰度的文字閱讀顏色
 
-### 🏛️ 海報板塊分區指南
-1. **頂部 Header**：醒目主標題「${parsed.title}」、警示副標「${parsed.subtitle}」、疾管署防護圖騰與致死率警訊。
-2. **主體 Body**：完整體現 ${lay.name} 結構，以「沖（15分鐘）、消（消毒）、送（就醫評估）」為 3 大核心支柱，附帶動物特徵記憶指引與疫苗評估原則。
-3. **底部 Footer**：醒目 CTA「有抓咬，先沖再送醫！」、防疫專線 1922 及諮詢電話、衛生福利部疾病管制署出處標註。
+### 📌 標題設定
+- **主標題**：${displayTitle}
+- **副標導讀**：${displaySubtitle}
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: High-density public health infographic poster about "${parsed.title}", structured in ${lay.id} layout, rendered in clean ${st.id} artistic style, featuring clear typographic emergency hierarchy, clinical step-by-step illustrations (soap washing, disinfecting, hospital visit), palette: ${palette.join(' ')}, 8k resolution, crisp vector-like clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+### 📝 完整內容與模組規劃依據
+${content}
+
+### 🏛️ 海報版面結構指引
+1. [頂部 Header]：大標「${displayTitle}」+ 副標「${displaySubtitle}」+ 疾管署權威標識。
+2. [主體 Body]：貫徹 ${lay.name}，以「沖（肥皂水沖15分） ➜ 消（優碘/酒精消毒） ➜ 送（就醫評估預防）」為核心視覺主線，左右並陳動物特徵記憶法與疫苗評估原則。
+3. [底部 Footer]：醒目行動指引 CTA「有抓咬，就先沖、再送醫！」+ 防疫專線 1922。
+
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+Prompt: High-density public health infographic poster for "${displayTitle}", subtitle "${displaySubtitle}", structured in ${lay.id} layout, rendered in ${st.id} artistic aesthetic, clear visual hierarchy, bold medical signage, clinical step-by-step vector graphics, clean composition, color palette: ${palette.join(' ')}, exact dimensions ${currentSpec.width}x${currentSpec.height} (${currentSpec.dpi}), ultra-detailed vector clarity, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
                 } else {
                     const st = coverStyles.find(s => s.id === selectedCoverStyle) || coverStyles[0];
                     return `### 🎯 任務目標：主視覺宣傳海報 / LINE 滿版推播大圖
-你是一位知名品牌宣傳海報與公共衛教主視覺藝術總監。
-請依據以下 5 維度客製化規格，為「${parsed.title}」打造一張極具衝擊力與公信力的主視覺海報：
+你是一位知名宣傳海報與公共衛教主視覺藝術總監。
+請依據以下 5 維度客製化規格與解析度設定，為「${displayTitle}」打造一張極具衝擊力與公信力的宣傳封面大圖：
 
-### 📐 5 維度定制規格
-- **主標題**：「${parsed.title}」
-- **副標題**：「${parsed.subtitle}」
+### 📐 尺寸規格與解析度
+- **長寬比例**：${aspectRatio} (${currentSpec.direction}) - ${currentSpec.desc}
+- **精準輸出解析度**：${currentSpec.width} × ${currentSpec.height} px (${currentSpec.dpi}，${currentSpec.note})
 - **構圖類型 (Type)**：${coverType}
 - **渲染手法 (Rendering)**：${coverRendering}
 - **視覺風格預設 (Style)**：${st.name} (${st.id}) - ${st.desc}
-- **文字層級 (Text Level)**：${coverTextLevel}
-- **氛圍基調 (Mood)**：${coverMood}（強烈警示感）
-- **尺寸長寬比 (Aspect Ratio)**：${aspectRatio}
-- **🎨 色彩角色規劃 (調色盤功用)**：${paletteGuide}
+- **氛圍調性 (Mood)**：${coverMood}
+- **調色盤指定**：${palette.join(', ')}
 
-### 📝 完整內容文案
-${rawContent}
+### 📌 標題文案
+- **主標題**：「${displayTitle}」
+- **副標題**：「${displaySubtitle}」
 
-### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 通義萬相)
-Prompt: Striking public health warning cover poster for "${parsed.title}", subtitle "${parsed.subtitle}", ${coverType} composition with ${coverRendering} rendering, aesthetic style ${st.id}, ${coverMood} urgency mood, prominent typography, harmonious colors ${palette.join(', ')}, dramatic professional lighting, 8k resolution, award-winning poster design, aspect ratio ${aspectRatio}. --ar ${aspectRatio.replace(':', ':')}`;
+### 📝 內容參考
+${content}
+
+### 🖼️ AI 生圖提示詞 (Midjourney / Flux / Gemini / 阿里通義萬相)
+Prompt: Striking promotional warning cover poster for "${displayTitle}", subtitle "${displaySubtitle}", ${coverType} layout with ${coverRendering} rendering, ${st.id} artistic style, ${coverMood} atmosphere, prominent typography, color palette: ${palette.join(', ')}, ${currentSpec.width}x${currentSpec.height} resolution, dramatic lighting, 8k, aspect ratio ${aspectRatio}. --ar ${aspectRatio}`;
                 }
-            }, [mode, parsed, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverTextLevel, coverMood, palette, rawContent]);
+            }, [mode, title, subtitle, content, cardCount, aspectRatio, selectedXhsStyle, selectedXhsLayout, selectedInfoStyle, selectedInfoLayout, selectedCoverStyle, coverType, coverRendering, coverMood, palette, currentSpec]);
 
             const copyToClipboard = (text, type) => {
                 navigator.clipboard.writeText(text).then(() => {
@@ -535,11 +614,12 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
             };
 
             const exportMarkdown = () => {
+                const safeTitle = (title.trim() || '未命名主題').replace(/[/\\?%*:|"<>]/g, '_').slice(0, 15);
                 const blob = new Blob([generatedPrompt], { type: 'text/markdown;charset=utf-8' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `${mode}-${parsed.title.slice(0, 10)}.md`;
+                a.download = `${mode}-${safeTitle}.md`;
                 a.click();
                 URL.revokeObjectURL(url);
             };
@@ -549,27 +629,30 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                     alert('PDF 函式庫尚未載入完成，請稍候重試');
                     return;
                 }
+                const displayTitle = title.trim() || '未命名主題';
+                const safeTitle = (title.trim() || '未命名主題').replace(/[/\\?%*:|"<>]/g, '_').slice(0, 10);
                 const doc = new window.jspdf.jsPDF();
                 doc.setFontSize(16);
                 doc.text(`Visual Prompt Specification - ${mode}`, 14, 20);
                 doc.setFontSize(11);
-                doc.text(`Title: ${parsed.title}`, 14, 30);
-                doc.text(`Ratio: ${aspectRatio} | Colors: ${palette.join(', ')}`, 14, 38);
-                doc.text(`CLI Command:`, 14, 48);
+                doc.text(`Title: ${displayTitle}`, 14, 30);
+                doc.text(`Ratio: ${aspectRatio} (${currentSpec.width}x${currentSpec.height} px, ${currentSpec.dpi})`, 14, 38);
+                doc.text(`Palette: ${palette.join(', ')}`, 14, 46);
+                doc.text(`CLI Command:`, 14, 56);
                 doc.setFontSize(9);
-                doc.text(generatedCli, 14, 55, { maxWidth: 180 });
+                doc.text(generatedCli, 14, 63, { maxWidth: 180 });
                 
                 doc.setFontSize(11);
-                doc.text(`Full Generation Prompt:`, 14, 70);
+                doc.text(`Full Generation Prompt:`, 14, 78);
                 doc.setFontSize(8);
                 const splitText = doc.splitTextToSize(generatedPrompt, 180);
-                doc.text(splitText, 14, 78);
-                doc.save(`${mode}-${parsed.title.slice(0, 8)}.pdf`);
+                doc.text(splitText, 14, 86);
+                doc.save(`${mode}-${safeTitle}.pdf`);
             };
 
             return (
                 <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-16">
-                    {/* Header with Sleek Cyan/Blue Tone */}
+                    {/* Header */}
                     <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5 shadow-lg shadow-black/40">
                         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
@@ -579,7 +662,7 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                                 <div>
                                     <h1 className="text-lg md:text-xl font-black tracking-tight text-white flex items-center gap-2">
                                         視覺海報與 LINE 圖卡生成器
-                                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">Baoyu Studio v2.2</span>
+                                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">Baoyu Studio v2.3</span>
                                     </h1>
                                     <p className="text-xs text-slate-400">一站式生成 baoyu-xhs-images · baoyu-infographic · baoyu-cover-image 專業 Prompt</p>
                                 </div>
@@ -618,67 +701,157 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                         {/* LEFT COLUMN: Controls & Configurations (5 cols) */}
                         <section className="lg:col-span-5 flex flex-col gap-5">
                             
-                            {/* Unified Single Content Box */}
+                            {/* Card 1: Title & Content */}
                             <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
-                                <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center justify-between mb-3">
                                     <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
                                         <Icon name="FileText" size={16} className="text-cyan-400" />
-                                        <span>文案內容直接貼上 (免分欄)</span>
+                                        <span>標題與文案內容</span>
                                     </h2>
-                                    <span className="text-[11px] text-cyan-400 font-mono">自動提取標題與結構</span>
+                                    <div className="flex items-center gap-2.5">
+                                        <label className="text-[11px] text-slate-400 hover:text-slate-200 flex items-center gap-1.5 cursor-pointer select-none" title="換貼新文章時，自動更新大標題與副標題">
+                                            <input
+                                                type="checkbox"
+                                                checked={autoSyncTitle}
+                                                onChange={(e) => setAutoSyncTitle(e.target.checked)}
+                                                className="rounded border-slate-700 bg-slate-950 text-cyan-500 focus:ring-0 w-3.5 h-3.5 cursor-pointer"
+                                            />
+                                            <span>隨內文自動同步</span>
+                                        </label>
+                                        {isOutOfSync && !autoSyncTitle && (
+                                            <button
+                                                onClick={handleSmartExtract}
+                                                className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 flex items-center gap-1 transition-all animate-pulse shadow-sm shadow-amber-500/10"
+                                                title={`偵測到內文標題為「${detectedFromContent.title}」，點擊立即套用`}
+                                            >
+                                                <Icon name="Sparkles" size={12} />
+                                                <span>同步新標題</span>
+                                            </button>
+                                        )}
+                                        {!isOutOfSync && !autoSyncTitle && (
+                                            <button
+                                                onClick={handleSmartExtract}
+                                                className="text-[11px] font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+                                                title="手動從下方內文重新提取標題"
+                                            >
+                                                <Icon name="Sparkles" size={13} />
+                                                <span>從內文識別</span>
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                                 
-                                <p className="text-xs text-slate-400 mb-3">
-                                    直接貼上完整 Markdown 或文字草稿，系統會自動萃取主標題、副標題，並將完整段落注入至對應版型與分鏡中。
-                                </p>
-
-                                <textarea
-                                    rows={11}
-                                    value={rawContent}
-                                    onChange={(e) => setRawContent(e.target.value)}
-                                    placeholder="在此貼上您的完整文章、重點條列或衛教草稿..."
-                                    className="w-full bg-slate-950 border border-slate-700/70 rounded-xl p-3.5 text-slate-200 font-mono text-xs leading-relaxed focus:border-cyan-400 focus:outline-none custom-scrollbar select-text"
-                                />
-
-                                {/* Auto-extracted preview pills */}
-                                <div className="mt-3 p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-col gap-1 text-xs">
-                                    <div className="flex items-center gap-1.5">
-                                        <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60">主標識別</span>
-                                        <span className="font-bold text-white truncate">{parsed.title}</span>
-                                    </div>
-                                    {parsed.subtitle && (
-                                        <div className="flex items-center gap-1.5">
-                                            <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">副標摘要</span>
-                                            <span className="text-slate-300 truncate">{parsed.subtitle}</span>
+                                <div className="space-y-3.5">
+                                    {/* Dedicated Title Input */}
+                                    <div>
+                                        <div className="flex items-center justify-between mb-1">
+                                            <label className="block text-xs font-bold text-slate-300">
+                                                海報主標題 (Main Title)
+                                            </label>
+                                            {!autoSyncTitle && (
+                                                <span className="text-[10px] text-slate-500">已啟用手動自訂</span>
+                                            )}
                                         </div>
-                                    )}
+                                        <input
+                                            type="text"
+                                            value={title}
+                                            onChange={(e) => {
+                                                setTitle(e.target.value);
+                                                setAutoSyncTitle(false);
+                                            }}
+                                            placeholder={`例如：${DEFAULT_TITLE}`}
+                                            className="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white text-sm font-bold focus:border-cyan-400 focus:outline-none transition-all"
+                                        />
+                                    </div>
+
+                                    {/* Dedicated Subtitle Input */}
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-300 mb-1">
+                                            副標題 / 核心導讀 (Subtitle)
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={subtitle}
+                                            onChange={(e) => {
+                                                setSubtitle(e.target.value);
+                                                setAutoSyncTitle(false);
+                                            }}
+                                            placeholder={`例如：${DEFAULT_SUBTITLE}`}
+                                            className="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2 text-slate-200 text-xs font-medium focus:border-cyan-400 focus:outline-none transition-all"
+                                        />
+                                    </div>
+
+                                    {/* Full Content Textarea */}
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-300 mb-1">
+                                            詳細文案內容 / Markdown 結構 (Full Copy)
+                                        </label>
+                                        <textarea
+                                            rows={8}
+                                            value={content}
+                                            onChange={(e) => handleContentChange(e.target.value)}
+                                            placeholder="貼上完整文章、步驟段落或重點條列..."
+                                            className="w-full bg-slate-950 border border-slate-700/70 rounded-xl p-3 text-slate-300 font-mono text-xs leading-relaxed focus:border-cyan-400 focus:outline-none custom-scrollbar select-text"
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Aspect Ratio & Clear Orientations */}
+                            {/* Card 2: Aspect Ratio & Professional Resolution Specifications */}
                             <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl">
-                                <h2 className="text-sm font-bold text-slate-200 mb-1 flex items-center gap-2">
-                                    <Icon name="Sliders" size={16} className="text-cyan-400" />
-                                    <span>尺寸比例與方向 (Aspect Ratio)</span>
-                                </h2>
-                                <p className="text-xs text-slate-400 mb-3">請依據您的投放平台（LINE 小卡、手機直式長圖、實體海報或橫幅）選擇尺寸：</p>
+                                <div className="flex items-center justify-between mb-2">
+                                    <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                                        <Icon name="Sliders" size={16} className="text-cyan-400" />
+                                        <span>比例、方向與解析度規格</span>
+                                    </h2>
+                                    <span className="text-[11px] font-mono font-bold text-cyan-400 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40">
+                                        {currentSpec.width} × {currentSpec.height} px
+                                    </span>
+                                </div>
+
+                                <p className="text-xs text-slate-400 mb-3">請依據發布平台與實體/數位輸出情境選擇比例：</p>
                                 
-                                <div className="grid grid-cols-2 gap-2.5">
-                                    {aspectDetails.map(item => (
+                                {/* 4 Aspect Ratios with Clear Directional Descriptions */}
+                                <div className="grid grid-cols-2 gap-2.5 mb-4">
+                                    {Object.entries(RESOLUTION_SPECS).map(([ratioKey, item]) => (
                                         <button
-                                            key={item.ratio}
-                                            onClick={() => setAspectRatio(item.ratio)}
-                                            className={`p-3 rounded-xl text-left border transition-all flex flex-col justify-between ${aspectRatio === item.ratio ? 'border-cyan-400 bg-cyan-950/30 ring-1 ring-cyan-400 shadow-md shadow-cyan-500/10' : 'border-slate-800 bg-slate-950/80 hover:border-slate-700'}`}
+                                            key={ratioKey}
+                                            onClick={() => setAspectRatio(ratioKey)}
+                                            className={`p-3 rounded-xl text-left border transition-all flex flex-col justify-between ${aspectRatio === ratioKey ? 'border-cyan-400 bg-cyan-950/30 ring-1 ring-cyan-400 shadow-md shadow-cyan-500/10' : 'border-slate-800 bg-slate-950/80 hover:border-slate-700'}`}
                                         >
                                             <div className="flex items-center justify-between mb-1">
-                                                <span className={`text-xs font-black ${aspectRatio === item.ratio ? 'text-cyan-300' : 'text-slate-200'}`}>
-                                                    {item.tag}
+                                                <span className={`text-xs font-black ${aspectRatio === ratioKey ? 'text-cyan-300' : 'text-slate-200'}`}>
+                                                    {item.name}
                                                 </span>
-                                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">{item.ratio}</span>
+                                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">{ratioKey}</span>
                                             </div>
-                                            <span className="text-[11px] text-slate-400 leading-tight">{item.desc}</span>
+                                            <span className="text-[11px] text-slate-400 leading-snug">{item.desc}</span>
                                         </button>
                                     ))}
+                                </div>
+
+                                {/* Quality & DPI Tier Selector */}
+                                <div className="pt-3 border-t border-slate-800/80">
+                                    <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
+                                        <span>輸出解析度檔次 (Resolution Quality Tier)</span>
+                                        <span className="text-[11px] font-mono text-slate-400">{currentSpec.dpi} · {currentSpec.note}</span>
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {[
+                                            { id: 'mobile', label: '📱 社群輕量', tip: 'LINE / 社群圖卡標準 (<1MB)' },
+                                            { id: 'hd2k', label: '🖥️ 數位高清 2K', tip: '螢幕展示 / 視網膜超清' },
+                                            { id: 'print4k', label: '🖨️ 印刷輸出 4K', tip: '3000~4000px · 300 DPI 實體海報' }
+                                        ].map(tier => (
+                                            <button
+                                                key={tier.id}
+                                                onClick={() => setQualityTier(tier.id)}
+                                                className={`py-2 px-1.5 rounded-xl text-center border transition-all ${qualityTier === tier.id ? 'border-cyan-400 bg-cyan-950/40 text-cyan-300 font-bold' : 'border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700'}`}
+                                            >
+                                                <div className="text-xs">{tier.label}</div>
+                                                <div className="text-[9px] text-slate-500 mt-0.5">{tier.tip}</div>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
 
                                 {mode === 'xhs' && (
@@ -696,22 +869,22 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                                 )}
                             </div>
 
-                            {/* Color Palette & Clear Functional Explanation */}
+                            {/* Card 3: Color Palette & Functional Roles */}
                             <div className="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-xl relative">
                                 <div className="flex items-center justify-between mb-1">
                                     <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
                                         <Icon name="Palette" size={16} className="text-cyan-400" />
-                                        <span>調色盤功能與色彩規範</span>
+                                        <span>調色盤功能與色彩角色</span>
                                     </h2>
-                                    <span className="text-[11px] font-bold text-cyan-400">可點擊色塊調色</span>
+                                    <span className="text-[11px] font-bold text-cyan-400">點擊任一色塊即可自訂</span>
                                 </div>
 
-                                {/* Explanation of why palette matters */}
+                                {/* Explanation of palette's true role */}
                                 <div className="bg-cyan-950/30 border border-cyan-800/40 rounded-xl p-2.5 mb-3 text-[11px] text-cyan-200/90 leading-relaxed">
-                                    💡 <strong>調色盤作用</strong>：此 5 色調色盤將直接注入生圖指令，分別控制海報的<strong>主色調、背景基底、重要標籤、正文字體與警示強調色</strong>，確保生成出的海報色系和諧一致，不會隨機亂混色。
+                                    💡 <strong>調色盤作用</strong>：這 5 個色碼將直接注入 AI 生圖指令中，分別精確控制海報的<strong>主色調、次要色、背景底色、正文字體與警示強調色</strong>（如紅色緊急處置），防止 AI 隨機雜亂混色。
                                 </div>
 
-                                {/* Current 5 Color Swatches */}
+                                {/* Current 5 Color Swatches with explicit role labels */}
                                 <div className="grid grid-cols-5 gap-2 mb-3">
                                     {palette.map((color, idx) => {
                                         const labels = ['主色', '次色', '底色', '字色', '警示'];
@@ -723,7 +896,7 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                                                     style={{ backgroundColor: color }}
                                                     title={`點擊調色：${color}`}
                                                 >
-                                                    <span className="text-[9px] font-bold px-1 rounded bg-black/40 text-white">
+                                                    <span className="text-[9px] font-bold px-1 rounded bg-black/50 text-white">
                                                         {labels[idx]}
                                                     </span>
                                                     <span
@@ -800,7 +973,7 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                                 </div>
 
                                 {/* Items Grid */}
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[320px] overflow-y-auto pr-1 custom-scrollbar">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
                                     {(mode === 'xhs' ? (subTab === 'layout' ? xhsLayouts : xhsStyles) :
                                       mode === 'infographic' ? (subTab === 'layout' ? infographicLayouts : infographicStyles) :
                                       coverStyles).map(item => {
@@ -861,7 +1034,9 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                                     <div className="flex items-center gap-2">
                                         <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-                                        <span className="text-xs font-bold text-white tracking-wide">即時 Prompt 編譯輸出</span>
+                                        <span className="text-xs font-bold text-white tracking-wide">
+                                            即時 Prompt 編譯輸出 ({currentSpec.width}×{currentSpec.height} px · {currentSpec.dpi})
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <button
@@ -911,7 +1086,7 @@ Prompt: Striking public health warning cover poster for "${parsed.title}", subti
                                             className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-600 text-slate-300 text-xs font-bold flex items-center gap-1 transition-all"
                                         >
                                             <Icon name="Download" size={13} />
-                                            <span>匯出 PDF 企劃書</span>
+                                            <span>匯出 PDF 規格書</span>
                                         </button>
                                     </div>
                                 </div>

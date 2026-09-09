@@ -1,21 +1,21 @@
 {
-  "name": "gemini-notebook-generator",
+  "name": "visual-prompt-studio",
   "version": "2.0.0",
-  "description": "Gemini Notebook 簡報 Prompt 生成器 - 完全鏡像與反混淆重構版",
+  "description": "Visual Prompt Studio - 視覺海報與社群圖卡 Prompt 生成器",
   "main": "app.js",
   "scripts": {
-    "build": "node -e \"const fs=require('fs');const Babel=require('./assets/libs/babel.min.js');fs.writeFileSync('./app.js', Babel.transform(fs.readFileSync('./app.jsx','utf-8'),{presets:['react']}).code);console.log('Build complete: app.js generated');\"",
+    "build": "node scripts/build.js",
     "serve": "python3 -m http.server 3000",
     "download-assets": "python3 scripts/download_assets.py"
   },
   "keywords": [
-    "gemini",
-    "notebooklm",
     "prompt-generator",
-    "presentation",
+    "infographic",
+    "poster",
+    "line-card",
     "react",
     "tailwindcss"
   ],
-  "author": "Meiko (Cloned & Decrypted for pair-programming)",
+  "author": "Visual Prompt Studio Team",
   "license": "MIT"
 }

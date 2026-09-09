@@ -1,0 +1,7 @@
+.git
+.agents
+baoyu-skills
+skills-lock.json
+node_modules
+*.log
+scripts/test_*.py
