@@ -1032,18 +1032,18 @@ const RESOLUTION_SPECS = {
 // LLM Secondary Re-generation Prompts (ChatGPT / Gemini)
 const SECONDARY_PROMPT_EXAMPLES = [{
   id: 'pikachu',
-  title: '範例 1：IP 角色趣味轉化（皮卡丘主題）',
+  title: '範例 1：IP 角色趣味風格（皮卡丘主題）',
   badge: '角色擬人 · 溫暖活潑',
   badgeColor: 'bg-amber-400/15 text-amber-300 border-amber-400/30',
-  desc: '將嚴肅衛教或專業宣導轉化為皮卡丘主角視角，親切吸睛。',
-  prompt: '將以下文字內容的敘事主角改為皮卡丘，統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
+  desc: '含「請勿直接生圖」防呆約束，將文案轉為皮卡丘主角視角與暖黃手繪風。',
+  prompt: '請勿直接生成圖片。請將以下文字內容的敘事主角改為皮卡丘，統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
 }, {
-  id: 'executive',
-  title: '範例 2：科技顧問與商務簡報（高管戰情版）',
-  badge: '專業商務 · 模組拆解',
-  badgeColor: 'bg-cyan-400/15 text-cyan-300 border-cyan-400/30',
-  desc: '適合技術架構、業務報告或高管彙報，強調極客青色調與關鍵量化指標。',
-  prompt: '請將以下文字內容轉化為科技大廠高管簡報風格，統一調整為深邃科技藍與極客青色調，以便當盒結構拆解出核心洞察與關鍵量化指標，完整保留原文資訊與數據，並直接輸出修改潤飾後的完整內容。'
+  id: 'spring_drink',
+  title: '範例 2：春日清新彌散風（飲品海報主題）',
+  badge: '清新彌散 · 質感排版',
+  badgeColor: 'bg-rose-400/15 text-rose-300 border-rose-400/30',
+  desc: '含防呆約束；草莓氣泡水通透柔焦視覺、多層文字錯落排版與清新點綴。',
+  prompt: '請勿直接生成圖片。請將以下文字內容修改為「春日清新彌散風」視覺風格，採直式構圖，以草莓氣泡水為視覺中心，營造柔焦虛化與通透質感；搭配多層文字錯落排版，畫面點綴草莓、薄荷葉、細緻星光與粉色標籤「春天的味道」；請完整保留原文所有資訊與情節，並直接輸出修改潤飾後的完整內容。'
 }];
 
 // Robust markdown title and subtitle extractor
@@ -1725,7 +1725,7 @@ ${content}
     className: "text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 border border-slate-700"
   }, "\u5171 2 \u5247\u7BC4\u4F8B\uFF08\u9EDE\u64CA\u53EF\u76F4\u63A5\u7DE8\u8F2F\uFF09")), /*#__PURE__*/React.createElement("p", {
     className: "text-[11px] text-slate-400 mt-0.5"
-  }, "\u5C07\u4E0A\u65B9\u898F\u683C\u8CBC\u7D66 AI \u6642\uFF0C\u53EF\u642D\u914D\u4EE5\u4E0B\u6307\u4EE4\u8981\u6C42\u6A21\u578B\u5FEB\u901F\u6539\u5BEB\u98A8\u683C\u6216\u89D2\u8272\uFF08\u6587\u5B57\u6846\u652F\u63F4\u76F4\u63A5\u7DE8\u8F2F\u5FAE\u8ABF\uFF09\uFF1A")))), /*#__PURE__*/React.createElement("div", {
+  }, "\u5C07\u4E0A\u65B9\u898F\u683C\u8CBC\u7D66 AI \u6642\uFF0C\u53EF\u642D\u914D\u4EE5\u4E0B\u6307\u4EE4\u8981\u6C42\u6A21\u578B\u6539\u5BEB\u98A8\u683C\u6216\u89D2\u8272\uFF08\u7686\u5DF2\u52A0\u5165\u300C\u8ACB\u52FF\u76F4\u63A5\u751F\u6210\u5716\u7247\u300D\u9632\u5446\u7D04\u675F\uFF0C\u9EDE\u64CA\u6587\u5B57\u6846\u53EF\u81EA\u8A02\u5FAE\u8ABF\uFF09\uFF1A")))), /*#__PURE__*/React.createElement("div", {
     className: "space-y-3"
   }, SECONDARY_PROMPT_EXAMPLES.map((ex, idx) => {
     const currentPromptText = examplePrompts[idx] !== undefined ? examplePrompts[idx] : ex.prompt;
