@@ -926,7 +926,7 @@ const DEFAULT_MARKDOWN = `# 主標
 
 ---
 
-# CTA
+# 行動呼籲
 ## **有抓咬，就先沖、再送醫！**
 ### 不確定怎麼辦？
 **撥打疾管署防疫專線 1922** 或 **0800-001922** 諮詢。
@@ -1031,46 +1031,20 @@ const RESOLUTION_SPECS = {
 
 // LLM Secondary Re-generation Prompts (ChatGPT / Gemini)
 const SECONDARY_PROMPT_EXAMPLES = [{
-  id: 'pikachu',
-  title: '範例 1：IP 角色趣味風格（皮卡丘主題）',
+  id: 'cute_pet',
+  title: '範例 1：可愛動物角色風格（狗貓主題）',
   badge: '角色擬人 · 溫暖活潑',
   badgeColor: 'bg-amber-400/15 text-amber-300 border-amber-400/30',
-  desc: '含「請勿直接生圖」防呆約束，將文案轉為皮卡丘主角視角與暖黃手繪風。',
-  prompt: '請勿直接生成圖片。請將以下文字內容的敘事主角改為皮卡丘，統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
+  desc: '含「請勿直接生圖」防呆約束，將文案轉為可愛狗貓主角視角與暖黃手繪風。',
+  prompt: '請勿直接生成圖片。請將以下文字內容的敘事主角改為一隻可愛的擬人化小狗（或小貓），統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
 }, {
   id: 'spring_drink',
   title: '範例 2：春日清新彌散風（飲品海報主題）',
   badge: '清新彌散 · 質感排版',
   badgeColor: 'bg-rose-400/15 text-rose-300 border-rose-400/30',
-  desc: '含防呆約束；草莓氣泡水通透柔焦視覺、多層文字錯落排版與清新點綴。',
-  prompt: '請勿直接生成圖片。請將以下文字內容修改為「春日清新彌散風」視覺風格，採直式構圖，以草莓氣泡水為視覺中心，營造柔焦虛化與通透質感；搭配多層文字錯落排版，畫面點綴草莓、薄荷葉、細緻星光與粉色標籤「春天的味道」；請完整保留原文所有資訊與情節，並直接輸出修改潤飾後的完整內容。'
+  desc: '含防呆約束；以草莓氣泡水、薄荷葉、星光等意象詞彙融入文案語氣，保留原文事實。',
+  prompt: '請勿直接生成圖片。請將以下文字內容改寫為「春日清新彌散風」的文案語氣，在敘述中自然融入草莓氣泡水、薄荷葉、細緻星光、粉色標籤「春天的味道」等意象詞彙，營造清新、通透、輕盈的氛圍感；若原文屬正式資訊或事實內容，這些意象僅作比喻與氛圍點綴，不得更動或稀釋原文的核心事實與情節。請完整保留原文所有資訊與情節，並直接輸出修改潤飾後的完整內容。'
 }];
-
-// Robust markdown title and subtitle extractor
-const extractTitleAndSubtitle = rawText => {
-  const lines = (rawText || '').split('\n').map(l => l.trim()).filter(Boolean);
-  let newT = '',
-    newSub = '';
-  for (let line of lines) {
-    if (/^[-=*_]{3,}$/.test(line)) continue;
-    let clean = line.replace(/^#+\s*/, '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').trim();
-    clean = clean.replace(/^(?:主標題?|標題|主題|Title)[:：\s]*/i, '').trim();
-    if (!clean || clean === '重點訊息' || clean === '行動指引' || clean === 'CTA') continue;
-    if (!newT) {
-      newT = clean;
-    } else if (!newSub && clean !== newT) {
-      let subClean = clean.replace(/^(?:副標題?|副標|Subtitle)[:：\s]*/i, '').trim();
-      if (subClean && subClean !== newT && subClean !== '重點訊息' && subClean !== '行動指引') {
-        newSub = subClean;
-        break;
-      }
-    }
-  }
-  return {
-    title: newT,
-    subtitle: newSub
-  };
-};
 const App = () => {
   const [mode, setMode] = useState('infographic'); // 'infographic' | 'xhs' | 'cover'
   const [subTab, setSubTab] = useState('layout'); // 'layout' | 'style'
@@ -1081,7 +1055,6 @@ const App = () => {
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [subtitle, setSubtitle] = useState(DEFAULT_SUBTITLE);
   const [content, setContent] = useState(DEFAULT_MARKDOWN);
-  const [autoSyncTitle, setAutoSyncTitle] = useState(true);
 
   // Aspect ratio & Resolution Tier
   const [aspectRatio, setAspectRatio] = useState('9:16');
@@ -1105,7 +1078,6 @@ const App = () => {
 
   // Modal, Feedback & Editable Prompt
   const [copied, setCopied] = useState(false);
-  const [copiedCli, setCopiedCli] = useState(false);
   const [copiedExampleKey, setCopiedExampleKey] = useState(null);
   const [examplePrompts, setExamplePrompts] = useState(() => SECONDARY_PROMPT_EXAMPLES.map(ex => ex.prompt));
   const [zoomImage, setZoomImage] = useState(null);
@@ -1124,27 +1096,8 @@ const App = () => {
       note: tier.note
     };
   }, [aspectRatio, qualityTier]);
-
-  // Detect title from current content to check synchronization
-  const detectedFromContent = useMemo(() => extractTitleAndSubtitle(content), [content]);
-  const isOutOfSync = useMemo(() => {
-    return Boolean(detectedFromContent.title && detectedFromContent.title !== title);
-  }, [detectedFromContent, title]);
   const handleContentChange = newVal => {
     setContent(newVal);
-    if (autoSyncTitle) {
-      const extracted = extractTitleAndSubtitle(newVal);
-      if (extracted.title) setTitle(extracted.title);
-      if (extracted.subtitle) setSubtitle(extracted.subtitle);
-    }
-  };
-  const handleSmartExtract = () => {
-    const {
-      title: t,
-      subtitle: sub
-    } = detectedFromContent;
-    if (t) setTitle(t);
-    if (sub) setSubtitle(sub);
   };
 
   // Handle mode switch with natural aspect ratio defaults
@@ -1184,19 +1137,6 @@ const App = () => {
     }).catch(() => {});
   }, []);
 
-  // Generate CLI command including size/quality
-  const generatedCli = useMemo(() => {
-    const cleanTopic = (title.trim() || '未命名主題').replace(/"/g, '\\"');
-    const sizeArg = `--size ${currentSpec.width}x${currentSpec.height}`;
-    if (mode === 'xhs') {
-      return `/baoyu-xhs-images "${cleanTopic}" --style ${selectedXhsStyle} --layout ${selectedXhsLayout} --count ${cardCount} --aspect ${aspectRatio} ${sizeArg}`;
-    } else if (mode === 'infographic') {
-      return `/baoyu-infographic "${cleanTopic}" --layout ${selectedInfoLayout} --style ${selectedInfoStyle} --aspect ${aspectRatio} ${sizeArg}`;
-    } else {
-      return `/baoyu-cover-image "${cleanTopic}" --type ${coverType} --style ${selectedCoverStyle} --rendering ${coverRendering} --text ${coverTextLevel} --mood ${coverMood} --aspect ${aspectRatio} ${sizeArg}`;
-    }
-  }, [mode, title, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood, currentSpec]);
-
   // Generate structured full Prompt with clear palette mapping & pixel dimensions
   const generatedPrompt = useMemo(() => {
     const [cPrimary, cSecondary, cBg, cText, cAccent] = palette;
@@ -1227,6 +1167,14 @@ const App = () => {
 - **主標題**：${displayTitle}
 - **副標導讀**：${displaySubtitle}
 
+### ✍️ 文字排版與字體層級規範
+- **標題層級**：主標題僅置於系列首張卡片，字級最大、字重最重（Black/Bold），單行建議 ≤ 12 字，避免手機端自動斷行破壞版面
+- **副標題**：字級約為主標題的 45%-55%，與主標題同一視覺群組、對齊同一基準線，語意上為導讀補充
+- **內文段落**：全系列字級統一，行高 150%-160%，單行字數依卡寬控制在 14-18 字內；每張卡片建議只保留 1 個核心訊息，避免文字堆疊
+- **數據 / 關鍵字強調**：以 [焦點強調色: ${cAccent}] 上色或加大字重標出，每張卡片最多 1-2 處強調，形成滑動瀏覽時的視覺錨點
+- **對齊與留白**：系列卡片共用同一格線與邊界留白（四邊留白 ≥ 6% 卡寬），標題／內文對齊基準線需一致，維持翻頁節奏的連續感
+- **字體建議**：中文標題採高對比黑體（如 Source Han Sans / Noto Sans TC，Bold-Black），內文採同字族 Regular-Medium，避免手寫字體或超過 2 種字體家族影響行動裝置易讀性
+
 ### 📝 詳細文案來源與段落依據
 ${content}
 
@@ -1236,7 +1184,7 @@ ${content}
     } else if (mode === 'infographic') {
       const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
       const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
-      return `### 🎯 任務目標：高密度知識資訊圖表 / 實體宣傳海報生成
+      return `### 🎯 任務目標：一圖看懂資訊圖表 / 實體宣傳海報生成
 你是一位世界級的資訊視覺化設計總監（Information Architecture & Poster Designer）。
 請依據以下結構規格、尺寸解析度、配色原則與輸入文案，為主題「${displayTitle}」規劃一張架構嚴密、一圖看懂的高品質資訊海報：
 
@@ -1256,6 +1204,14 @@ ${content}
 ### 📌 標題設定
 - **主標題**：${displayTitle}
 - **副標導讀**：${displaySubtitle}
+
+### ✍️ 文字排版與字體層級規範
+- **標題層級**：主標題採全圖最大字級置於頂部或視覺焦點區，副標題字級約為主標題 40%-50%，兩者需保持明確的視覺重量差
+- **章節標題**：各資訊模組標題字級統一，搭配 [主視覺骨架色: ${cPrimary}] 色塊或圖標錶頭，強化章節可辨識度
+- **內文與清單**：正文字級於指定輸出解析度下需維持印刷可讀性，行高 150%-160%，避免密集區塊因字級過小造成閱讀疲勞
+- **數據與關鍵結論**：以 [焦點強調色: ${cAccent}] 上色並加大字重/字級，形成資訊掃讀時的視覺錨點，全圖建議不超過 3-4 處強調
+- **對齊與留白**：全圖採統一網格系統，各模組留白一致，標題與內文對齊基準線需貫穿整張海報，避免局部擁擠、局部空洞
+- **字體建議**：標題使用高對比黑體變體（Bold-Black），正文使用同字族 Regular-Medium，數據可搭配數字字重加粗，避免混用超過 2 種字體家族
 
 ### 📝 完整內容與模組規劃依據
 ${content}
@@ -1282,6 +1238,13 @@ ${content}
 - **主標題**：「${displayTitle}」
 - **副標題**：「${displaySubtitle}」
 
+### ✍️ 文字排版與字體層級規範
+- **主標題**：全圖視覺焦點，字級最大、字重最重，單行建議 ≤ 8-10 字（可依構圖需求拆為 2 行），避免文字過長被迫縮字而失去焦點感
+- **副標題**：字級約為主標題 30%-40%，置於主標題下方或側邊，作為語意補充，避免與主標題爭奪視覺重心
+- **文字與構圖融合**：依「${coverType}」構圖類型，標題文字應與主視覺圖像元素形成層次（前景/中景遮罩、光影對比），而非單純疊加於畫面之上
+- **對齊與留白**：標題區域四周需保留安全邊界（建議 ≥ 8% 畫面寬高），核心文字避免落在畫面正中下方，因應 LINE 推播介面常見的文字說明與操作按鈕遮擋
+- **字體建議**：主標題採高對比黑體或依「${st.name}」風格調整的客製化美術字，副標題採同字族 Regular-Medium，避免與主標題字重衝突
+
 ### 📝 內容參考
 ${content}
 
@@ -1293,15 +1256,10 @@ ${content}
 
   // Active prompt: either user edited custom prompt or auto-generated
   const activePrompt = customPrompt !== null ? customPrompt : generatedPrompt;
-  const copyToClipboard = (text, type) => {
+  const copyToClipboard = text => {
     navigator.clipboard.writeText(text).then(() => {
-      if (type === 'cli') {
-        setCopiedCli(true);
-        setTimeout(() => setCopiedCli(false), 2000);
-      } else {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     });
   };
   const copyExamplePrompt = (key, text) => {
@@ -1355,7 +1313,7 @@ ${content}
     className: "text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/30"
   }, "Baoyu Studio v2.3")), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-slate-400"
-  }, "\u4E00\u7AD9\u5F0F\u751F\u6210 baoyu-xhs-images \xB7 baoyu-infographic \xB7 baoyu-cover-image \u5C08\u696D Prompt"))), /*#__PURE__*/React.createElement("div", {
+  }, "\u4E00\u7AD9\u5F0F\u751F\u6210\u8CC7\u8A0A\u6D77\u5831\u3001\u793E\u7FA4\u5C0F\u5361\u3001\u4E3B\u8996\u89BA\u5927\u5716\u7684\u5C08\u696D Prompt"))), /*#__PURE__*/React.createElement("div", {
     className: "flex bg-slate-900 border border-slate-800 p-1 rounded-xl"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => handleModeChange('infographic'),
@@ -1363,19 +1321,19 @@ ${content}
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "BarChart3",
     size: 14
-  }), /*#__PURE__*/React.createElement("span", null, "baoyu-infographic (\u8CC7\u8A0A\u6D77\u5831)")), /*#__PURE__*/React.createElement("button", {
+  }), /*#__PURE__*/React.createElement("span", null, "\u8CC7\u8A0A\u6D77\u5831\uFF08\u4E00\u5716\u770B\u61C2\uFF09")), /*#__PURE__*/React.createElement("button", {
     onClick: () => handleModeChange('xhs'),
     className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'xhs' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Layers",
     size: 14
-  }), /*#__PURE__*/React.createElement("span", null, "baoyu-xhs-images (\u793E\u7FA4\u5C0F\u5361)")), /*#__PURE__*/React.createElement("button", {
+  }), /*#__PURE__*/React.createElement("span", null, "\u793E\u7FA4\u5C0F\u5361\uFF08\u8F2A\u64AD\u5716\u5361\uFF09")), /*#__PURE__*/React.createElement("button", {
     onClick: () => handleModeChange('cover'),
     className: `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'cover' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`
   }, /*#__PURE__*/React.createElement(Icon, {
     name: "Image",
     size: 14
-  }), /*#__PURE__*/React.createElement("span", null, "baoyu-cover-image (\u4E3B\u8996\u89BA\u5C01\u9762)"))))), /*#__PURE__*/React.createElement("main", {
+  }), /*#__PURE__*/React.createElement("span", null, "\u4E3B\u8996\u89BA\u5927\u5716\uFF08\u5BA3\u50B3\u5C01\u9762\uFF09"))))), /*#__PURE__*/React.createElement("main", {
     className: "max-w-7xl mx-auto px-4 md:px-6 pt-6 grid grid-cols-1 lg:grid-cols-12 gap-6"
   }, /*#__PURE__*/React.createElement("section", {
     className: "lg:col-span-5 flex flex-col gap-5"
@@ -1389,45 +1347,16 @@ ${content}
     name: "FileText",
     size: 16,
     className: "text-cyan-400"
-  }), /*#__PURE__*/React.createElement("span", null, "\u6A19\u984C\u8207\u6587\u6848\u5167\u5BB9")), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2.5"
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "text-[11px] text-slate-400 hover:text-slate-200 flex items-center gap-1.5 cursor-pointer select-none",
-    title: "\u63DB\u8CBC\u65B0\u6587\u7AE0\u6642\uFF0C\u81EA\u52D5\u66F4\u65B0\u5927\u6A19\u984C\u8207\u526F\u6A19\u984C"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox",
-    checked: autoSyncTitle,
-    onChange: e => setAutoSyncTitle(e.target.checked),
-    className: "rounded border-slate-700 bg-slate-950 text-cyan-500 focus:ring-0 w-3.5 h-3.5 cursor-pointer"
-  }), /*#__PURE__*/React.createElement("span", null, "\u96A8\u5167\u6587\u81EA\u52D5\u540C\u6B65")), isOutOfSync && !autoSyncTitle && /*#__PURE__*/React.createElement("button", {
-    onClick: handleSmartExtract,
-    className: "text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 flex items-center gap-1 transition-all animate-pulse shadow-sm shadow-amber-500/10",
-    title: `偵測到內文標題為「${detectedFromContent.title}」，點擊立即套用`
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "Sparkles",
-    size: 12
-  }), /*#__PURE__*/React.createElement("span", null, "\u540C\u6B65\u65B0\u6A19\u984C")), !isOutOfSync && !autoSyncTitle && /*#__PURE__*/React.createElement("button", {
-    onClick: handleSmartExtract,
-    className: "text-[11px] font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors",
-    title: "\u624B\u52D5\u5F9E\u4E0B\u65B9\u5167\u6587\u91CD\u65B0\u63D0\u53D6\u6A19\u984C"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "Sparkles",
-    size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "\u5F9E\u5167\u6587\u8B58\u5225")))), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, "\u6A19\u984C\u8207\u6587\u6848\u5167\u5BB9"))), /*#__PURE__*/React.createElement("div", {
     className: "space-y-3.5"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between mb-1"
   }, /*#__PURE__*/React.createElement("label", {
     className: "block text-xs font-bold text-slate-300"
-  }, "\u6D77\u5831\u4E3B\u6A19\u984C (Main Title)"), !autoSyncTitle && /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] text-slate-500"
-  }, "\u5DF2\u555F\u7528\u624B\u52D5\u81EA\u8A02")), /*#__PURE__*/React.createElement("input", {
+  }, "\u6D77\u5831\u4E3B\u6A19\u984C (Main Title)")), /*#__PURE__*/React.createElement("input", {
     type: "text",
     value: title,
-    onChange: e => {
-      setTitle(e.target.value);
-      setAutoSyncTitle(false);
-    },
+    onChange: e => setTitle(e.target.value),
     placeholder: `例如：${DEFAULT_TITLE}`,
     className: "w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white text-sm font-bold focus:border-cyan-400 focus:outline-none transition-all"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -1435,10 +1364,7 @@ ${content}
   }, "\u526F\u6A19\u984C / \u6838\u5FC3\u5C0E\u8B80 (Subtitle)"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     value: subtitle,
-    onChange: e => {
-      setSubtitle(e.target.value);
-      setAutoSyncTitle(false);
-    },
+    onChange: e => setSubtitle(e.target.value),
     placeholder: `例如：${DEFAULT_SUBTITLE}`,
     className: "w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2 text-slate-200 text-xs font-medium focus:border-cyan-400 focus:outline-none transition-all"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -1660,24 +1586,13 @@ ${content}
   }, "\u624B\u52D5\u7DE8\u8F2F\u4E2D")), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center flex-wrap gap-2"
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => copyToClipboard(generatedCli, 'cli'),
-    className: "px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all",
-    title: "\u8907\u88FD CLI \u6307\u4EE4"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "Terminal",
-    size: 13
-  }), /*#__PURE__*/React.createElement("span", null, copiedCli ? '已複製！' : '複製 CLI')), /*#__PURE__*/React.createElement("button", {
-    onClick: () => copyToClipboard(activePrompt, 'prompt'),
+    onClick: () => copyToClipboard(activePrompt),
     className: "px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all",
     title: "\u4E00\u9375\u8907\u88FD\u6574\u4EFD\u898F\u683C\u63D0\u793A\u8A5E\uFF01"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: copied ? 'Check' : 'Copy',
     size: 14
   }), /*#__PURE__*/React.createElement("span", null, copied ? '已複製提示詞！' : '📋 複製提示詞')))), /*#__PURE__*/React.createElement("div", {
-    className: "bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "truncate pr-3 select-all"
-  }, generatedCli)), /*#__PURE__*/React.createElement("div", {
     className: "relative"
   }, /*#__PURE__*/React.createElement("textarea", {
     value: activePrompt,

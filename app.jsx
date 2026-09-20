@@ -313,7 +313,7 @@
 
 ---
 
-# CTA
+# 行動呼籲
 ## **有抓咬，就先沖、再送醫！**
 ### 不確定怎麼辦？
 **撥打疾管署防疫專線 1922** 或 **0800-001922** 諮詢。
@@ -359,45 +359,22 @@
         // LLM Secondary Re-generation Prompts (ChatGPT / Gemini)
         const SECONDARY_PROMPT_EXAMPLES = [
             {
-                id: 'pikachu',
-                title: '範例 1：IP 角色趣味風格（皮卡丘主題）',
+                id: 'cute_pet',
+                title: '範例 1：可愛動物角色風格（狗貓主題）',
                 badge: '角色擬人 · 溫暖活潑',
                 badgeColor: 'bg-amber-400/15 text-amber-300 border-amber-400/30',
-                desc: '含「請勿直接生圖」防呆約束，將文案轉為皮卡丘主角視角與暖黃手繪風。',
-                prompt: '請勿直接生成圖片。請將以下文字內容的敘事主角改為皮卡丘，統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
+                desc: '含「請勿直接生圖」防呆約束，將文案轉為可愛狗貓主角視角與暖黃手繪風。',
+                prompt: '請勿直接生成圖片。請將以下文字內容的敘事主角改為一隻可愛的擬人化小狗（或小貓），統一調整為明亮溫暖的黃色色調與手寫風格，完整保留原文資訊與情節，並直接輸出修改潤飾後的完整內容。'
             },
             {
                 id: 'spring_drink',
                 title: '範例 2：春日清新彌散風（飲品海報主題）',
                 badge: '清新彌散 · 質感排版',
                 badgeColor: 'bg-rose-400/15 text-rose-300 border-rose-400/30',
-                desc: '含防呆約束；草莓氣泡水通透柔焦視覺、多層文字錯落排版與清新點綴。',
-                prompt: '請勿直接生成圖片。請將以下文字內容修改為「春日清新彌散風」視覺風格，採直式構圖，以草莓氣泡水為視覺中心，營造柔焦虛化與通透質感；搭配多層文字錯落排版，畫面點綴草莓、薄荷葉、細緻星光與粉色標籤「春天的味道」；請完整保留原文所有資訊與情節，並直接輸出修改潤飾後的完整內容。'
+                desc: '含防呆約束；以草莓氣泡水、薄荷葉、星光等意象詞彙融入文案語氣，保留原文事實。',
+                prompt: '請勿直接生成圖片。請將以下文字內容改寫為「春日清新彌散風」的文案語氣，在敘述中自然融入草莓氣泡水、薄荷葉、細緻星光、粉色標籤「春天的味道」等意象詞彙，營造清新、通透、輕盈的氛圍感；若原文屬正式資訊或事實內容，這些意象僅作比喻與氛圍點綴，不得更動或稀釋原文的核心事實與情節。請完整保留原文所有資訊與情節，並直接輸出修改潤飾後的完整內容。'
             }
         ];
-
-        // Robust markdown title and subtitle extractor
-        const extractTitleAndSubtitle = (rawText) => {
-            const lines = (rawText || '').split('\n').map(l => l.trim()).filter(Boolean);
-            let newT = '', newSub = '';
-            for (let line of lines) {
-                if (/^[-=*_]{3,}$/.test(line)) continue;
-                let clean = line.replace(/^#+\s*/, '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').trim();
-                clean = clean.replace(/^(?:主標題?|標題|主題|Title)[:：\s]*/i, '').trim();
-                if (!clean || clean === '重點訊息' || clean === '行動指引' || clean === 'CTA') continue;
-                
-                if (!newT) {
-                    newT = clean;
-                } else if (!newSub && clean !== newT) {
-                    let subClean = clean.replace(/^(?:副標題?|副標|Subtitle)[:：\s]*/i, '').trim();
-                    if (subClean && subClean !== newT && subClean !== '重點訊息' && subClean !== '行動指引') {
-                        newSub = subClean;
-                        break;
-                    }
-                }
-            }
-            return { title: newT, subtitle: newSub };
-        };
 
         const App = () => {
             const [mode, setMode] = useState('infographic'); // 'infographic' | 'xhs' | 'cover'
@@ -409,8 +386,7 @@
             const [title, setTitle] = useState(DEFAULT_TITLE);
             const [subtitle, setSubtitle] = useState(DEFAULT_SUBTITLE);
             const [content, setContent] = useState(DEFAULT_MARKDOWN);
-            const [autoSyncTitle, setAutoSyncTitle] = useState(true);
-            
+
             // Aspect ratio & Resolution Tier
             const [aspectRatio, setAspectRatio] = useState('9:16');
             const [qualityTier, setQualityTier] = useState('hd2k'); // 'mobile' | 'hd2k' | 'print4k'
@@ -435,7 +411,6 @@
 
             // Modal, Feedback & Editable Prompt
             const [copied, setCopied] = useState(false);
-            const [copiedCli, setCopiedCli] = useState(false);
             const [copiedExampleKey, setCopiedExampleKey] = useState(null);
             const [examplePrompts, setExamplePrompts] = useState(() =>
                 SECONDARY_PROMPT_EXAMPLES.map(ex => ex.prompt)
@@ -457,25 +432,8 @@
                 };
             }, [aspectRatio, qualityTier]);
 
-            // Detect title from current content to check synchronization
-            const detectedFromContent = useMemo(() => extractTitleAndSubtitle(content), [content]);
-            const isOutOfSync = useMemo(() => {
-                return Boolean(detectedFromContent.title && detectedFromContent.title !== title);
-            }, [detectedFromContent, title]);
-
             const handleContentChange = (newVal) => {
                 setContent(newVal);
-                if (autoSyncTitle) {
-                    const extracted = extractTitleAndSubtitle(newVal);
-                    if (extracted.title) setTitle(extracted.title);
-                    if (extracted.subtitle) setSubtitle(extracted.subtitle);
-                }
-            };
-
-            const handleSmartExtract = () => {
-                const { title: t, subtitle: sub } = detectedFromContent;
-                if (t) setTitle(t);
-                if (sub) setSubtitle(sub);
             };
 
             // Handle mode switch with natural aspect ratio defaults
@@ -518,19 +476,6 @@
                 .catch(() => {});
             }, []);
 
-            // Generate CLI command including size/quality
-            const generatedCli = useMemo(() => {
-                const cleanTopic = (title.trim() || '未命名主題').replace(/"/g, '\\"');
-                const sizeArg = `--size ${currentSpec.width}x${currentSpec.height}`;
-                if (mode === 'xhs') {
-                    return `/baoyu-xhs-images "${cleanTopic}" --style ${selectedXhsStyle} --layout ${selectedXhsLayout} --count ${cardCount} --aspect ${aspectRatio} ${sizeArg}`;
-                } else if (mode === 'infographic') {
-                    return `/baoyu-infographic "${cleanTopic}" --layout ${selectedInfoLayout} --style ${selectedInfoStyle} --aspect ${aspectRatio} ${sizeArg}`;
-                } else {
-                    return `/baoyu-cover-image "${cleanTopic}" --type ${coverType} --style ${selectedCoverStyle} --rendering ${coverRendering} --text ${coverTextLevel} --mood ${coverMood} --aspect ${aspectRatio} ${sizeArg}`;
-                }
-            }, [mode, title, selectedXhsStyle, selectedXhsLayout, cardCount, aspectRatio, selectedInfoLayout, selectedInfoStyle, coverType, selectedCoverStyle, coverRendering, coverTextLevel, coverMood, currentSpec]);
-
             // Generate structured full Prompt with clear palette mapping & pixel dimensions
             const generatedPrompt = useMemo(() => {
                 const [cPrimary, cSecondary, cBg, cText, cAccent] = palette;
@@ -562,6 +507,14 @@
 - **主標題**：${displayTitle}
 - **副標導讀**：${displaySubtitle}
 
+### ✍️ 文字排版與字體層級規範
+- **標題層級**：主標題僅置於系列首張卡片，字級最大、字重最重（Black/Bold），單行建議 ≤ 12 字，避免手機端自動斷行破壞版面
+- **副標題**：字級約為主標題的 45%-55%，與主標題同一視覺群組、對齊同一基準線，語意上為導讀補充
+- **內文段落**：全系列字級統一，行高 150%-160%，單行字數依卡寬控制在 14-18 字內；每張卡片建議只保留 1 個核心訊息，避免文字堆疊
+- **數據 / 關鍵字強調**：以 [焦點強調色: ${cAccent}] 上色或加大字重標出，每張卡片最多 1-2 處強調，形成滑動瀏覽時的視覺錨點
+- **對齊與留白**：系列卡片共用同一格線與邊界留白（四邊留白 ≥ 6% 卡寬），標題／內文對齊基準線需一致，維持翻頁節奏的連續感
+- **字體建議**：中文標題採高對比黑體（如 Source Han Sans / Noto Sans TC，Bold-Black），內文採同字族 Regular-Medium，避免手寫字體或超過 2 種字體家族影響行動裝置易讀性
+
 ### 📝 詳細文案來源與段落依據
 ${content}
 
@@ -571,7 +524,7 @@ ${content}
                 } else if (mode === 'infographic') {
                     const st = infographicStyles.find(s => s.id === selectedInfoStyle) || infographicStyles[0];
                     const lay = infographicLayouts.find(l => l.id === selectedInfoLayout) || infographicLayouts[0];
-                    return `### 🎯 任務目標：高密度知識資訊圖表 / 實體宣傳海報生成
+                    return `### 🎯 任務目標：一圖看懂資訊圖表 / 實體宣傳海報生成
 你是一位世界級的資訊視覺化設計總監（Information Architecture & Poster Designer）。
 請依據以下結構規格、尺寸解析度、配色原則與輸入文案，為主題「${displayTitle}」規劃一張架構嚴密、一圖看懂的高品質資訊海報：
 
@@ -591,6 +544,14 @@ ${content}
 ### 📌 標題設定
 - **主標題**：${displayTitle}
 - **副標導讀**：${displaySubtitle}
+
+### ✍️ 文字排版與字體層級規範
+- **標題層級**：主標題採全圖最大字級置於頂部或視覺焦點區，副標題字級約為主標題 40%-50%，兩者需保持明確的視覺重量差
+- **章節標題**：各資訊模組標題字級統一，搭配 [主視覺骨架色: ${cPrimary}] 色塊或圖標錶頭，強化章節可辨識度
+- **內文與清單**：正文字級於指定輸出解析度下需維持印刷可讀性，行高 150%-160%，避免密集區塊因字級過小造成閱讀疲勞
+- **數據與關鍵結論**：以 [焦點強調色: ${cAccent}] 上色並加大字重/字級，形成資訊掃讀時的視覺錨點，全圖建議不超過 3-4 處強調
+- **對齊與留白**：全圖採統一網格系統，各模組留白一致，標題與內文對齊基準線需貫穿整張海報，避免局部擁擠、局部空洞
+- **字體建議**：標題使用高對比黑體變體（Bold-Black），正文使用同字族 Regular-Medium，數據可搭配數字字重加粗，避免混用超過 2 種字體家族
 
 ### 📝 完整內容與模組規劃依據
 ${content}
@@ -617,6 +578,13 @@ ${content}
 - **主標題**：「${displayTitle}」
 - **副標題**：「${displaySubtitle}」
 
+### ✍️ 文字排版與字體層級規範
+- **主標題**：全圖視覺焦點，字級最大、字重最重，單行建議 ≤ 8-10 字（可依構圖需求拆為 2 行），避免文字過長被迫縮字而失去焦點感
+- **副標題**：字級約為主標題 30%-40%，置於主標題下方或側邊，作為語意補充，避免與主標題爭奪視覺重心
+- **文字與構圖融合**：依「${coverType}」構圖類型，標題文字應與主視覺圖像元素形成層次（前景/中景遮罩、光影對比），而非單純疊加於畫面之上
+- **對齊與留白**：標題區域四周需保留安全邊界（建議 ≥ 8% 畫面寬高），核心文字避免落在畫面正中下方，因應 LINE 推播介面常見的文字說明與操作按鈕遮擋
+- **字體建議**：主標題採高對比黑體或依「${st.name}」風格調整的客製化美術字，副標題採同字族 Regular-Medium，避免與主標題字重衝突
+
 ### 📝 內容參考
 ${content}
 
@@ -629,15 +597,10 @@ ${content}
             // Active prompt: either user edited custom prompt or auto-generated
             const activePrompt = customPrompt !== null ? customPrompt : generatedPrompt;
 
-            const copyToClipboard = (text, type) => {
+            const copyToClipboard = (text) => {
                 navigator.clipboard.writeText(text).then(() => {
-                    if (type === 'cli') {
-                        setCopiedCli(true);
-                        setTimeout(() => setCopiedCli(false), 2000);
-                    } else {
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 2000);
-                    }
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
                 });
             };
 
@@ -689,7 +652,7 @@ ${content}
                                         視覺海報與 LINE 圖卡生成器
                                         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">Baoyu Studio v2.3</span>
                                     </h1>
-                                    <p className="text-xs text-slate-400">一站式生成 baoyu-xhs-images · baoyu-infographic · baoyu-cover-image 專業 Prompt</p>
+                                    <p className="text-xs text-slate-400">一站式生成資訊海報、社群小卡、主視覺大圖的專業 Prompt</p>
                                 </div>
                             </div>
 
@@ -700,21 +663,21 @@ ${content}
                                     className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'infographic' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
                                 >
                                     <Icon name="BarChart3" size={14} />
-                                    <span>baoyu-infographic (資訊海報)</span>
+                                    <span>資訊海報（一圖看懂）</span>
                                 </button>
                                 <button
                                     onClick={() => handleModeChange('xhs')}
                                     className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'xhs' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
                                 >
                                     <Icon name="Layers" size={14} />
-                                    <span>baoyu-xhs-images (社群小卡)</span>
+                                    <span>社群小卡（輪播圖卡）</span>
                                 </button>
                                 <button
                                     onClick={() => handleModeChange('cover')}
                                     className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${mode === 'cover' ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
                                 >
                                     <Icon name="Image" size={14} />
-                                    <span>baoyu-cover-image (主視覺封面)</span>
+                                    <span>主視覺大圖（宣傳封面）</span>
                                 </button>
                             </div>
                         </div>
@@ -733,39 +696,8 @@ ${content}
                                         <Icon name="FileText" size={16} className="text-cyan-400" />
                                         <span>標題與文案內容</span>
                                     </h2>
-                                    <div className="flex items-center gap-2.5">
-                                        <label className="text-[11px] text-slate-400 hover:text-slate-200 flex items-center gap-1.5 cursor-pointer select-none" title="換貼新文章時，自動更新大標題與副標題">
-                                            <input
-                                                type="checkbox"
-                                                checked={autoSyncTitle}
-                                                onChange={(e) => setAutoSyncTitle(e.target.checked)}
-                                                className="rounded border-slate-700 bg-slate-950 text-cyan-500 focus:ring-0 w-3.5 h-3.5 cursor-pointer"
-                                            />
-                                            <span>隨內文自動同步</span>
-                                        </label>
-                                        {isOutOfSync && !autoSyncTitle && (
-                                            <button
-                                                onClick={handleSmartExtract}
-                                                className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 flex items-center gap-1 transition-all animate-pulse shadow-sm shadow-amber-500/10"
-                                                title={`偵測到內文標題為「${detectedFromContent.title}」，點擊立即套用`}
-                                            >
-                                                <Icon name="Sparkles" size={12} />
-                                                <span>同步新標題</span>
-                                            </button>
-                                        )}
-                                        {!isOutOfSync && !autoSyncTitle && (
-                                            <button
-                                                onClick={handleSmartExtract}
-                                                className="text-[11px] font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
-                                                title="手動從下方內文重新提取標題"
-                                            >
-                                                <Icon name="Sparkles" size={13} />
-                                                <span>從內文識別</span>
-                                            </button>
-                                        )}
-                                    </div>
                                 </div>
-                                
+
                                 <div className="space-y-3.5">
                                     {/* Dedicated Title Input */}
                                     <div>
@@ -773,17 +705,11 @@ ${content}
                                             <label className="block text-xs font-bold text-slate-300">
                                                 海報主標題 (Main Title)
                                             </label>
-                                            {!autoSyncTitle && (
-                                                <span className="text-[10px] text-slate-500">已啟用手動自訂</span>
-                                            )}
                                         </div>
                                         <input
                                             type="text"
                                             value={title}
-                                            onChange={(e) => {
-                                                setTitle(e.target.value);
-                                                setAutoSyncTitle(false);
-                                            }}
+                                            onChange={(e) => setTitle(e.target.value)}
                                             placeholder={`例如：${DEFAULT_TITLE}`}
                                             className="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-white text-sm font-bold focus:border-cyan-400 focus:outline-none transition-all"
                                         />
@@ -797,10 +723,7 @@ ${content}
                                         <input
                                             type="text"
                                             value={subtitle}
-                                            onChange={(e) => {
-                                                setSubtitle(e.target.value);
-                                                setAutoSyncTitle(false);
-                                            }}
+                                            onChange={(e) => setSubtitle(e.target.value)}
                                             placeholder={`例如：${DEFAULT_SUBTITLE}`}
                                             className="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3.5 py-2 text-slate-200 text-xs font-medium focus:border-cyan-400 focus:outline-none transition-all"
                                         />
@@ -1070,15 +993,7 @@ ${content}
                                     </div>
                                     <div className="flex items-center flex-wrap gap-2">
                                         <button
-                                            onClick={() => copyToClipboard(generatedCli, 'cli')}
-                                            className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all"
-                                            title="複製 CLI 指令"
-                                        >
-                                            <Icon name="Terminal" size={13} />
-                                            <span>{copiedCli ? '已複製！' : '複製 CLI'}</span>
-                                        </button>
-                                        <button
-                                            onClick={() => copyToClipboard(activePrompt, 'prompt')}
+                                            onClick={() => copyToClipboard(activePrompt)}
                                             className="px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-cyan-400/20 transition-all"
                                             title="一鍵複製整份規格提示詞！"
                                         >
@@ -1086,11 +1001,6 @@ ${content}
                                             <span>{copied ? '已複製提示詞！' : '📋 複製提示詞'}</span>
                                         </button>
                                     </div>
-                                </div>
-
-                                {/* Terminal CLI Banner */}
-                                <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 flex items-center justify-between overflow-x-auto custom-scrollbar">
-                                    <div className="truncate pr-3 select-all">{generatedCli}</div>
                                 </div>
 
                                 {/* Full Structured Prompt Content (Directly Editable Textarea) */}
